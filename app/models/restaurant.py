@@ -22,6 +22,7 @@ class Restaurant(db.Model):
     categories = db.Column(db.String(100), nullable=False)
     avg_rating= db.Column(db.Numeric(precision=3, scale=2), default=0)
     description = db.Column(db.String(255))
+    avg_price = db.Column(db.Integer, default=0)
     lat = db.Column(db.Float)
     lng = db.Column(db.Float)
     created_at = db.Column(db.DateTime, default=datetime.now())
@@ -47,6 +48,7 @@ class Restaurant(db.Model):
             'categories' : self.categories,
             'avgRating' : self.avg_rating,
             'description' : self.description,
+            'avgPrice' : self.avg_price,
             'lat' : self.lat,
             'lng' : self.lng,
             'createdAt': self.created_at,

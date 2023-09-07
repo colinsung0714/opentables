@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 3413a90f13ef
+Revision ID: 40caffa4602d
 Revises: 
-Create Date: 2023-09-06 13:12:01.153274
+Create Date: 2023-09-06 23:12:12.040882
 
 """
 from alembic import op
@@ -13,7 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = '3413a90f13ef'
+revision = '40caffa4602d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,6 +29,8 @@ def upgrade():
     sa.Column('profile_pic', sa.String(length=255), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('first_name', sa.String(length=40), nullable=True),
+    sa.Column('last_name', sa.String(length=40), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
@@ -48,6 +50,7 @@ def upgrade():
     sa.Column('categories', sa.String(length=100), nullable=False),
     sa.Column('avg_rating', sa.Numeric(precision=3, scale=2), nullable=True),
     sa.Column('description', sa.String(length=255), nullable=True),
+    sa.Column('avg_price', sa.Integer(), nullable=True),
     sa.Column('lat', sa.Float(), nullable=True),
     sa.Column('lng', sa.Float(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),

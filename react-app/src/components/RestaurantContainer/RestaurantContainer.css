@@ -1,0 +1,18 @@
+.single-restaurant-container img {
+    width: 300px;
+}
+
+.single-restaurant-container {
+    position: absolute;
+    transition: top 2s ease-in-out .7s;
+ 
+}
+
+.single-restaurant-container:hover {
+   top: -10px;
+}
+
+.restaurant-middle-container {
+    display: flex;
+    gap: 20px;
+}

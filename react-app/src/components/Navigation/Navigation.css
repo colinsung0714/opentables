@@ -1,7 +1,52 @@
 .profile-dropdown {
   position: absolute;
+  border: solid 2px black;
 }
 
 .hidden {
   display: none;
+}
+
+.nav-bar {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-bar a{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  gap:10px;
+  font-weight: bold;
+}
+
+.nav-bar img {
+  height: 50px;
+  width: 60px;
+}
+
+#user-button {
+  border: solid 2px rgb(228, 169, 59);
+  display: flex;
+  width: 80px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#user-button img {
+  width: 25px;
+  height: 25px;
+  border-radius: 15px;
+}
+
+#user-button i {
+
+  font-size: x-large;
 }

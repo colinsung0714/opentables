@@ -13,10 +13,11 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    profile_pic = db.Column(db.String(255))
+    profile_pic = db.Column(db.String(255), default='https://opentables.s3.us-west-1.amazonaws.com/default-profile-pic.jpg')
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, default=datetime.now())
-
+    first_name = db.Column(db.String(40))
+    last_name = db.Column(db.String(40))
     restaurants = db.relationship('Restaurant', back_populates='owner', cascade="all, delete-orphan")
     reservations = db.relationship('Reservation', back_populates='user', cascade="all, delete-orphan")
 
@@ -35,6 +36,8 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
+            'firstName':self.first_name,
+            'lastName':self.last_name,
             'email': self.email,
             'profilePic': self.profile_pic,
             'createdAt': self.created_at,

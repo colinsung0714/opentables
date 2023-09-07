@@ -1,1 +1,5 @@
 /* TODO Add site wide styles */
+body {
+    font-family: 'Noto Sans', sans-serif;
+    box-sizing: content-box;
+}

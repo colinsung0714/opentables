@@ -1,0 +1,96 @@
+.date-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-bar {
+    border: solid 2px black;
+    display: flex;
+}
+
+.search-bar input {
+    border: none;
+    width: 100%;
+}
+
+.search-filter-contaner {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background: linear-gradient(.647turn,#1a0a47cc,#0d1b4599 .01%,#0d1b45cc 51.04%,#0d1b45 99.1%);
+}
+
+.date-time-party-container {
+    display: flex;
+    gap: 20px;
+    font-size: 20px;
+}
+
+.date-container {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.time-container {
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.time-container select{
+    border: none;
+    border-radius: 5px;
+}
+
+.party-container {
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    padding: 10px;
+}
+
+.party-container select {
+    border: none;
+    border-radius: 5px;
+}
+
+.search-bar {
+    background-color: white;
+    border-radius: 5px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.search-bar input {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.search-bar input:focus {
+    outline: none;
+}
+
+.restaurants-container {
+    margin: 0px 150px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#restaurants-header {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    margin-left: 150px;
+    margin-right: 150px;
+}

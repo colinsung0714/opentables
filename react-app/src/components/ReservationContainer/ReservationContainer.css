@@ -1,0 +1,68 @@
+.single-reservation-container {
+    border: 2px solid #d8d9db;
+    border-radius: 5px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.single-reservation-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.single-reservation-info img{
+    border-radius: 15%;
+    width: 150px;
+    height: 150px;
+    padding: 20px;
+}
+
+.party-date-container {
+    display: flex;
+    gap: 10px;
+}
+
+.party-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.reservation-confirmed-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.reservation-completed-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.date-time-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reservation-button-upcoming-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    padding-right: 40px;
+}
+
+.reservation-button-past-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 40px;
+}

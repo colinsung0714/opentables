@@ -6,7 +6,7 @@ class Reservation(db.Model):
     __tablename__ = 'reservations'
 
     __table_args__ = (
-        UniqueConstraint('user_id', 'restaurant_id', name='unique_combination_constraint'),
+        UniqueConstraint('restaurant_id', 'reservation_date', name='unique_combination_constraint'),
         {'schema': SCHEMA} if environment == "production" else None,
     )
 
@@ -26,8 +26,9 @@ class Reservation(db.Model):
             'id': self.id,
             'restaurantId': self.restaurant_id,
             'userId': self.user_id,
-            'reservationDate': self.reservation_date,
+            'reservationDate': self.reservation_date.strftime("%Y-%m-%d %H:%M"),
             'numGuests': self.party,
+            'restaurantInfo': self.restaurant.to_dict(),
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
         }

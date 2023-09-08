@@ -21,12 +21,13 @@ export const ManageRestaurants = () => {
     const handleDelete = (restaurantId) => {
         dispatch(fetchDelteRestaurant(restaurantId))
     }
-    if(!ownRestaurants.length) return null
+    if(Number(userId) !== currentUser.id) history.push('/')
     return (
         <div>
-            <UserNavigation currentUser={currentUser} />
+            <UserNavigation currentUser={currentUser} type={'restaurants'}/>
             <div className="restaurants-manage-container">
                 <h2>My Restaurants</h2>
+                {!ownRestaurants.length && <div>There is no restaurant</div>}
                 {ownRestaurants.map(restaurant =>
                     <div className='restaurant-manage' key={restaurant.id}>
                         <div className="left-manage">

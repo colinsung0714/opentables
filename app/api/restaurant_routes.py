@@ -31,13 +31,14 @@ def new_restaurant(userId):
     form['csrf_token'].data = request.cookies['csrf_token']
     
     if form.validate_on_submit():
-      
-        restaurant_pic = form.data['restaurant_pic']
-        restaurant_pic.filename = get_unique_filename(restaurant_pic.filename)
-        upload = upload_file_to_s3(restaurant_pic)
-
-        if 'url' not in upload:
-            print(upload)
+        if form.data['restaurant_pic']:
+            restaurant_pic = form.data['restaurant_pic']
+            restaurant_pic.filename = get_unique_filename(restaurant_pic.filename)
+            upload = upload_file_to_s3(restaurant_pic)
+        else:
+            upload = {}
+            upload['url'] = 'https://opentables.s3.us-west-1.amazonaws.com/default_restaurant.jpg'
+            
         owner = User.query.get(userId)
         restaurant = Restaurant(
             name=form.data['name'],

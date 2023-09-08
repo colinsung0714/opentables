@@ -1,0 +1,8 @@
+.user-reservations-container {
+    display: flex;
+    margin: 20px 150px;
+}
+
+.user-reservations {
+    width: 100%;
+}

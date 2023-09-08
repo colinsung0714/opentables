@@ -1,6 +1,6 @@
 import React from "react";
 import '../UserNavigation/UserNavigation.css'
-export const UserNavigation = ({currentUser}) => {
+export const UserNavigation = ({currentUser, type}) => {
 
     return (
         <>
@@ -16,8 +16,8 @@ export const UserNavigation = ({currentUser}) => {
             </div>
         </div>
         <div className="nav-menu-bar">
-            <div>Reservations</div>
-            <div>Restaurants</div>
+            <div style={type === 'reservations' ? {fontWeight:'bold'} : null}>Reservations</div>
+            <div style={type === 'restaurants' ? {fontWeight:'bold'} : null}>Restaurants</div>
         </div>
         </>
     )

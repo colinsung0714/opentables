@@ -1,4 +1,4 @@
-const today = new Date()
+export const today = new Date()
 
 const newDate = new Date(today.getFullYear(), today.getMonth(), today.getDay(), 0, 0) 
 
@@ -13,15 +13,37 @@ export const selectionMapper = () => {
     return res
 }
 
-export const selectionMapperClose = () => {
-    const res = []
-    
-}
-
 export const phoneValidate = phone => {
     let phoneParts = phone.split('-')
     for (let num of phoneParts) {
         if (isNaN(num)) return true
     }
     return false
+}
+
+export const upcomingReservations = reservations => {
+    const res = []
+    for(let reservation of reservations) {
+        const reservationTime = new Date(reservation.reservationDate)
+        if(today.getTime() < reservationTime.getTime()) {
+            res.push(reservation)
+        }
+    }
+    return res
+}
+
+export const pastReservations = reservations => {
+    const res = []
+    for(let reservation of reservations) {
+        const reservationTime = new Date(reservation.reservationDate)
+        if(today.getTime() >= reservationTime.getTime()) {
+            res.push(reservation)
+        }
+    }
+    return res
+}
+
+export const convertTimetoString = datetime => {
+    const stringTime = new Date(datetime)
+    return stringTime.toString()
 }

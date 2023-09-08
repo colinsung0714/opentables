@@ -10,7 +10,8 @@
 .nav-bar {
   margin-top: 20px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin: 50px 200px;
   align-items: center;
 }
 
@@ -47,6 +48,7 @@
 }
 
 #user-button i {
-
   font-size: x-large;
 }
+
+

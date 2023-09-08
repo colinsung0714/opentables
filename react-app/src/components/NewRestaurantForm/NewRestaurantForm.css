@@ -1,0 +1,36 @@
+.new-restaurant-container {
+    position: relative;
+}
+
+.intro-new-restaurant {
+    margin:20px 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(252.28deg, #FDAF08 0%, #DA3642 51.04%, #1A0A47 100%);
+    padding-bottom: 400px;
+    padding-top: 100px;
+}
+
+.new-restaurant-form-container {
+    background-color: white;
+    border: solid 2px red;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 40px;
+    height: 900px;
+    position: absolute;
+    top:400px;
+    width: 90%;
+    z-index: 1;
+}
+
+.new-restaurant-form {
+    display: flex;
+
+}

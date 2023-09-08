@@ -1,0 +1,23 @@
+.restaurant-detail-container {
+    position: relative;
+    display: flex;
+    margin: 40px 0;
+    width: 100%;
+    justify-content: center;
+}
+
+.restaurant-info-container {
+    position: absolute;
+    top: 450px;
+    background-color: white;
+    width: 80%;
+    padding: 0 40px;
+    gap: 10px;
+}
+
+.nav-restaurant-detail-container {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+}
+

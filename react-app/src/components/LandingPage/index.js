@@ -20,6 +20,7 @@ export const LandingPage = () => {
     const eighthTime = new Date(seventhTime.getTime() + 30 * 60 * 1000)
     const ninthTime = new Date(eighthTime.getTime() + 30 * 60 * 1000)
     const tenthTime = new Date(ninthTime.getTime() + 30 * 60 * 1000)
+ 
     useEffect(() => {
         dispatch(fetchAllRestaurants())
     }, [])

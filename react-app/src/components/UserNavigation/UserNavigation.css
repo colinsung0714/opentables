@@ -1,0 +1,32 @@
+
+.user-manage-restaurant-container {
+    display: flex;
+    border-bottom: 2px solid #d8d9db;
+    margin: 20px 150px;
+}
+
+.user-nav-bar {
+   display: flex;
+   gap:20px;
+   margin-bottom: 30px;
+}
+
+.user-info-nav-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-nav-bar img {
+    border-radius: 50%;
+    height: 170px;
+    width: 170px;
+}
+
+.nav-menu-bar {
+    display: flex;
+    margin: 20px 150px;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #d8d9db;
+}

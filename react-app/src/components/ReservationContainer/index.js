@@ -4,7 +4,7 @@ import {convertTimetoString} from '../helper'
 export const ReservationContainer = ({ reservation, type }) => {
     const reservationDateTimeParts = convertTimetoString(reservation.reservationDate).split(' ')
     const timeParts = reservationDateTimeParts[4].slice(0, 5)
-    // ['Wed', 'Sep', '20', '2023', '16:30:00', 'GMT-0700', '(Pacific', 'Daylight', 'Time)']
+    
     return (
         <div className="single-reservation-container">
             <div className="single-reservation-info">

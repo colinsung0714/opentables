@@ -9,15 +9,61 @@
 .restaurant-info-container {
     position: absolute;
     top: 450px;
-    background-color: white;
     width: 80%;
     padding: 0 40px;
-    gap: 10px;
+    gap: 40px;
+    display: flex;
+    justify-content: center;
 }
 
 .nav-restaurant-detail-container {
     display: flex;
     gap: 10px;
-    justify-content: space-around;
+  
 }
 
+.restaurant-info {
+    background-color: white;
+  
+}
+
+.restaurant-reservation-container {
+    background-color: white;
+}
+
+.detail-restaurant-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-restaurant-icons-container {
+    display: flex;
+}
+
+#star-icon-restaurant-container {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    align-items: center;
+}
+
+#comment-restaurant-icon-container {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    align-items: center;
+}
+
+#money-restaurant-icon-container {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    align-items: center;
+}
+
+#type-restaurant-icon-container {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    align-items: center;
+}

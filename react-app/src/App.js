@@ -10,6 +10,7 @@ import { RestaurantDetail } from "./components/RestaurantDetail";
 import { NewRestaurantForm } from "./components/NewRestaurantForm";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import {ManageRestaurants} from './components/ManageRestaurants'
+import { ManageReservations } from "./components/ManageReservations";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <ProtectedRoute path='/user/:userId/restaurants'>
             <ManageRestaurants />
+          </ProtectedRoute>
+          <ProtectedRoute path='/user/:userId/reservations'>
+            <ManageReservations />
           </ProtectedRoute>
         </Switch>
       )}

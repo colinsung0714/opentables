@@ -74,7 +74,7 @@ export const NewRestaurantForm = () => {
             formData.append('categories', categories)
             formData.append('description', description)
             formData.append('avg_price', priceRange)
-            formData.append('restaurant_pic', image)
+            if(image)formData.append('restaurant_pic', image)
             if (checkMonday) {
                 formData.append('monday_open', mondayOpen)
                 formData.append('monday_close', mondayClose)

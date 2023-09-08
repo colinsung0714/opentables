@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 3c72e020ea79
+Revision ID: 82029aa9e8f8
 Revises: 
-Create Date: 2023-09-07 16:50:42.871748
+Create Date: 2023-09-08 12:32:57.792884
 
 """
 from alembic import op
@@ -13,7 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = '3c72e020ea79'
+revision = '82029aa9e8f8'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -78,7 +78,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['restaurant_id'], ['restaurants.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('user_id', 'restaurant_id', name='unique_combination_constraint')
+    sa.UniqueConstraint('restaurant_id', 'reservation_date', name='unique_combination_constraint')
     )
     # ### end Alembic commands ###
     if environment == "production":

@@ -28,31 +28,21 @@ def seed_business_hours():
         start=time(9,0),
         end=time(18,0)
     )
-    sat_hours = Business_hour(
-        day='Saturday',
-        start=time(0,0),
-        end=time(0,0)
-    )
-    sun_hours = Business_hour(
-        day='Sunday',
-        start=time(0,0),
-        end=time(0,0)
-    )
+
+
     restaurant= Restaurant.query.get(1)
     restaurant.business_hours.append(monday_hours)
     restaurant.business_hours.append(tues_hours)
     restaurant.business_hours.append(wednes_hours)
     restaurant.business_hours.append(thurs_hours)
     restaurant.business_hours.append(fri_hours)
-    restaurant.business_hours.append(sat_hours)
-    restaurant.business_hours.append(sun_hours)
+   
     db.session.add(monday_hours)
     db.session.add(tues_hours)
     db.session.add(wednes_hours)
     db.session.add(thurs_hours)
     db.session.add(fri_hours)
-    db.session.add(sat_hours)
-    db.session.add(sun_hours)
+   
 
     db.session.commit()
 

@@ -4,14 +4,14 @@ import { useSelector, useDispatch } from "react-redux"
 import { useParams, useHistory } from 'react-router-dom';
 import '../ManageReservations/ManageReservations.css'
 import { fetchallUserReservations } from "../../store/reservation";
-import { upcomingReservations, pastReservations } from "../helper";
+import { upcomingReservations, pastReservations, sortList } from "../helper";
 import { ReservationContainer } from "../ReservationContainer";
 export const ManageReservations = () => {
     const { userId } = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
     const currentUser = useSelector(state => state.session.user)
-    const reservations = Object.values(useSelector(state => state.reservation.reservations))
+    const reservations = Object.values(useSelector(state => state.reservation.reservations)).filter(reservation => reservation.userId === currentUser.id)
     useEffect(() => {
         dispatch(fetchallUserReservations(currentUser.id))
     }, [])
@@ -26,14 +26,14 @@ export const ManageReservations = () => {
                     <div className="user-reservations">
                         <h2>Upcoming reservations</h2>
                         <div>
-                            {upcomingReservations(reservations).length ? upcomingReservations(reservations).map(reservation =>
+                            {upcomingReservations(reservations).length ? sortList(upcomingReservations(reservations)).map(reservation =>
                                 <div key={reservation.id}>
                                     <ReservationContainer reservation={reservation} type={'upcoming'}/>
                                 </div>) : 'There is no reservations'}
                         </div>
                         <h2>Past reservations</h2>
                         <div>
-                            {pastReservations(reservations).length ? pastReservations(reservations).map(reservation =>
+                            {pastReservations(reservations).length ? sortList(pastReservations(reservations)).map(reservation =>
                                 <div key={reservation.id}>
                                     <ReservationContainer reservation={reservation} type={'past'}/>
                                 </div>) : 'There is no reservations'}

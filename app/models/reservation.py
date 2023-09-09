@@ -15,8 +15,8 @@ class Reservation(db.Model):
     restaurant_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('restaurants.id')))
     party = db.Column(db.Integer, default=2)
     reservation_date = db.Column(db.DateTime, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     restaurant = db.relationship('Restaurant', back_populates='reservations')
     user = db.relationship('User', back_populates='reservations')

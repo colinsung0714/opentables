@@ -68,16 +68,9 @@ def update_reservation(reservationId):
 @reservation_routes.route('/<int:reservationId>/delete', methods=['DELETE'])
 @login_required
 def delete_reservation(reservationId):
-    print('~~~~~~~~~~~~~~~reservationId', reservationId)
+   
     reservation = Reservation.query.get(reservationId)
-    res = reservation.to_dict()
-    print('~~~~~~~~~~~~~~~~reservation', reservation)
-    user = User.query.get(reservation.user_id)
-    restaurant = Restaurant.query.get(reservation.restaurant_id)
-    print('~~~~~~~~~~~~~~~~~~~~~user', user.reservations)
-    print('~~~~~~~~~~~~~~~~~~~~~restaurant', restaurant.reservations)
-    user.reservations.remove(reservation)
-    restaurant.reservations.remove(reservation)
+    res = reservation.to_dict()    
     db.session.delete(reservation)
     db.session.commit()
     return res

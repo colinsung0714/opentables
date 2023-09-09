@@ -25,8 +25,8 @@ class Restaurant(db.Model):
     avg_price = db.Column(db.Integer, default=0)
     lat = db.Column(db.Float)
     lng = db.Column(db.Float)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     owner = db.relationship('User', back_populates='restaurants')
     business_hours = db.relationship('Business_hour', back_populates='restaurant', cascade="all, delete-orphan")

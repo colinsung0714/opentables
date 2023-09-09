@@ -6,6 +6,7 @@ import "../ManageRestaurants/ManageRestaurants.css"
 import { UserNavigation } from "../UserNavigation"
 import { fetchAllRestaurants, fetchDelteRestaurant } from "../../store/restaurant"
 import { StarIcon } from '../StarIcon'
+import { sortList } from "../helper"
 export const ManageRestaurants = () => {
     const currentUser = useSelector(state => state.session.user)
     const { userId } = useParams()
@@ -28,7 +29,7 @@ export const ManageRestaurants = () => {
             <div className="restaurants-manage-container">
                 <h2>My Restaurants</h2>
                 {!ownRestaurants.length && <div>There is no restaurant</div>}
-                {ownRestaurants.map(restaurant =>
+                {sortList(ownRestaurants).map(restaurant =>
                     <div className='restaurant-manage' key={restaurant.id}>
                         <div className="left-manage">
                             <img src={restaurant.restaurantPic} />

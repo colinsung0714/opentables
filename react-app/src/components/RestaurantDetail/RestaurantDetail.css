@@ -19,16 +19,27 @@
 .nav-restaurant-detail-container {
     display: flex;
     gap: 10px;
-  
+    font-size: 20px;
+    border-bottom: 2px solid #d8d9db;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .restaurant-info {
     background-color: white;
-  
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid #d8d9db;
 }
 
 .restaurant-reservation-container {
+    display: flex;
+    flex-direction: column;
     background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    gap:20px;
+    border: 2px solid #d8d9db;
 }
 
 .detail-restaurant-info {
@@ -36,8 +47,16 @@
     flex-direction: column;
 }
 
+.detail-restaurant-info h1{
+    padding-bottom: 20px;
+    margin: 0;
+    border-bottom: 2px solid #d8d9db;
+}
+
 .detail-restaurant-icons-container {
+    padding: 20px;
     display: flex;
+    gap: 20px;
 }
 
 #star-icon-restaurant-container {

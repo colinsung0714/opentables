@@ -28,13 +28,13 @@ export const ManageRestaurants = () => {
             <UserNavigation currentUser={currentUser} type={'restaurants'}/>
             <div className="restaurants-manage-container">
                 <h2>My Restaurants</h2>
-                {!ownRestaurants.length && <div>There is no restaurant</div>}
+                {!ownRestaurants.length && <div style={{margin:"20px 0"}}>There is no restaurant</div>}
                 {sortList(ownRestaurants).map(restaurant =>
                     <div className='restaurant-manage' key={restaurant.id}>
                         <div className="left-manage">
                             <img src={restaurant.restaurantPic} />
-                            <div>
-                                <div>{restaurant.name}</div>
+                            <div className="restaurant-info-detail-icon-container">
+                                <h3>{restaurant.name}</h3>
                                 <StarIcon avgRating={restaurant.avgRating} />
                                 <div className="categories-city-container">
                                     <div style={{ borderRight: "2px solid #d8d9db", paddingRight: "10px" }}>{restaurant.categories}</div>

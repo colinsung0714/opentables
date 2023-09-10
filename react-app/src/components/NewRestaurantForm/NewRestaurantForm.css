@@ -17,20 +17,51 @@
 
 .new-restaurant-form-container {
     background-color: white;
-    border: solid 2px red;
+    border: 2px solid #d8d9db;
     border-radius: 50px;
     display: flex;
-    align-items: center;
+   
     flex-direction: column;
     margin: 0 40px;
     height: 900px;
     position: absolute;
     top:400px;
     width: 90%;
-    z-index: 1;
+    height: fit-content;
+    padding: 20px
 }
 
 .new-restaurant-form {
     display: flex;
+    justify-content: center;
+    width: 100%;
+}
 
+#restaurant-form {
+   
+   
+    width: 100%;
+    padding: 10px;
+}
+
+.businesshour-container-newform {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid black;
+    width: fit-content;
+    margin: auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+.rating-input {
+    display: flex;
+    align-items: center;
+
+}
+
+.rating-input i{
+    font-size: 30px;
 }

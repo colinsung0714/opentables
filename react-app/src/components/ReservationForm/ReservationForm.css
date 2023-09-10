@@ -1,8 +1,100 @@
 .reservation-form-container {
-    margin: 20px 200px;
+    margin: 40px 250px;
+    border: 2px solid #d8d9db;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px;
+}
+
+.reservation-form-container h2 {
+    text-align: center;
 }
 
 .selection-reservation-container {
     display: flex;
     gap: 10px;
+    align-items: center;
+}
+
+.selection-reservation-container select{
+    cursor: pointer;
+}
+
+.restaurant-reservation-info-container {
+    display: flex;
+    gap: 40px;
+}
+
+.restaurant-reservation-info-container img{
+    height: 200px;
+    width: 200px;
+    border-radius: 10%;
+}
+
+.party-reservation-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 20px;
+}
+
+.reservation-current-date-time {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 20px;
+}
+
+.reservation-calendar-party-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.reservation-calendar-party {
+    display: flex;
+    gap: 20px;
+    border: 2px solid #d8d9db;
+    padding: 20px;
+}
+
+.user-selection-reservation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    font-size: 18px;
+
+}
+
+.user-selection-reservation-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.calendar-selection-form-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.party-container {
+    border: 2px solid #d8d9db;
+    width: fit-content;
+}
+
+.party-container select {
+    cursor: pointer;
+}
+
+.select-another-time-container {
+    display: flex;
+    align-items: center;
+}
+
+.selection-reservation-container p{
+    color: red;
 }

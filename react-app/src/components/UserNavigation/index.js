@@ -1,6 +1,8 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import '../UserNavigation/UserNavigation.css'
 export const UserNavigation = ({currentUser, type}) => {
+    const history = useHistory()
 
     return (
         <>
@@ -16,8 +18,8 @@ export const UserNavigation = ({currentUser, type}) => {
             </div>
         </div>
         <div className="nav-menu-bar">
-            <div style={type === 'reservations' ? {fontWeight:'bold'} : null}>Reservations</div>
-            <div style={type === 'restaurants' ? {fontWeight:'bold'} : null}>Restaurants</div>
+            <div id="navi-to-reservation" onClick={()=>history.push(`/user/${currentUser.id}/reservations`)} style={type === 'reservations' ? {fontWeight:'bold'} : null}>Reservations</div>
+            <div id="navi-to-restaurant" onClick={()=>history.push(`/user/${currentUser.id}/restaurants`)} style={type === 'restaurants' ? {fontWeight:'bold'} : null}>Restaurants</div>
         </div>
         </>
     )

@@ -1,0 +1,25 @@
+.login-modal-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-upper-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border-bottom: 2px solid #d8d9db;
+}
+
+.login-modal-container img {
+    width: 125px;
+    height: 125px;
+}
+
+.login-lower-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 20px;
+}

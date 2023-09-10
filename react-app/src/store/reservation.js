@@ -121,7 +121,6 @@ export default function reservationsReducer(state=initialState, action) {
             return {...newState, reservations:{...newState.reservations, [action.reservation.id]:{...action.reservation}}, restaurantReservations:{...newState.restaurantReservations}}
         }
         case DELETE_RESERVATION: {
-            console.log(action.reservation)
             const newState = {...state, reservations:{...state.reservations}, restaurantReservations:{...state.restaurantReservations}}
             delete newState.reservations[action.reservation.id]
             delete newState.restaurantReservations[action.reservation.id]

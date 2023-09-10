@@ -2,9 +2,17 @@ const all_restaurants = 'restaurants/all'
 const single_restaurant = 'restaurants/:restaurantId'
 const new_restaurant = 'restaurants/new'
 const delete_restaurant = 'restaurants/delete'
+const FILTER_RESTAURANTS = 'restaurants/search'
 const allRestaurants = (restaurants) => {
     return {
         type:all_restaurants,
+        restaurants
+    }
+}
+
+const filterRestaurants = restaurants => {
+    return {
+        type:FILTER_RESTAURANTS,
         restaurants
     }
 }
@@ -96,6 +104,23 @@ export const fetchDelteRestaurant = restaurantId => async dispatch => {
     }
 }
 
+export const fetchSearchRestaurant = restaurant => async dispatch => {
+    const res = await fetch('/api/restaurants/search', {
+        method:"POST",
+        headers: { "Content-Type": "application/json" },
+        body:JSON.stringify(restaurant)
+    })
+    if(res.ok) {
+        const recivedData = await res.json()
+        console.log(recivedData)
+        dispatch(filterRestaurants(recivedData))
+    }
+    else {
+        const error = await res.json()
+        throw error
+    }
+}
+
 const initialState = { allRestaurants:{}, singleRestaurant:{}}
 
 export default function restaurantsReducer(state=initialState, action) {
@@ -119,6 +144,13 @@ export default function restaurantsReducer(state=initialState, action) {
             const newState =  {...state, allRestaurants:{...state.allRestaurants}, singleRestaurant:{...state.singleRestaurant}}
             delete newState.allRestaurants[action.restaurant.id]
             return {...newState, allRestaurants:{...newState.allRestaurants}, singleRestaurant:{...newState.singleRestaurant}}
+        }
+        case FILTER_RESTAURANTS: {
+            const newState = {...state, allRestaurants:{}, singleRestaurant:{}}
+            action.restaurants.restaurants?.forEach(restaurant => {
+                newState.allRestaurants[restaurant.id] = restaurant                
+            });
+            return newState
         }
         default:
             return state

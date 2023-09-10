@@ -62,11 +62,13 @@ def sign_up():
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-       
-        profile_pic = form.data["profile_pic"]
-      
-        profile_pic.filename = get_unique_filename(profile_pic.filename)
-        upload = upload_file_to_s3(profile_pic)
+        if not form.data["profile_pic"]:
+            upload = {}
+            upload['url'] = 'https://opentables.s3.us-west-1.amazonaws.com/default-profile-pic.jpg'
+        else:
+            profile_pic = form.data["profile_pic"]
+            profile_pic.filename = get_unique_filename(profile_pic.filename)
+            upload = upload_file_to_s3(profile_pic)
      
         if 'url' not in upload:
             print (upload)
@@ -75,7 +77,9 @@ def sign_up():
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password'],
-            profile_pic = upload['url']
+            profile_pic = upload['url'],
+            first_name = form.data['first_name'],
+            last_name = form.data['last_name']
         )
         db.session.add(user)
         db.session.commit()

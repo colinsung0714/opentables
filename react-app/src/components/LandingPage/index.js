@@ -6,7 +6,7 @@ import { RestaurantContainer } from '../RestaurantContainer'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { dateformatConverter, selectionMapper } from "../helper";
-import {fetchSearchRestaurant} from '../../store/restaurant'
+import { fetchSearchRestaurant } from '../../store/restaurant'
 
 export const LandingPage = () => {
     const dispatch = useDispatch()
@@ -15,7 +15,7 @@ export const LandingPage = () => {
     const [startDate, setstartDate] = useState(today)
     const [party, setParty] = useState(2)
     const [search, setSearch] = useState('')
-    const [error, setError ] = useState({})
+    const [error, setError] = useState({})
     const restaurants = Object.values(useSelector(state => state.restaurant.allRestaurants))
     const todayParts = today.toString().split(' ')
     const firstTime = today.getMinutes() < 30 ? new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours(), 30) : new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours() + 1, 0)
@@ -42,37 +42,37 @@ export const LandingPage = () => {
         e.preventDefault();
         const searchData = {
             party,
-            name:search,
+            name: search,
             date_time: dateformatConverter(startDate, time)
         }
-        dispatch(fetchSearchRestaurant(searchData)).catch(e=>setError(e))
+        dispatch(fetchSearchRestaurant(searchData)).catch(e => setError(e))
         setError({})
     }
-    
+
     return (
         <>
             <div className="search-filter-contaner">
                 <div style={{ fontSize: '48px', color: 'white', fontWeight: 'bold' }}>Find your table for any occasion</div>
                 <form onSubmit={handleSubmit} className="date-time-party-container">
                     <div className="date-container">
-                    <DatePicker selected={startDate} minDate={today} onChange={(date) => setstartDate(date)} />
+                        <DatePicker selected={startDate} minDate={today} onChange={(date) => setstartDate(date)} />
                     </div>
                     <div className="time-container">
                         <i className="far fa-clock"></i>
                         <select value={time} onChange={handleTime}>
-                            { startDate.toString().slice(0,15) === today.toString().slice(0,15) ? <>
-                            <option value={firstTime.toString().split(' ')[4].slice(0, 5)}>{firstTime.toString().split(' ')[4].slice(0, 5)}</option>
-                            <option value={secondTime.toString().split(' ')[4].slice(0, 5)}>{secondTime.toString().split(' ')[4].slice(0, 5)}</option>
-                            <option value={thirdTime.toString().split(' ')[4].slice(0, 5)}>{thirdTime.toString().split(' ')[4].slice(0, 5)}</option>
-                            <option value={fourthTime.toString().split(' ')[4].slice(0, 5)}>{fourthTime.toString().split(' ')[4].slice(0, 5)}</option>
-                            <option value={fifthTime.toString().split(' ')[4].slice(0, 5)}>{fifthTime.toString().split(' ')[4].slice(0, 5)}</option>
-                            <option value={sixthTime.toString().split(' ')[4].slice(0, 5)}>{sixthTime.toString().split(' ')[4].slice(0, 5)}</option>
-                            <option value={seventhTime.toString().split(' ')[4].slice(0, 5)}>{seventhTime.toString().split(' ')[4].slice(0, 5)}</option>
-                            <option value={eighthTime.toString().split(' ')[4].slice(0, 5)}>{eighthTime.toString().split(' ')[4].slice(0, 5)}</option>
-                            <option value={ninthTime.toString().split(' ')[4].slice(0, 5)}>{ninthTime.toString().split(' ')[4].slice(0, 5)}</option>
-                            <option value={tenthTime.toString().split(' ')[4].slice(0, 5)}>{tenthTime.toString().split(' ')[4].slice(0, 5)}</option>
+                            {startDate.toString().slice(0, 15) === today.toString().slice(0, 15) ? <>
+                                <option value={firstTime.toString().split(' ')[4].slice(0, 5)}>{firstTime.toString().split(' ')[4].slice(0, 5)}</option>
+                                <option value={secondTime.toString().split(' ')[4].slice(0, 5)}>{secondTime.toString().split(' ')[4].slice(0, 5)}</option>
+                                <option value={thirdTime.toString().split(' ')[4].slice(0, 5)}>{thirdTime.toString().split(' ')[4].slice(0, 5)}</option>
+                                <option value={fourthTime.toString().split(' ')[4].slice(0, 5)}>{fourthTime.toString().split(' ')[4].slice(0, 5)}</option>
+                                <option value={fifthTime.toString().split(' ')[4].slice(0, 5)}>{fifthTime.toString().split(' ')[4].slice(0, 5)}</option>
+                                <option value={sixthTime.toString().split(' ')[4].slice(0, 5)}>{sixthTime.toString().split(' ')[4].slice(0, 5)}</option>
+                                <option value={seventhTime.toString().split(' ')[4].slice(0, 5)}>{seventhTime.toString().split(' ')[4].slice(0, 5)}</option>
+                                <option value={eighthTime.toString().split(' ')[4].slice(0, 5)}>{eighthTime.toString().split(' ')[4].slice(0, 5)}</option>
+                                <option value={ninthTime.toString().split(' ')[4].slice(0, 5)}>{ninthTime.toString().split(' ')[4].slice(0, 5)}</option>
+                                <option value={tenthTime.toString().split(' ')[4].slice(0, 5)}>{tenthTime.toString().split(' ')[4].slice(0, 5)}</option>
                             </>
-                            : selectionMapper().map(el => <option key={el} value={el}>{el}</option>)
+                                : selectionMapper().map(el => <option key={el} value={el}>{el}</option>)
                             }
                         </select>
                     </div>
@@ -92,7 +92,7 @@ export const LandingPage = () => {
                     </div>
                     <div className="search-bar">
                         <i className="fas fa-search"></i>
-                        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Restaurant..." />
+                        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Restaurant..." />
                     </div>
                     <button type="submit">Let's go</button>
                 </form>
@@ -100,8 +100,9 @@ export const LandingPage = () => {
             <h2 id="restaurants-header">Available restaurants now</h2>
             <div className="restaurants-container">
                 {error.error && <p>{error.error}</p>}
-                {restaurants.length ? restaurants.map(restaurant => <div key={restaurant.id} className="restaurant-single-landing-container"><RestaurantContainer restaurant={restaurant}/></div>) : <div style={{margin:"0 140px", width:"400px"}}>There is no available restaurants</div>}
+                {restaurants.length ? restaurants.map(restaurant => <div key={restaurant.id} className="restaurant-single-landing-container"><RestaurantContainer restaurant={restaurant} /></div>) : <div style={{ margin: "0 140px", width: "400px" }}>There is no available restaurants</div>}
             </div>
         </>
     )
 }
+

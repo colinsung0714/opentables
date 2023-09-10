@@ -2,19 +2,32 @@ import React, { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleRestaurants } from "../../store/restaurant";
+import { getKey } from "../../store/maps";
 import '../RestaurantDetail/RestaurantDetail.css'
 import { AvgPriceIcon } from '../AvgPriceIcon'
 import { StarIcon } from '../StarIcon'
+import Maps from "../Maps";
 export const RestaurantDetail = () => {
     const { restaurantId } = useParams()
-    const currentUser = useSelector(state=>state.session.user)
+    const key = useSelector((state) => state.maps.key);
+    const currentUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const histroy = useHistory()
     const restaurant = useSelector(state => state.restaurant.singleRestaurant)
     useEffect(() => {
+        if (!key) {
+            dispatch(getKey());
+          }
         dispatch(fetchSingleRestaurants(restaurantId))
     }, [])
 
+    if (!key) {
+        return null;
+    }
+    
+      
+
+   
 
     return (
         <div className="restaurant-detail-container">
@@ -46,9 +59,11 @@ export const RestaurantDetail = () => {
                 </div>
                 <div className="restaurant-reservation-container">
                     <div>Make a Reservation</div>
-                    <button onClick={()=>histroy.push(`/user/${currentUser.id}/restaurants/${restaurantId}/reservations/new`)}>Find a Time</button>
+                    <button onClick={() => histroy.push(`/user/${currentUser.id}/restaurants/${restaurantId}/reservations/new`)}>Find a Time</button>
+                    <Maps apiKey={key} lat={restaurant.lat} lng={restaurant.lng} title={restaurant.name}/>
                 </div>
             </div>
+            
         </div>
     )
 }

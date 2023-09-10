@@ -6,6 +6,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 
+
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -47,29 +48,31 @@ function ProfileButton({ user }) {
       <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <div>Hello, {user.firstName}!</div>
+            <h3>Hello, {user.firstName}!</h3>
             <div>{user.email}</div>
-            <div onClick={() => history.push('/restaurants/new')}>Add My Restaurant</div>
-            <div onClick={() => history.push(`/user/${user.id}/restaurants`)}>My Restaurants</div>
-            <div onClick={() => history.push(`/user/${user.id}/reservations`)}>My Reservations</div>
+            <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push('/restaurants/new')}>Add My Restaurant</div>
+            <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push(`/user/${user.id}/restaurants`)}>My Restaurants</div>
+            <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push(`/user/${user.id}/reservations`)}>My Reservations</div>
             <div>
-              <button onClick={handleLogout}>Log Out</button>
+              <button id="Logout-profile-dropdown" onClick={handleLogout}>Log Out</button>
             </div>
           </>
         ) : (
-          <>
+          <div style={{display:"flex", gap:"10px"}}>
             <OpenModalButton
+              className='login-button'
               buttonText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
             />
 
             <OpenModalButton
+              className='signup-button'
               buttonText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
-          </>
+          </div>
         )}
       </div>
     </>

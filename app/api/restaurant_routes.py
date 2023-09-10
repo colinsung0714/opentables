@@ -5,7 +5,7 @@ from ..models.user import User
 from ..models.business_hour import Business_hour
 from app.models import db
 from app.forms import NewRestaurantForm
-from datetime import time
+from datetime import time, datetime
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 from app.api.AWS_helpers import upload_file_to_s3, get_unique_filename
@@ -247,6 +247,59 @@ def delete_restaurant(restaurantId):
     db.session.delete(target_restaurant)
     db.session.commit()
     return target_restaurant.to_dict()
+
+@restaurant_routes.route('/search', methods=['POST'])
+def search_restaurant():
+    data = request.json
     
-        
+    year, month, day, hour, min = data['date_time'].split(':')
+    reservation_date = datetime(int(year), int(month), int(day), int(hour), int(min))
+    target_time = time(int(hour), int(min))
+    target_day = reservation_date.strftime('%A')
+    if data['name']:
+        restaurants = Restaurant.query.filter(Restaurant.name.ilike(f"%{data['name']}%")).all()
+        if restaurants:
+            avaliable_restaurant = []
+            for restaurant in restaurants:
+                if target_day in [bsh.day.name for bsh in restaurant.business_hours] and len([bsh for bsh in restaurant.business_hours if bsh.start <= target_time <= bsh.end]):
+                    avaliable_restaurant.append(restaurant)
+            if not len(avaliable_restaurant):
+                return {'error': "There is no match restaurant"}   
+    
+            no_available_restaurants = []
+            for restaurant in avaliable_restaurant:
+                if  reservation_date in [reserv.reservation_date for reserv in restaurant.reservations]:
+                    no_available_restaurants.append(restaurant)
+            if len(no_available_restaurants):
+                for restaurant in no_available_restaurants:
+                    if restaurant in avaliable_restaurant:
+                        avaliable_restaurant.remove(restaurant)
+            return {'restaurants' : [restaurant.to_dict() for restaurant in avaliable_restaurant]}
+        else:
+            return {'error': "There is no match restaurant"}           
+
+    else:
+        restaurants = Restaurant.query.all()
+        if restaurants:
+            avaliable_restaurant = []
+            for restaurant in restaurants:
+                if target_day in [bsh.day.name for bsh in restaurant.business_hours] and len([bsh for bsh in restaurant.business_hours if bsh.start <= target_time <= bsh.end]):
+                    avaliable_restaurant.append(restaurant)
+            if not len(avaliable_restaurant):
+                return {'error': "There is no match restaurant"}   
+    
+            no_available_restaurants = []
+            for restaurant in avaliable_restaurant:
+                if  reservation_date in [reserv.reservation_date for reserv in restaurant.reservations]:
+                    no_available_restaurants.append(restaurant)
+            if len(no_available_restaurants):
+                for restaurant in no_available_restaurants:
+                    if restaurant in avaliable_restaurant:
+                        avaliable_restaurant.remove(restaurant)
+            return {'restaurants' : [restaurant.to_dict() for restaurant in avaliable_restaurant]}
+        else:
+            return {'error': "There is no match restaurant"}  
+                    
+       
+      
 

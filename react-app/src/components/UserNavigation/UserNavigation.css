@@ -30,3 +30,12 @@
     padding-bottom: 20px;
     border-bottom: 2px solid #d8d9db;
 }
+
+#navi-to-reservation {
+    cursor: pointer;
+}
+
+
+#navi-to-restaurant {
+    cursor: pointer;
+}

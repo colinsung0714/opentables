@@ -117,59 +117,65 @@ export const NewRestaurantForm = () => {
                 <div>The most valuable diner network that's 20+ years in the making</div>
             </div>
             <div className="new-restaurant-form-container">
-                <h2>{type === 'update'? "Update your restaurant's information": "Tell us about your restaurant business"}</h2>
+                <h2 style={{textAlign:'center'}}>{type === 'update'? "Update your restaurant's information": "Tell us about your restaurant business"}</h2>
                 <div className="new-restaurant-form">
-                    <form encType="multipart/form-data" onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+                    <form id="restaurant-form" encType="multipart/form-data" onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column",  gap: "10px" }}>
                         <label>
-                            Restaurant Name:
-                            <input type="text" value={name} onChange={e => setName(e.target.value)} required />
+                            <div>Restaurant Name</div>
+                            <input style={{width:"100%",height:"30px"}} type="text" value={name} onChange={e => setName(e.target.value)} required />
                         </label>
-                        <div style={{ width: '100%' }}>
+                        <div style={{ width: '100%', display:"flex" }}>
                             <label>
-                                Phone:
-                                <input type="text" value={phone} onChange={e => setPhone(e.target.value)} required />
+                                <div style={{display:"flex", alignItems:"center", gap:"5px"}}>
+                                <div>Phone</div>
+                                {error.phone && <p style={{margin:"0", color:"red"}} >{error.phone}</p>}
+                                </div>
+                                <input style={{width:"100%", height:"30px"}} type="text" value={phone} onChange={e => setPhone(e.target.value)} required />
                             </label>
-                            {error.phone && <p>{error.phone}</p>}
+                            
                             <label>
-                                Street:
-                                <input type="text" value={street} onChange={e => setStreet(e.target.value)} required />
-                            </label>
-                        </div>
-                        <div style={{ width: '100%' }}>
-                            <label>
-                                City:
-                                <input type="text" value={city} onChange={e => setCity(e.target.value)} required />
-                            </label>
-                            <label>
-                                State:
-                                <input type="text" value={state} onChange={e => setState(e.target.value)} required />
-                            </label>
-                            <label>
-                                Country:
-                                <input type="text" value={country} onChange={e => setCountry(e.target.value)} required />
-                            </label>
-                            <label>
-                                Zip Code:
-                                <input type="text" value={zipCode} onChange={e => setzipCode(e.target.value)} required />
-                            </label>
-                            {error.zipcode && <p>{error.zipcode}</p>}
-                        </div>
-                        <div style={{ width: '100%' }}>
-                            <label>
-                                Categories:
-                                <input type="text" value={categories} onChange={e => setCategories(e.target.value)} required />
+                                <div>Street</div>
+                                <input style={{width:"100%", height:"30px"}} type="text" value={street} onChange={e => setStreet(e.target.value)} required />
                             </label>
                         </div>
-                        <div style={{ width: '100%' }}>
+                        <div style={{ width: '100%', display:"flex" }}>
                             <label>
-                                Description:
-                                <textarea type="text" value={description} onChange={e => setDescription(e.target.value)} required />
+                                <div>City</div>
+                                <input style={{width:"100%", height:"30px"}} type="text" value={city} onChange={e => setCity(e.target.value)} required />
+                            </label>
+                            <label>
+                            <div>State</div>
+                                <input style={{width:"100%", height:"30px"}} type="text" value={state} onChange={e => setState(e.target.value)} required />
+                            </label>
+                            <label>
+                            <div>Country</div>
+                                <input style={{width:"100%", height:"30px"}} type="text" value={country} onChange={e => setCountry(e.target.value)} required />
+                            </label>
+                            <label>
+                            <div style={{display:"flex", alignItems:"center", gap:"5px"}}>
+                                <div>Zip Code</div>
+                                {error.zipcode && <p style={{margin:"0", color:"red"}}>{error.zipcode}</p>}
+                            </div>
+                                <input style={{width:"100%", height:"30px"}} type="text" value={zipCode} onChange={e => setzipCode(e.target.value)} required />
+                            </label>
+                            
+                        </div>
+                        <div style={{ width: '100%', display:"flex" }}>
+                            <label>
+                                <div>Categories</div>
+                                <input style={{width:"100%", height:"30px"}} type="text" value={categories} onChange={e => setCategories(e.target.value)} required />
+                            </label>
+                        </div>
+                        <div style={{ width: '100%', display:"flex"}}>
+                            <label style={{width:"100%"}}>
+                                <div>Description</div>
+                                <textarea style={{width:"100%", height:"200px"}} type="text" value={description} onChange={e => setDescription(e.target.value)} required />
                             </label>
                         </div>
                         <div>
-                            <div className="rating-input" style={{ display: "flex" }}>
+                            <div className="rating-input" style={{ display: "flex", gap:"10px", margin:"10px 0" }}>
                                 <div>
-                                    Price Rating
+                                    Price Rating:
                                 </div>
                                 <div>
                                     <i className="fas fa-dollar-sign" style={priceRange > 0 ? null : { color: '#d1d5d6' }} onMouseEnter={() => { setpriceRange(1) }} onMouseLeave={() => setpriceRange(priceRange)} onClick={() => setpriceRange(priceRange)}></i>
@@ -184,9 +190,9 @@ export const NewRestaurantForm = () => {
                                     <i className="fas fa-dollar-sign" style={priceRange > 3 ? null : { color: '#d1d5d6' }} onMouseEnter={() => { setpriceRange(4) }} onMouseLeave={() => setpriceRange(priceRange)} onClick={() => setpriceRange(priceRange)}></i>
                                 </div>
                             </div>
-                            <div>
-                                <label>
-                                    Restaurant Picture
+                            <div style={{ width: '100%', display:"flex" }}>
+                                <label style={{ width: '100%', display:"flex", flexDirection:"column", gap:"10px" }}>
+                                    <div>Restaurant Picture</div>
                                     <input
                                         type="file"
                                         accept="image/*"
@@ -195,9 +201,9 @@ export const NewRestaurantForm = () => {
                                 </label>
                             </div>
                         </div>
-                        <div>
+                        <div className="businesshour-container-newform">
                             <div>Business Hours</div>
-                            <div>
+                            <div style={{display:"flex", gap:"10px", alignItems:"center"}}>
                                 <label>
                                     Monday
                                     <input type="checkbox" value={checkMonday} checked={checkMonday} onChange={() => setCheckMonday(prev => !prev)} />
@@ -211,7 +217,7 @@ export const NewRestaurantForm = () => {
                                     <select disabled={!mondayOpen || !checkMonday} value={mondayClose} onChange={e => setMondayClose(e.target.value)}>{selectionMapper().slice(selectionMapper().indexOf(mondayOpen) + 1).map(time => <option key={time} value={time}>{time}</option>)}</select>
                                 </label>
                             </div>
-                            <div>
+                            <div style={{display:"flex", gap:"10px", alignItems:"center"}}>
                                 <label>
                                     Tuesday
                                     <input type="checkbox" value={checkTuesday} checked={checkTuesday} onChange={() => setCheckTuesday(prev => !prev)} />
@@ -225,7 +231,7 @@ export const NewRestaurantForm = () => {
                                     <select disabled={!tuesdayOpen || !checkTuesday} value={tuesdayClose} onChange={e => setTuesClose(e.target.value)}>{selectionMapper().slice(selectionMapper().indexOf(tuesdayOpen) + 1).map(time => <option key={time} value={time}>{time}</option>)}</select>
                                 </label>
                             </div>
-                            <div>
+                            <div style={{display:"flex", gap:"10px", alignItems:"center"}}>
                                 <label>
                                     Wednesday
                                     <input type="checkbox" checked={checkWednesday} value={checkWednesday} onChange={() => setCheckWednesday(prev => !prev)} />
@@ -239,7 +245,7 @@ export const NewRestaurantForm = () => {
                                     <select disabled={!wednesdayOpen || !checkWednesday} value={wednesClose} onChange={e => setWednesdayClose(e.target.value)}>{selectionMapper().slice(selectionMapper().indexOf(wednesdayOpen) + 1).map(time => <option key={time} value={time}>{time}</option>)}</select>
                                 </label>
                             </div>
-                            <div>
+                            <div style={{display:"flex", gap:"10px", alignItems:"center"}}>
                                 <label>
                                     Thursday
                                     <input type="checkbox" checked={checkThursday} value={checkThursday} onChange={() => setCheckThursday(prev => !prev)} />
@@ -253,7 +259,7 @@ export const NewRestaurantForm = () => {
                                     <select disabled={!thursdayOpen || !checkThursday} value={thursdayClose} onChange={e => setThursdayClose(e.target.value)}>{selectionMapper().slice(selectionMapper().indexOf(thursdayOpen) + 1).map(time => <option key={time} value={time}>{time}</option>)}</select>
                                 </label>
                             </div>
-                            <div>
+                            <div style={{display:"flex", gap:"10px", alignItems:"center"}}>
                                 <label>
                                     Friday
                                     <input type="checkbox" checked={checkFriday} value={checkFriday} onChange={() => setCheckFriday(prev => !prev)} />
@@ -267,7 +273,7 @@ export const NewRestaurantForm = () => {
                                     <select disabled={!fridayOpen || !checkFriday} value={fridayClose} onChange={e => setFridayClose(e.target.value)}>{selectionMapper().slice(selectionMapper().indexOf(fridayOpen) + 1).map(time => <option key={time} value={time}>{time}</option>)}</select>
                                 </label>
                             </div>
-                            <div>
+                            <div style={{display:"flex", gap:"10px", alignItems:"center"}}>
                                 <label>
                                     Saturday
                                     <input type="checkbox" checked={checkSaturday} value={checkSaturday} onChange={() => setCheckSaturday(prev => !prev)} />
@@ -281,7 +287,7 @@ export const NewRestaurantForm = () => {
                                     <select disabled={!saturdayOpen || !checkSaturday} value={saturdayClose} onChange={e => setSaturdayClose(e.target.value)}>{selectionMapper().slice(selectionMapper().indexOf(saturdayOpen) + 1).map(time => <option key={time} value={time}>{time}</option>)}</select>
                                 </label>
                             </div>
-                            <div>
+                            <div style={{display:"flex", gap:"10px", alignItems:"center"}}>
                                 <label>
                                     Sunday
                                     <input type="checkbox" checked={checkSunday} value={checkSunday} onChange={() => setCheckSunday(prev => !prev)} />

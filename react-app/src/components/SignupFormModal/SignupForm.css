@@ -1,0 +1,20 @@
+.signin-upper-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border-bottom: 2px solid #d8d9db;
+}
+
+.signin-upper-container img {
+    width: 125px;
+    height: 125px;
+}
+
+.form-elements-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}

@@ -1,6 +1,13 @@
 .profile-dropdown {
   position: absolute;
-  border: solid 2px black;
+  border: 2px solid #d8d9db;
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 10px;
+  z-index: 1;
 }
 
 .hidden {
@@ -51,4 +58,23 @@
   font-size: x-large;
 }
 
+#Logout-profile-dropdown{
+  background-color: white;
+  color: #da3743;
+  padding: 0;
+  font-weight: bold;
+}
 
+.login-button {
+  background-color: white;
+  color: #da3743;
+  font-weight: bold;
+  border: 2px solid #da3743;
+}
+
+.signup-button {
+  background-color: white;
+  color: #da3743;
+  font-weight: bold;
+  border: 2px solid #da3743;
+}

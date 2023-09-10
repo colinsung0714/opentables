@@ -1,12 +1,15 @@
 .single-restaurant-container img {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
 }
 
 .single-restaurant-container {
     position: absolute;
     transition: top 2s ease-in-out .7s;
- 
+    border: 2px solid #d8d9db;
+    border-radius: 20px;
+    padding: 5px
 }
 
 .single-restaurant-container:hover {

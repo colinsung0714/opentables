@@ -6,6 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 from app.forms import NewReservationForm
 from app.models import Reservation, Restaurant, User
+from sqlalchemy.exc import IntegrityError
 
 reservation_routes = Blueprint('reservation', __name__)
 
@@ -33,21 +34,25 @@ def new_reservation(userId, restaurantId):
    
     form = NewReservationForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    try:
+        if form.validate_on_submit():
+            year, month, day, hour, min = form.data['reservation_date'].split(':')
+            reservation = Reservation(
+                party=form.data['party'],
+                reservation_date=datetime(int(year), int(month), int(day), int(hour), int(min))
+            )
+            db.session.add(reservation)
+            restaurant = Restaurant.query.get(restaurantId)
+            user = User.query.get(userId)
+            user.reservations.append(reservation)
+            restaurant.reservations.append(reservation)
 
-    if form.validate_on_submit():
-        year, month, day, hour, min = form.data['reservation_date'].split(':')
-        reservation = Reservation(
-            party=form.data['party'],
-            reservation_date=datetime(int(year), int(month), int(day), int(hour), int(min))
-        )
-        db.session.add(reservation)
-        restaurant = Restaurant.query.get(restaurantId)
-        user = User.query.get(userId)
-        user.reservations.append(reservation)
-        restaurant.reservations.append(reservation)
-
-        db.session.commit()
-        return reservation.to_dict()
+            db.session.commit()
+            return reservation.to_dict()
+    except ValueError as e:
+        db.session.rollback()
+        error_message = "Please select time correctly."
+        return jsonify({'error': error_message}), 400
     
 @reservation_routes.route('/<int:reservationId>/edit', methods=['PUT'])
 @login_required
@@ -55,16 +60,26 @@ def update_reservation(reservationId):
     form = NewReservationForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     reservation = Reservation.query.get(reservationId)
-    
-    if form.validate_on_submit():
-        
-        year, month, day, hour, min = form.data['reservation_date'].split(':')
-        reservation.reservation_date = datetime(int(year), int(month), int(day), int(hour), int(min))
-        reservation.party = form.data['party']
+    restaurant = Restaurant.query.get(reservation.restaurant_id)
+    try:
+        if form.validate_on_submit():
+            year, month, day, hour, min = form.data['reservation_date'].split(':')
+           
+            date = datetime(int(year), int(month), int(day)).strftime('%A')
+            days_bs_hour = [bs_hour.day.name for bs_hour in restaurant.business_hours]
+            if date not in days_bs_hour:
+                db.session.rollback()
+                error_message = "Restaurant close that day, please choose another day."
+                return jsonify({'error': error_message}), 400
+            reservation.reservation_date = datetime(int(year), int(month), int(day), int(hour), int(min))
+            reservation.party = form.data['party']
 
-        db.session.commit()
-        return reservation.to_dict()
-    
+            db.session.commit()
+            return reservation.to_dict()
+    except IntegrityError as e:
+        db.session.rollback()
+        error_message = "A reservation with that time already exists."
+        return jsonify({'error': error_message}), 400
 @reservation_routes.route('/<int:reservationId>/delete', methods=['DELETE'])
 @login_required
 def delete_reservation(reservationId):

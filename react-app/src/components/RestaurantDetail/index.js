@@ -25,16 +25,14 @@ export const RestaurantDetail = () => {
                 <div className="restaurant-info">
                     <div className="nav-restaurant-detail-container">
                         <div>Overview</div>
-                        <div>Experiences</div>
-                        <div>Popular dishes</div>
                         <div>Photos</div>
                         <div>Menu</div>
                         <div>Review</div>
                     </div>
                     <div className="detail-restaurant-info">
-                        <div>
+                        <h1>
                             {restaurant.name}
-                        </div>
+                        </h1>
                         <div className="detail-restaurant-icons-container">
                             <div id="star-icon-restaurant-container"><StarIcon avgRating={restaurant.avgRating} /><div>{restaurant.avgRating}</div></div>
                             <div id="comment-restaurant-icon-container"><i className="far fa-comment-alt"></i>{restaurant.reviewNum}</div>

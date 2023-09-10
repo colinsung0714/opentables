@@ -92,10 +92,10 @@
 }
 
 .restaurants-container {
-    margin: 0px 150px;
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 50px;
 }
 
 #restaurants-header {
@@ -103,4 +103,15 @@
     margin-bottom: 30px;
     margin-left: 150px;
     margin-right: 150px;
+}
+.restaurant-single-landing-container {
+    display: flex;
+}
+
+.react-datepicker__input-container input{
+    border: none;
+}
+
+.react-datepicker__input-container input:focus{
+    outline: none;
 }

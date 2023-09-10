@@ -92,10 +92,11 @@
 }
 
 .restaurants-container {
-    position: relative;
+  
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 50px;
+    row-gap: 400px;
 }
 
 #restaurants-header {
@@ -105,6 +106,7 @@
     margin-right: 150px;
 }
 .restaurant-single-landing-container {
+    position: relative;
     display: flex;
 }
 

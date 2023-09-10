@@ -9,6 +9,9 @@ from datetime import time, datetime
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 from app.api.AWS_helpers import upload_file_to_s3, get_unique_filename
+import googlemaps
+import os
+
 restaurant_routes = Blueprint('restaurant', __name__)
 
 @restaurant_routes.route('/all')
@@ -38,15 +41,30 @@ def new_restaurant(userId):
         else:
             upload = {}
             upload['url'] = 'https://opentables.s3.us-west-1.amazonaws.com/default_restaurant.jpg'
-            
+        api_key = os.environ.get('MAPS_API_KEY')
+        gmaps = googlemaps.Client(key=api_key)
+        street = form.data['state']
+        state= form.data['state']
+        city = form.data['city']
+
+        
+        try:
+            geocode_result = gmaps.geocode(f'{street}, {city}, {state}')
+            lat, lng = geocode_result[0]['geometry']['location'].values()
+        
+        except IndexError as e:
+            return {'error':'Please provide address correctly'}, 400
+        
         owner = User.query.get(userId)
         restaurant = Restaurant(
             name=form.data['name'],
             restaurant_pic = upload['url'],
             phone = form.data['phone'],
-            street = form.data['street'],
-            city= form.data['city'],
-            state=form.data['state'],
+            street = street,
+            city= city,
+            state=state,
+            lat=float(lat),
+            lng=float(lng),
             zip_code=form.data['zip_code'],
             country = form.data['country'],
             categories = form.data['categories'],

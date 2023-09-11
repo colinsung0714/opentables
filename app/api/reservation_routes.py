@@ -51,7 +51,7 @@ def new_reservation(userId, restaurantId):
             return reservation.to_dict()
     except ValueError as e:
         db.session.rollback()
-        error_message = "Please select time correctly."
+        error_message = "Please select another time."
         return jsonify({'error': error_message}), 400
     
 @reservation_routes.route('/<int:reservationId>/edit', methods=['PUT'])
@@ -89,3 +89,8 @@ def delete_reservation(reservationId):
     db.session.delete(reservation)
     db.session.commit()
     return res
+
+@reservation_routes.route('/all')
+def all_reservations_landing():
+    reservations = Reservation.query.all()
+    return  { 'reservations': [reservation.to_dict() for reservation in reservations] }

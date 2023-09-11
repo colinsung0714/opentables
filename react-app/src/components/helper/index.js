@@ -100,7 +100,7 @@ export const filterTimeMatchDay = (reservationDates, targetDate) => {
 
 export const filterFinalList = (businessHourList, deleteArray) => {
     for (let el of deleteArray) {
-        if (businessHourList.indexOf(el))
+        if (businessHourList.indexOf(el) >= 0)
             businessHourList.splice(businessHourList.indexOf(el), 1)
     }
     return businessHourList

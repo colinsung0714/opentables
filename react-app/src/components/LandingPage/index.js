@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { dateformatConverter, selectionMapper } from "../helper";
 import { fetchSearchRestaurant } from '../../store/restaurant'
+import { fetchAllReservation } from "../../store/reservation";
 
 export const LandingPage = () => {
     const dispatch = useDispatch()
@@ -28,9 +29,9 @@ export const LandingPage = () => {
     const eighthTime = new Date(seventhTime.getTime() + 30 * 60 * 1000)
     const ninthTime = new Date(eighthTime.getTime() + 30 * 60 * 1000)
     const tenthTime = new Date(ninthTime.getTime() + 30 * 60 * 1000)
-
+    const reservations = Object.values(useSelector(state=>state.reservation.allReservations))
     useEffect(() => {
-        dispatch(fetchAllRestaurants())
+        dispatch(fetchAllRestaurants()).then(()=>dispatch(fetchAllReservation()))
     }, [])
     const handleTime = e => {
         setTime(e.target.value)
@@ -100,7 +101,7 @@ export const LandingPage = () => {
             <h2 id="restaurants-header">Available restaurants now</h2>
             <div className="restaurants-container">
                 {error.error && <p>{error.error}</p>}
-                {restaurants.length ? restaurants.map(restaurant => <div key={restaurant.id} className="restaurant-single-landing-container"><RestaurantContainer restaurant={restaurant} /></div>) : <div style={{ margin: "0 140px", width: "400px" }}>There is no available restaurants</div>}
+                {restaurants.length ? restaurants.map(restaurant => <div key={restaurant.id} className="restaurant-single-landing-container"><RestaurantContainer restaurant={restaurant} reservations={reservations}/></div>) : <div style={{ margin: "0 140px", width: "400px" }}>There is no available restaurants</div>}
             </div>
         </>
     )

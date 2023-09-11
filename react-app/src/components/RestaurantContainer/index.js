@@ -5,17 +5,18 @@ import { StarIcon } from "../StarIcon";
 import { AvgPriceIcon } from "../AvgPriceIcon";
 import { useSelector } from "react-redux";
 import { selectionMapper, convertIntDaytoStringDay, normalizationListOfreservationDateTime, matchingDay, filterTimeMatchDay, filterFinalList, convertTofullDateString, currentSelectionMapper, dateformatConverter } from '../helper'
-export const RestaurantContainer = ({ restaurant, reservations }) => {
+import LoginFormModal from "../LoginFormModal";
+import { useModal } from '../../context/Modal';
+export const RestaurantContainer = ({ restaurant, reservations, startDate }) => {
     const history = useHistory()
     const movetoRestaurantDetail = (id) => {
         history.push(`/restaurants/${id}`)
     }
-    
+    const { setModalContent, setOnModalClose } = useModal();
     const currentUser = useSelector(state=>state.session.user)
     const now = new Date()
     const restaurantBusinessHours = restaurant.business_hours
     const reservationsDateTime = reservations.filter(reservation => reservation.restaurantId === restaurant.id).map(reservation => reservation.reservationDate)
-    const startDate = new Date()
     const nowDate = now.getDate()
     const nowMonth = now.getMonth()
     const nowYear = now.getFullYear()
@@ -65,8 +66,12 @@ export const RestaurantContainer = ({ restaurant, reservations }) => {
             <div style={{display:"flex", gap:"5px"}}>
                 {filterBusinessHour.length ? filterBusinessHour.slice(0, 3).map(time => <button onClick={(e)=>{
                     e.stopPropagation()
-                    history.push(`/user/${currentUser.id}/restaurants/${restaurant.id}/reservations/new`)
-            }} key={time}>{time}</button>) : <div style={{padding:"16px"}}>Not Available for today</div>}
+                    if(currentUser) {
+                        history.push(`/user/${currentUser.id}/restaurants/${restaurant.id}/reservations/new`)
+                    } else {
+                        setModalContent(<LoginFormModal/>)
+                    }
+            }} key={time}>{time}</button>) : <div style={{padding:"16px"}}>Not Available</div>}
             </div>
         </div>
     )

@@ -88,7 +88,7 @@ export const ReservationForm = () => {
 
                         <div className="reservation-current-date-time"><i className="far fa-calendar" />{type === 'update' ? `${startDate.toString().slice(0, 10)} at ${restime}`
                             :
-                            restime ? `${startDate.toString().slice(0, 10)} at ${restime}` : `${startDate.toString().slice(0, 10)}`}</div>
+                            restime ? `${startDate.toString().slice(0, 10)} at ${restime}` : `Choose your reservation time below`}</div>
                         <div></div>
                         <div className="party-reservation-container"><i className="far fa-user" />{party}</div>
                     </div>

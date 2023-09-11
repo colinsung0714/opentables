@@ -7,27 +7,33 @@ import '../RestaurantDetail/RestaurantDetail.css'
 import { AvgPriceIcon } from '../AvgPriceIcon'
 import { StarIcon } from '../StarIcon'
 import Maps from "../Maps";
+import LoginFormModal from "../LoginFormModal";
+import { useModal } from '../../context/Modal';
 export const RestaurantDetail = () => {
     const { restaurantId } = useParams()
     const key = useSelector((state) => state.maps.key);
     const currentUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const histroy = useHistory()
+    const { setModalContent, setOnModalClose } = useModal();
     const restaurant = useSelector(state => state.restaurant.singleRestaurant)
     useEffect(() => {
         if (!key) {
             dispatch(getKey());
-          }
+        }
         dispatch(fetchSingleRestaurants(restaurantId))
     }, [])
 
     if (!key) {
         return null;
     }
-    
-      
+    const handleClick = () => {
+        if (currentUser) histroy.push(`/user/${currentUser.id}/restaurants/${restaurantId}/reservations/new`)
+        else setModalContent(<LoginFormModal/>)
+    }
 
-   
+
+
 
     return (
         <div className="restaurant-detail-container">
@@ -59,11 +65,11 @@ export const RestaurantDetail = () => {
                 </div>
                 <div className="restaurant-reservation-container">
                     <div>Make a Reservation</div>
-                    <button onClick={() => histroy.push(`/user/${currentUser.id}/restaurants/${restaurantId}/reservations/new`)}>Find a Time</button>
-                    <Maps apiKey={key} lat={restaurant.lat} lng={restaurant.lng} title={restaurant.name}/>
+                    <button onClick={() => handleClick()}>Find a Time</button>
+                    <Maps apiKey={key} lat={restaurant.lat} lng={restaurant.lng} title={restaurant.name} />
                 </div>
             </div>
-            
+
         </div>
     )
 }

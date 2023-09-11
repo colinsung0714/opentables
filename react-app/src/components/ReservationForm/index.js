@@ -42,7 +42,10 @@ export const ReservationForm = () => {
             dispatch(fetchUpdateReservation(reservation.id, data)).then(() => history.push(`/user/${currentUser.id}/reservations`)).catch(e => setError(e.error))
             setError({})
         }
-        else dispatch(fetchNewReservation(restaurantId, currentUser.id, data)).then(() => history.push(`/user/${currentUser.id}/reservations`)).catch(e=> setError(e.error))
+        else {
+            dispatch(fetchNewReservation(restaurantId, currentUser.id, data)).then(() => history.push(`/user/${currentUser.id}/reservations`)).catch(e=> setError(e.error))
+            setError({})
+        }
     }
     const nowDate = now.getDate()
     const nowMonth = now.getMonth()

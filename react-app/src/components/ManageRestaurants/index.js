@@ -47,6 +47,7 @@ export const ManageRestaurants = () => {
                             <button onClick={()=>handleDelete(restaurant.id)}>Delete</button>
                         </div>
                     </div>)}
+                    <div id="empty-space" style={{height:"50px"}}></div>
             </div>
         </div>
     )

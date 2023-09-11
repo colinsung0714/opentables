@@ -38,6 +38,7 @@ export const ManageReservations = () => {
                                     <ReservationContainer reservation={reservation} type={'past'}/>
                                 </div>) : 'There is no reservations'}
                         </div>
+                        <div id="empty-space" style={{height:"50px"}}></div>
                     </div>}
             </div>
         </div>

@@ -73,6 +73,7 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate }) => 
                     }
             }} key={time}>{time}</button>) : <div style={{padding:"16px"}}>Not Available</div>}
             </div>
+            <div id="empty-space" style={{height:"50px"}}></div>
         </div>
     )
 }

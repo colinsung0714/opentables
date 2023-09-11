@@ -9,6 +9,7 @@ import { dateformatConverter, selectionMapper } from "../helper";
 import { fetchSearchRestaurant } from '../../store/restaurant'
 import { fetchAllReservation } from "../../store/reservation";
 
+
 export const LandingPage = () => {
     const dispatch = useDispatch()
     const today = new Date()
@@ -103,6 +104,7 @@ export const LandingPage = () => {
                 {error.error && <p>{error.error}</p>}
                 {restaurants.length ? restaurants.map(restaurant => <div key={restaurant.id} className="restaurant-single-landing-container"><RestaurantContainer restaurant={restaurant} reservations={reservations} startDate={startDate}/></div>) : <div style={{ margin: "0 140px", width: "400px" }}>There is no available restaurants</div>}
             </div>
+                            
         </>
     )
 }

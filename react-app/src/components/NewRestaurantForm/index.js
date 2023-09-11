@@ -4,6 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import '../NewRestaurantForm/NewRestaurantForm.css'
 import { selectionMapper, phoneValidate } from '../helper'
 import { fetchNewRestaurant, fetchUpdateRestaurant } from "../../store/restaurant";
+import { Footer } from "../Footer";
 export const NewRestaurantForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -115,6 +116,7 @@ export const NewRestaurantForm = () => {
     }
 
     return (
+        
         <div className="new-restaurant-container">
             <div className="intro-new-restaurant">
                 <h2>Dig into the world's most complete restaurant platform</h2>
@@ -309,9 +311,12 @@ export const NewRestaurantForm = () => {
                         </div>
                         <button type="submit">{type === 'update' ? 'Update Restaurant' : 'Submit'}</button>
                         {(imageLoading) && <p>Loading...</p>}
+                        <div id="empty-space" style={{height:"50px"}}></div>
                     </form>
+                   
                 </div>
             </div>
         </div>
+
     )
 }

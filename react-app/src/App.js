@@ -9,9 +9,10 @@ import { LandingPage } from "./components/LandingPage";
 import { RestaurantDetail } from "./components/RestaurantDetail";
 import { NewRestaurantForm } from "./components/NewRestaurantForm";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import {ManageRestaurants} from './components/ManageRestaurants'
+import { ManageRestaurants } from './components/ManageRestaurants'
 import { ManageReservations } from "./components/ManageReservations";
 import { ReservationForm } from "./components/ReservationForm";
+import { Footer } from "./components/Footer";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,7 +25,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-           <Route exact path='/'>
+          <Route exact path='/'>
             <LandingPage />
           </Route>
           <Route path="/login" >
@@ -50,6 +51,7 @@ function App() {
           </ProtectedRoute>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }

@@ -5,6 +5,7 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { login } from "../../store/session";
 
 
 function ProfileButton({ user }) {
@@ -35,6 +36,11 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(logout());
   };
+
+  const handleDemoUser = (e) => {
+    e.preventDefault();
+    dispatch(login('demo@aa.io', 'password'))
+  }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
@@ -72,6 +78,7 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
+            <button id="demouser-button" onClick={handleDemoUser}>Demo User</button>
           </div>
         )}
       </div>

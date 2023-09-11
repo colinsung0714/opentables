@@ -66,7 +66,7 @@ export const RestaurantContainer = ({ restaurant, reservations }) => {
                 {filterBusinessHour.length ? filterBusinessHour.slice(0, 3).map(time => <button onClick={(e)=>{
                     e.stopPropagation()
                     history.push(`/user/${currentUser.id}/restaurants/${restaurant.id}/reservations/new`)
-            }} key={time}>{time}</button>) : <div style={{padding:"16px"}}>Not Available</div>}
+            }} key={time}>{time}</button>) : <div style={{padding:"16px"}}>Not Available for today</div>}
             </div>
         </div>
     )

@@ -98,7 +98,7 @@ export const LandingPage = () => {
                     <button type="submit">Let's go</button>
                 </form>
             </div>
-            <h2 id="restaurants-header">Available restaurants now</h2>
+            <h2 id="restaurants-header">Available restaurants</h2>
             <div className="restaurants-container">
                 {error.error && <p>{error.error}</p>}
                 {restaurants.length ? restaurants.map(restaurant => <div key={restaurant.id} className="restaurant-single-landing-container"><RestaurantContainer restaurant={restaurant} reservations={reservations}/></div>) : <div style={{ margin: "0 140px", width: "400px" }}>There is no available restaurants</div>}

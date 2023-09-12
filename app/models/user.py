@@ -18,8 +18,10 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow)
     first_name = db.Column(db.String(40))
     last_name = db.Column(db.String(40))
+
     restaurants = db.relationship('Restaurant', back_populates='owner', cascade="all, delete-orphan")
     reservations = db.relationship('Reservation', back_populates='user', cascade="all, delete-orphan")
+    reviews = db.relationship('Review', back_populates='user', cascade="all, delete-orphan")
 
     @property
     def password(self):

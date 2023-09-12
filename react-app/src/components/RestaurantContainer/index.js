@@ -44,11 +44,11 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate }) => 
         const deleteList = currentSelectionMapper()
         filterFinalList(filterBusinessHour, deleteList)
     }
-
+  
     
     return (
         <div onClick={() => movetoRestaurantDetail(restaurant.id)} className="single-restaurant-container">
-            <div><img src={restaurant.restaurantPic} /></div>
+            <div className="img-container"><img src={restaurant.restaurantPic} /></div>
             <div>{restaurant.name}</div>
             <div className="restaurant-middle-container">
                 <div>

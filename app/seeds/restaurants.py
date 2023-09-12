@@ -29,7 +29,7 @@ def seed_restaurants():
         country='United State',
         avg_price=1,
         categories='Salad',
-        description='Amazon Go is a new kind of store with no checkouts, powered by Just Walk Out Technology. Swing by to grab delicious made-to-order and ready-made foods, beverages, snacks, and more at a great value - then skip the checkout and get back to your day. Enjoy freshly brewed hot & iced coffees, espresso, beer & wine, kombucha & cold brew on tap, frozen yogurt, and so much more. Plus, you can quickly drop off Amazon online returns and browse a selection of everyday essentials. Simply use your Amazon app to enter the store, grab what you want, and go!',
+        description='Swing by to grab delicious made-to-order and ready-made foods, beverages, snacks, and more at a great value.',
         lat=33.8260963,
         lng=-118.3523585,
     )
@@ -44,7 +44,7 @@ def seed_restaurants():
         country='United State',
         avg_price=3,
         categories='Californian',
-        description="Reservations accepted two weeks in advance. Serving American fare from upscale comfort food to vegan specialities in the heart of the West Hollywood Design district. Craig's offers covered and heating patio seating, indoor and bar seating. Reservations are recommended, but walk-ins accepted and our bar features our full dinner menu.",
+        description="Reservations accepted two weeks in advance. Serving American fare from upscale comfort food to vegan specialities.",
         lat=34.0806198,
         lng=-118.3864144,
     )

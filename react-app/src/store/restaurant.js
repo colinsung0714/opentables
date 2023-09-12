@@ -112,8 +112,23 @@ export const fetchSearchRestaurant = restaurant => async dispatch => {
     })
     if(res.ok) {
         const recivedData = await res.json()
-        console.log(recivedData)
         dispatch(filterRestaurants(recivedData))
+    }
+    else {
+        const error = await res.json()
+        throw error
+    }
+}
+
+export const fetchSearchRestaurantSuggestion = restaurant => async dispatch => {
+    const res = await fetch('/api/restaurants/search', {
+        method:"POST",
+        headers: { "Content-Type": "application/json" },
+        body:JSON.stringify(restaurant)
+    })
+    if(res.ok) {
+        const recivedData = await res.json()
+        return recivedData
     }
     else {
         const error = await res.json()

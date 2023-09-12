@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import '../NewRestaurantForm/NewRestaurantForm.css'
 import { selectionMapper, phoneValidate } from '../helper'
 import { fetchNewRestaurant, fetchUpdateRestaurant } from "../../store/restaurant";
-import { Footer } from "../Footer";
+
 export const NewRestaurantForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -36,14 +36,13 @@ export const NewRestaurantForm = () => {
     const [sundayClose, setsundayClose] = useState(type === 'update' ? restaurant[0].business_hours.find(hours => hours.day === 'Sunday')?.end : '')
     const [checkSunday, setCheckSunday] = useState(type === 'update' && restaurant[0].business_hours.find(hours => hours.day === 'Sunday')?.start ? true : false)
     const [priceRange, setpriceRange] = useState(type === 'update' ? restaurant[0].avgPrice : 0)
-    const [imageLoading, setImageLoading] = useState(false);
     const [image, setImage] = useState(null);
     const [name, setName] = useState(type === 'update' ? restaurant[0].name : '')
     const [phone, setPhone] = useState(type === 'update' ? restaurant[0].phone : '')
     const [street, setStreet] = useState(type === 'update' ? restaurant[0].street : '')
     const [city, setCity] = useState(type === 'update' ? restaurant[0].city : '')
     const [state, setState] = useState(type === 'update' ? restaurant[0].state : '')
-    const [country, setCountry] = useState(type === 'update' ? restaurant[0].country : '')
+    const [country, setCountry] = useState(type === 'update' ? restaurant[0].country : 'United State')
     const [zipCode, setzipCode] = useState(type === 'update' ? restaurant[0].zipCode : '')
     const [categories, setCategories] = useState(type === 'update' ? restaurant[0].categories : '')
     const [description, setDescription] = useState(type === 'update' ? restaurant[0].description : '')
@@ -59,8 +58,34 @@ export const NewRestaurantForm = () => {
         if (phoneValidate(phone)) {
             errorObj.phone = "Need to use only number and '-'"
         }
+        if(name.length < 1) errorObj.name = '*'
+        if(city.length < 1) errorObj.city = '*'
+        if(state.length < 1) errorObj.state = '*'
+        if(categories.length < 1) errorObj.categories = '*'
+        if(description.length < 1) errorObj.description ='*'
+        if(checkMonday) {
+            if(!mondayOpen || !mondayClose) errorObj.monday ='Please select time for monday'
+        }
+        if(checkTuesday) {
+            if(!tuesdayOpen || !tuesdayClose) errorObj.tuesday ='Please select time for tuesday'
+        }
+        if(checkWednesday) {
+            if(!wednesdayOpen || !wednesClose) errorObj.wednesday ='Please select for wednesday'
+        }
+        if(checkThursday) {
+            if(!thursdayOpen || !thursdayClose) errorObj.thursday ='Please select time for thursday'
+        }
+        if(checkFriday) {
+            if(!fridayOpen || !fridayClose) errorObj.fridday ='Please select time for friday'
+        }
+        if(checkSaturday) {
+            if(!saturdayOpen || !saturdayClose) errorObj.saturday ='Please select time for saturday'
+        }
+        if(checkSunday) {
+            if(!sundayOpen || !sundayClose) errorObj.sunday ='Please select time for sunday'
+        }
         setError(errorObj)
-    }, [phone, zipCode])
+    }, [phone, zipCode, name, city, state, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday ])
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!Object.values(error).length) {
@@ -104,7 +129,6 @@ export const NewRestaurantForm = () => {
                 formData.append('sunday_open', sundayOpen)
                 formData.append('sunday_close', sundayClose)
             }
-            setImageLoading(true);
             if (type === 'update') dispatch(fetchUpdateRestaurant(formData, restaurantId)).then(restaurant => history.push(`/restaurants/${restaurantId}`)).catch(err => setError(err))
             else dispatch(fetchNewRestaurant(formData, currentUser.id)).then(restaurant => history.push(`/restaurants/${restaurant.id}`)).catch(err => {
                 const errorMsg = {}
@@ -128,8 +152,11 @@ export const NewRestaurantForm = () => {
                 <div className="new-restaurant-form">
                     <form id="restaurant-form" encType="multipart/form-data" onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                         <label>
+                            <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                             <div>Restaurant Name</div>
-                            <input style={{ width: "100%", height: "30px" }} type="text" value={name} onChange={e => setName(e.target.value)} required />
+                            {error.name && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                            </div>
+                            <input placeholder="ex. my restaurant"style={{ width: "100%", height: "30px" }} type="text" value={name} onChange={e => setName(e.target.value)} required />
                         </label>
                         <div style={{ width: '100%', display: "flex" }}>
                             <label>
@@ -137,46 +164,61 @@ export const NewRestaurantForm = () => {
                                     <div>Phone</div>
                                     {error.phone && <p style={{ margin: "0", color: "red" }} >{error.phone}</p>}
                                 </div>
-                                <input style={{ width: "100%", height: "30px" }} type="text" value={phone} onChange={e => setPhone(e.target.value)} required />
+                                <input placeholder="ex. xxx-xxx-xxxx" style={{ width: "100%", height: "30px"}} type="text" value={phone} onChange={e => setPhone(e.target.value)} required />
                             </label>
 
                             <label>
+                                <div style={{ display: "flex", alignItems: "center", gap: "5px" }} >
                                 <div>Street</div>
-                                <input style={{ width: "100%", height: "30px" }} type="text" value={street} onChange={e => setStreet(e.target.value)} required />
+                                {error.street && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                </div>
+                                <input placeholder="ex. 410 Terry Ave N" style={{ width: "100%", height: "30px" }} type="text" value={street} onChange={e => setStreet(e.target.value)} required />
                             </label>
                         </div>
                         <div style={{ width: '100%', display: "flex" }}>
                             <label>
+                                <div  style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                 <div>City</div>
-                                <input style={{ width: "100%", height: "30px" }} type="text" value={city} onChange={e => setCity(e.target.value)} required />
+                                {error.city && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                </div>
+                                <input placeholder="ex. Seattle" style={{ width: "100%", height: "30px" }} type="text" value={city} onChange={e => setCity(e.target.value)} required />
                             </label>
                             <label>
+                                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                 <div>State</div>
-                                <input style={{ width: "100%", height: "30px" }} type="text" value={state} onChange={e => setState(e.target.value)} required />
+                                {error.state && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                </div>
+                                <input placeholder="ex. WA" style={{ width: "100%", height: "30px" }} type="text" value={state} onChange={e => setState(e.target.value)} required />
                             </label>
                             <label>
                                 <div>Country</div>
-                                <input style={{ width: "100%", height: "30px" }} type="text" value={country} onChange={e => setCountry(e.target.value)} required />
+                                <input style={{ width: "100%", height: "30px" }} type="text" value={country} required />
                             </label>
                             <label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                     <div>Zip Code</div>
                                     {error.zipcode && <p style={{ margin: "0", color: "red" }}>{error.zipcode}</p>}
                                 </div>
-                                <input style={{ width: "100%", height: "30px" }} type="text" value={zipCode} onChange={e => setzipCode(e.target.value)} required />
+                                <input placeholder="ex. 98109" style={{ width: "100%", height: "30px" }} type="text" value={zipCode} onChange={e => setzipCode(e.target.value)} required />
                             </label>
 
                         </div>
                         <div style={{ width: '100%', display: "flex" }}>
                             <label>
+                                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                 <div>Categories</div>
-                                <input style={{ width: "100%", height: "30px" }} type="text" value={categories} onChange={e => setCategories(e.target.value)} required />
+                                {error.categories && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                </div>
+                                <input placeholder="ex. Korean" style={{ width: "100%", height: "30px" }} type="text" value={categories} onChange={e => setCategories(e.target.value)} required />
                             </label>
                         </div>
                         <div style={{ width: '100%', display: "flex" }}>
                             <label style={{ width: "100%" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                 <div>Description</div>
-                                <textarea style={{ width: "100%", height: "200px" }} type="text" value={description} onChange={e => setDescription(e.target.value)} required />
+                                {error.categories && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                </div>
+                                <textarea placeholder="ex. Nice Restaurant..." style={{ width: "100%", height: "200px" }} type="text" value={description} onChange={e => setDescription(e.target.value)} required />
                             </label>
                         </div>
                         <div>
@@ -210,6 +252,13 @@ export const NewRestaurantForm = () => {
                         </div>
                         <div className="businesshour-container-newform">
                             <div>Business Hours</div>
+                            {error.monday && <p style={{ margin: "0", color: "red" }} >{error.monday}</p>}
+                            {error.tuesday && <p style={{ margin: "0", color: "red" }} >{error.tuesday}</p>}
+                            {error.wednesday && <p style={{ margin: "0", color: "red" }} >{error.wednesday}</p>}
+                            {error.thursday && <p style={{ margin: "0", color: "red" }} >{error.thursday}</p>}
+                            {error.friday && <p style={{ margin: "0", color: "red" }} >{error.friday}</p>}
+                            {error.saturday && <p style={{ margin: "0", color: "red" }} >{error.saturday}</p>}
+                            {error.sunday && <p style={{ margin: "0", color: "red" }} >{error.sunday}</p>}
                             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                                 <label>
                                     Monday
@@ -309,11 +358,9 @@ export const NewRestaurantForm = () => {
                                 </label>
                             </div>
                         </div>
-                        <button type="submit">{type === 'update' ? 'Update Restaurant' : 'Submit'}</button>
-                        {(imageLoading) && <p>Loading...</p>}
+                        <button style={Object.values(error).length > 0 ? {backgroundColor:"#ccc", color:"#666", cursor:"not-allowed"}: null} type="submit">{type === 'update' ? 'Update Restaurant' : 'Submit'}</button>
                         <div id="empty-space" style={{height:"50px"}}></div>
                     </form>
-                   
                 </div>
             </div>
         </div>

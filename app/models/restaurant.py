@@ -31,6 +31,7 @@ class Restaurant(db.Model):
     owner = db.relationship('User', back_populates='restaurants')
     business_hours = db.relationship('Business_hour', back_populates='restaurant', cascade="all, delete-orphan")
     reservations = db.relationship('Reservation', back_populates='restaurant', cascade="all, delete-orphan")
+    reviews = db.relationship('Review',  back_populates='restaurant', cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
@@ -56,5 +57,7 @@ class Restaurant(db.Model):
             'business_hours':[bh.to_dict() for bh in self.business_hours]
         }
     
+ 
+
     
 

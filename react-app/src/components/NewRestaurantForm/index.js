@@ -58,11 +58,12 @@ export const NewRestaurantForm = () => {
         if (phoneValidate(phone)) {
             errorObj.phone = "Need to use only number and '-'"
         }
-        if(name.length < 1) errorObj.name = '*'
+        if(name.length < 1 ) errorObj.name = 'name should be less than 100 char'
+        if(state.length < 1 ) errorObj.state = '*'
+        if(street.length < 1 ) errorObj.street = '*'
         if(city.length < 1) errorObj.city = '*'
-        if(state.length < 1) errorObj.state = '*'
-        if(categories.length < 1) errorObj.categories = '*'
-        if(description.length < 1) errorObj.description ='*'
+        if(categories.length < 1 || categories.length > 100) errorObj.categories = 'categoreis should be less than 100 char'
+        if(description.length < 1 || description.length >255) errorObj.description ='description should be less than 255 char'
         if(checkMonday) {
             if(!mondayOpen || !mondayClose) errorObj.monday ='Please select time for monday'
         }
@@ -85,7 +86,7 @@ export const NewRestaurantForm = () => {
             if(!sundayOpen || !sundayClose) errorObj.sunday ='Please select time for sunday'
         }
         setError(errorObj)
-    }, [phone, zipCode, name, city, state, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday ])
+    }, [phone, zipCode, name, street, city, state, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday ])
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!Object.values(error).length) {
@@ -170,7 +171,7 @@ export const NewRestaurantForm = () => {
                             <label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }} >
                                 <div>Street</div>
-                                {error.street && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                {error.street && <p style={{ margin: "0", color: "red" }} >{error.street}</p>}
                                 </div>
                                 <input placeholder="ex. 410 Terry Ave N" style={{ width: "100%", height: "30px" }} type="text" value={street} onChange={e => setStreet(e.target.value)} required />
                             </label>
@@ -179,14 +180,14 @@ export const NewRestaurantForm = () => {
                             <label>
                                 <div  style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                 <div>City</div>
-                                {error.city && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                {error.city && <p style={{ margin: "0", color: "red" }} >{error.city}</p>}
                                 </div>
                                 <input placeholder="ex. Seattle" style={{ width: "100%", height: "30px" }} type="text" value={city} onChange={e => setCity(e.target.value)} required />
                             </label>
                             <label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                 <div>State</div>
-                                {error.state && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                {error.state && <p style={{ margin: "0", color: "red" }} >{error.state}</p>}
                                 </div>
                                 <input placeholder="ex. WA" style={{ width: "100%", height: "30px" }} type="text" value={state} onChange={e => setState(e.target.value)} required />
                             </label>
@@ -207,7 +208,7 @@ export const NewRestaurantForm = () => {
                             <label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                 <div>Categories</div>
-                                {error.categories && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                {error.categories && <p style={{ margin: "0", color: "red" }} >{error.categories}</p>}
                                 </div>
                                 <input placeholder="ex. Korean" style={{ width: "100%", height: "30px" }} type="text" value={categories} onChange={e => setCategories(e.target.value)} required />
                             </label>
@@ -216,7 +217,7 @@ export const NewRestaurantForm = () => {
                             <label style={{ width: "100%" }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                 <div>Description</div>
-                                {error.categories && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
+                                {error.categories && <p style={{ margin: "0", color: "red" }} >{error.description}</p>}
                                 </div>
                                 <textarea placeholder="ex. Nice Restaurant..." style={{ width: "100%", height: "200px" }} type="text" value={description} onChange={e => setDescription(e.target.value)} required />
                             </label>

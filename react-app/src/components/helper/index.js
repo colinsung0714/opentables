@@ -143,3 +143,60 @@ export const sortList = list => {
         return 0
     })
 }
+
+export const convertIntMonthtoStringMonth = month => {
+    switch (Number(month)) {
+        case 1:
+            return 'January'
+        case 2:
+            return 'Feburary'
+        case 3:
+            return 'March'
+        case 4:
+            return 'April'
+        case 5:
+            return 'May'
+        case 6:
+            return 'June'
+        case 7:
+            return 'July'
+        case 8:
+            return 'August'
+        case 9:
+            return 'September'
+        case 10:
+            return 'October'
+        case 11:
+            return 'November'
+        case 12:
+            return 'December'
+        default:
+            return;
+    }
+}
+
+export const dateCalculatortoString =(targetDate) => {
+    const today = new Date().toLocaleDateString()
+    const todayParts = today.split('/')
+    const todayMonth = todayParts[0]
+    const todayDay = todayParts[1]
+    const todayYear = todayParts[2]
+    
+    const visitedDay = new Date(targetDate).toLocaleDateString()
+   
+    const visitedDayParts = visitedDay.split('/')
+    const visitedDayMonth = visitedDayParts[0]
+    const visitedDayDay = visitedDayParts[1]
+    const visitedDayYear = visitedDayParts[2]
+    
+  
+    if (todayDay === visitedDayDay && todayMonth === visitedDayMonth && todayYear === visitedDayYear) return 'Dined today'
+    else if(todayDay !== visitedDayDay && todayMonth === visitedDayMonth && todayYear === visitedDayYear) {
+        if (Number(todayDay) - Number(visitedDayDay) === 1) return `Dined yesterday`
+        else return `Dined ${Number(todayDay) - Number(visitedDayDay)} days ago`
+    }
+    else {
+        return `Dined on ${convertIntMonthtoStringMonth(visitedDayMonth)} ${visitedDayDay}, ${visitedDayYear}`
+    }
+    
+}

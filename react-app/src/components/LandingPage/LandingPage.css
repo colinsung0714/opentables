@@ -74,12 +74,14 @@
 }
 
 .search-bar {
+    position: relative;
     background-color: white;
     border-radius: 5px;
     width: 250px;
     display: flex;
     align-items: center;
     padding: 10px;
+    border: none;
 }
 
 .search-bar input {
@@ -91,23 +93,11 @@
     outline: none;
 }
 
-.restaurants-container {
-  
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    column-gap: 50px;
-    row-gap: 400px;
-}
-
 #restaurants-header {
     margin-top: 50px;
     margin-bottom: 30px;
     margin-left: 150px;
     margin-right: 150px;
-}
-.restaurant-single-landing-container {
-    position: relative;
-    display: flex;
 }
 
 .react-datepicker__input-container input{
@@ -116,4 +106,20 @@
 
 .react-datepicker__input-container input:focus{
     outline: none;
+}
+
+#suggestion-list {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    background-color: white;
+    border-radius: 5px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    border: none;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+    gap: 5px;
 }

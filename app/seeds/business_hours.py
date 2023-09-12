@@ -29,6 +29,134 @@ def seed_business_hours():
         end=time(18,0)
     )
 
+    monday_hours_two = Business_hour(
+        day='Monday',
+        start=time(10,0),
+        end=time(20,0)
+    )
+    tues_hours_two = Business_hour(
+        day='Tuesday',
+        start=time(10,0),
+        end=time(20,0)
+    )
+    wednes_hours_two = Business_hour(
+        day='Wednesday',
+        start=time(11,0),
+        end=time(20,0)
+    )
+    thurs_hours_two = Business_hour(
+        day='Thursday',
+        start=time(11,0),
+        end=time(20,0)
+    )
+    fri_hours_two = Business_hour(
+        day='Friday',
+        start=time(11,0),
+        end=time(20,0)
+    )
+
+    monday_hours_three = Business_hour(
+        day='Monday',
+        start=time(7,0),
+        end=time(19,30)
+    )
+    tues_hours_three = Business_hour(
+        day='Tuesday',
+        start=time(9,0),
+        end=time(19,30)
+    )
+    wednes_hours_three = Business_hour(
+        day='Wednesday',
+        start=time(9,0),
+        end=time(19,30)
+    )
+    thurs_hours_three = Business_hour(
+        day='Thursday',
+        start=time(9,0),
+        end=time(18,30)
+    )
+    fri_hours_three = Business_hour(
+        day='Friday',
+        start=time(9,0),
+        end=time(18,0)
+    )
+
+    monday_hours_four = Business_hour(
+        day='Monday',
+        start=time(11,0),
+        end=time(23,0)
+    )
+    tues_hours_four = Business_hour(
+        day='Tuesday',
+        start=time(11,0),
+        end=time(23,0)
+    )
+    wednes_hours_four = Business_hour(
+        day='Wednesday',
+        start=time(11,0),
+        end=time(23,0)
+    )
+    thurs_hours_four = Business_hour(
+        day='Thursday',
+        start=time(11,0),
+        end=time(23,0)
+    )
+    fri_hours_four = Business_hour(
+        day='Friday',
+        start=time(11,0),
+        end=time(23,0)
+    )
+
+    sat_hours_four = Business_hour(
+        day='Saturday',
+        start=time(11,0),
+        end=time(23,0)
+    )
+
+    sun_hours_four = Business_hour(
+        day='Sunday',
+        start=time(11,0),
+        end=time(23,0)
+    )
+
+    monday_hours_five = Business_hour(
+        day='Monday',
+        start=time(8,0),
+        end=time(23,0)
+    )
+    tues_hours_five = Business_hour(
+        day='Tuesday',
+        start=time(8,0),
+        end=time(20,0)
+    )
+    wednes_hours_five = Business_hour(
+        day='Wednesday',
+        start=time(8,0),
+        end=time(23,00)
+    )
+    thurs_hours_five = Business_hour(
+        day='Thursday',
+        start=time(7,0),
+        end=time(21,0)
+    )
+    fri_hours_five = Business_hour(
+        day='Friday',
+        start=time(7,0),
+        end=time(23,00)
+    )
+
+    sat_hours_five = Business_hour(
+        day='Saturday',
+        start=time(7,0),
+        end=time(23,0)
+    )
+
+    sun_hours_five = Business_hour(
+        day='Sunday',
+        start=time(7,0),
+        end=time(23,0)
+    )
+
 
     restaurant= Restaurant.query.get(1)
     restaurant.business_hours.append(monday_hours)
@@ -36,13 +164,72 @@ def seed_business_hours():
     restaurant.business_hours.append(wednes_hours)
     restaurant.business_hours.append(thurs_hours)
     restaurant.business_hours.append(fri_hours)
+
+    restaurant_two = Restaurant.query.get(2)
+    restaurant_two.business_hours.append(monday_hours_two)
+    restaurant_two.business_hours.append(tues_hours_two)
+    restaurant_two.business_hours.append(wednes_hours_two)
+    restaurant_two.business_hours.append(thurs_hours_two)
+    restaurant_two.business_hours.append(fri_hours_two)
+
+    restaurant_three = Restaurant.query.get(3)
+    restaurant_three.business_hours.append(monday_hours_three)
+    restaurant_three.business_hours.append(tues_hours_three)
+    restaurant_three.business_hours.append(wednes_hours_three)
+    restaurant_three.business_hours.append(thurs_hours_three)
+    restaurant_three.business_hours.append(fri_hours_three)
+
+    restaurant_three = Restaurant.query.get(4)
+    restaurant_three.business_hours.append(monday_hours_four)
+    restaurant_three.business_hours.append(tues_hours_four)
+    restaurant_three.business_hours.append(wednes_hours_four)
+    restaurant_three.business_hours.append(thurs_hours_four)
+    restaurant_three.business_hours.append(fri_hours_four)
+    restaurant_three.business_hours.append(sat_hours_four)
+    restaurant_three.business_hours.append(sun_hours_four)
+
+    restaurant_three = Restaurant.query.get(5)
+    restaurant_three.business_hours.append(monday_hours_five)
+    restaurant_three.business_hours.append(tues_hours_five)
+    restaurant_three.business_hours.append(wednes_hours_five)
+    restaurant_three.business_hours.append(thurs_hours_five)
+    restaurant_three.business_hours.append(fri_hours_five)
+    restaurant_three.business_hours.append(sat_hours_five)
+    restaurant_three.business_hours.append(sun_hours_five)
    
     db.session.add(monday_hours)
     db.session.add(tues_hours)
     db.session.add(wednes_hours)
     db.session.add(thurs_hours)
     db.session.add(fri_hours)
+
+    db.session.add(monday_hours_two)
+    db.session.add(tues_hours_two)
+    db.session.add(wednes_hours_two)
+    db.session.add(thurs_hours_two)
+    db.session.add(fri_hours_two)
+
+    db.session.add(monday_hours_three)
+    db.session.add(tues_hours_three)
+    db.session.add(wednes_hours_three)
+    db.session.add(thurs_hours_three)
+    db.session.add(fri_hours_three)
+
+    db.session.add(monday_hours_four)
+    db.session.add(tues_hours_four)
+    db.session.add(wednes_hours_four)
+    db.session.add(thurs_hours_four)
+    db.session.add(fri_hours_four)
+    db.session.add(thurs_hours_four)
+    db.session.add(fri_hours_four)
    
+    db.session.add(monday_hours_five)
+    db.session.add(tues_hours_five)
+    db.session.add(wednes_hours_five)
+    db.session.add(thurs_hours_five)
+    db.session.add(fri_hours_five)
+    db.session.add(thurs_hours_five)
+    db.session.add(fri_hours_five)
 
     db.session.commit()
 

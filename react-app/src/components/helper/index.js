@@ -15,8 +15,12 @@ export const selectionMapper = () => {
 
 export const phoneValidate = phone => {
     let phoneParts = phone.split('-')
+    if(phoneParts[0]?.length !== 3 || phoneParts[1]?.length !== 3 ||phoneParts[2]?.length !== 4) return true
     for (let num of phoneParts) {
         if (isNaN(num)) return true
+    }
+    if(phone[0] === '-' || phone[phone.length-1]==='-' || phoneParts.length !== 3 || phone.length !== 12) {
+        return true
     }
     return false
 }
@@ -113,7 +117,7 @@ export const convertTofullDateString = (year, month, day) => {
 export const currentSelectionMapper = () => {
     const res = []
 
-    for (let i = 0; i < (today.getHours() * 2 + 2) * 30; i += 30) {
+    for (let i = 0; i < (today.getHours() * 2 + 1) * 30; i += 30) {
         const newTime = new Date(newDate.getTime() + i * 60 * 1000)
 
         res.push(newTime.toString().split(' ')[4].slice(0, 5))

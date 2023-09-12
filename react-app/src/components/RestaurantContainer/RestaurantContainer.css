@@ -1,22 +1,26 @@
-.single-restaurant-container img {
-    width: 250px;
-    height: 250px;
-    border-radius: 20px;
-}
+
 
 .single-restaurant-container {
-    position: absolute;
-    transition: top 2s ease-in-out .7s;
+    /* position: absolute;
+    transition: top 2s ease-in-out .7s; */
     border: 2px solid #d8d9db;
     border-radius: 20px;
-    padding: 5px
+    padding: 20px;
+    width: fit-content;
 }
-
+/* 
 .single-restaurant-container:hover {
    top: -10px;
-}
+} */
 
 .restaurant-middle-container {
     display: flex;
     gap: 20px;
+}
+
+.img-container img{
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+    cursor: pointer;
 }

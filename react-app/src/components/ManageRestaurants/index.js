@@ -4,9 +4,11 @@ import { useParams, useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import "../ManageRestaurants/ManageRestaurants.css"
 import { UserNavigation } from "../UserNavigation"
-import { fetchAllRestaurants, fetchDelteRestaurant } from "../../store/restaurant"
+import { fetchAllRestaurants } from "../../store/restaurant"
 import { StarIcon } from '../StarIcon'
 import { sortList } from "../helper"
+import OpenModalButton from "../OpenModalButton";
+import { DeleteModalButton } from "../DeleteModalButton"
 export const ManageRestaurants = () => {
     const currentUser = useSelector(state => state.session.user)
     const { userId } = useParams()
@@ -17,18 +19,15 @@ export const ManageRestaurants = () => {
         dispatch(fetchAllRestaurants())
     }, [])
     const handleUpdate = (restaurantId) => {
-        history.push(`/restaurants/new`, {type:'update', restaurantId})
+        history.push(`/restaurants/new`, { type: 'update', restaurantId })
     }
-    const handleDelete = (restaurantId) => {
-        dispatch(fetchDelteRestaurant(restaurantId))
-    }
-    if(Number(userId) !== currentUser.id) history.push('/')
+    if (Number(userId) !== currentUser.id) history.push('/')
     return (
         <div>
-            <UserNavigation currentUser={currentUser} type={'restaurants'}/>
+            <UserNavigation currentUser={currentUser} type={'restaurants'} />
             <div className="restaurants-manage-container">
                 <h2>My Restaurants</h2>
-                {!ownRestaurants.length && <div style={{margin:"20px 0"}}>There is no restaurant</div>}
+                {!ownRestaurants.length && <div style={{ margin: "20px 0" }}>There is no restaurant</div>}
                 {sortList(ownRestaurants).map(restaurant =>
                     <div className='restaurant-manage' key={restaurant.id}>
                         <div className="left-manage">
@@ -43,11 +42,15 @@ export const ManageRestaurants = () => {
                             </div>
                         </div>
                         <div className="manage-button-container">
-                            <button onClick={()=>handleUpdate(restaurant.id)}>Update</button>
-                            <button onClick={()=>handleDelete(restaurant.id)}>Delete</button>
+                            <button onClick={() => handleUpdate(restaurant.id)}>Update</button>
+                            <OpenModalButton
+                                className='restaurant-delete-button'
+                                buttonText="Delete"
+                                modalComponent={<DeleteModalButton restaurant={restaurant} type={'restaurant'} />}
+                            />
                         </div>
                     </div>)}
-                    <div id="empty-space" style={{height:"50px"}}></div>
+                <div id="empty-space" style={{ height: "50px" }}></div>
             </div>
         </div>
     )

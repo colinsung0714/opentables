@@ -18,7 +18,6 @@ export const LandingPage = () => {
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
     const userTime = new Date().toLocaleString("en-US", {timeZone:userTimeZone})
     const today = new Date(userTime)
-
     const [time, setTime] = useState(today.getMinutes() < 30 ? new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours(), 30).toString().split(' ')[4].slice(0, 5) : new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours() + 1, 0).toString().split(' ')[4].slice(0, 5))
     const [startDate, setstartDate] = useState(today)
     const [party, setParty] = useState(2)
@@ -79,11 +78,9 @@ export const LandingPage = () => {
         }
     };
    
-    
     return (
         <>
             <div className="search-filter-contaner">
-                <p>{today}</p>
                 <div style={{ fontSize: '48px', color: 'white', fontWeight: 'bold' }}>Find your table for any occasion</div>
                 <form onSubmit={handleSubmit} className="date-time-party-container">
                     <div className="date-container">
@@ -133,6 +130,7 @@ export const LandingPage = () => {
             </div>
             <h2 id="restaurants-header">All Restaurants</h2>
             <div className="restaurants-container">
+              
                 {error.error && <p>{error.error}</p>}
                 {
                     restaurants.length ?

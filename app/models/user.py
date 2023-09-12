@@ -43,5 +43,6 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'profilePic': self.profile_pic,
             'createdAt': self.created_at,
-            'updatedAt': self.updated_at 
+            'updatedAt': self.updated_at,
+            'reviewNum' : len(self.reviews) if self.reviews else None
         }

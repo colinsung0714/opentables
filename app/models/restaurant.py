@@ -54,7 +54,8 @@ class Restaurant(db.Model):
             'lng' : self.lng,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at, 
-            'business_hours':[bh.to_dict() for bh in self.business_hours]
+            'business_hours':[bh.to_dict() for bh in self.business_hours],
+            'reviews':[review.to_dict() for review in self.reviews]
         }
     
  

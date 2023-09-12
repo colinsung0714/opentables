@@ -49,7 +49,7 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate }) => 
     return (
         <div onClick={() => movetoRestaurantDetail(restaurant.id)} className="single-restaurant-container">
             <div className="img-container"><img src={restaurant.restaurantPic} /></div>
-            <div>{restaurant.name}</div>
+            <div style={{fontWeight:'bold'}}>{restaurant.name}</div>
             <div className="restaurant-middle-container">
                 <div>
                     <div><StarIcon avgRating={restaurant.avgRating} /></div>
@@ -60,7 +60,7 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate }) => 
                 </div>
                 <div>
                     <div>{restaurant.reviewNum === 0 ? 'New' : restaurant.reviewNum === 1 ? `${restaurant.reviewNum}  review` : `${restaurant.reviewNum} reviews`}</div>
-                    <div>{restaurant.city}</div>
+                    <div>• {restaurant.city}</div>
                 </div>
             </div>
             <div style={{display:"flex", gap:"5px"}}>

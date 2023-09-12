@@ -1,6 +1,6 @@
 from app.models import db, Restaurant, User, Reservation, Review,environment, SCHEMA
 from sqlalchemy.sql import text
-from app.api.helper import calculate_avg
+from app.api.helper import calculate_avg, total_review_num
 
 def seed_reviews():
     review_one = Review(
@@ -9,17 +9,19 @@ def seed_reviews():
     )
     review_two = Review(
         rating=2,
-        comment='Super nice restaurant',
+        comment='Good Restaurant',
     )
     db.session.add(review_one)
     db.session.add(review_two)
     user_one = User.query.get(1)
+    user_two = User.query.get(2)
     restaurant_one = Restaurant.query.get(1)
     user_one.reviews.append(review_one)
     restaurant_one.reviews.append(review_one)
-    user_one.reviews.append(review_two)
+    user_two.reviews.append(review_two)
     restaurant_one.reviews.append(review_two)
     restaurant_one.avg_rating = calculate_avg(restaurant_one)
+    restaurant_one.review_num = total_review_num(restaurant_one)
     db.session.commit()
     
     

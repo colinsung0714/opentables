@@ -15,7 +15,9 @@ import 'react-multi-carousel/lib/styles.css';
 
 export const LandingPage = () => {
     const dispatch = useDispatch()
-    const today = new Date()
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const userTime = new Date().toLocaleString("en-US", {timeZone:userTimeZone})
+    const today = new Date(userTime)
     const [time, setTime] = useState(today.getMinutes() < 30 ? new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours(), 30).toString().split(' ')[4].slice(0, 5) : new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours() + 1, 0).toString().split(' ')[4].slice(0, 5))
     const [startDate, setstartDate] = useState(today)
     const [party, setParty] = useState(2)
@@ -34,20 +36,23 @@ export const LandingPage = () => {
     const eighthTime = new Date(seventhTime.getTime() + 30 * 60 * 1000)
     const ninthTime = new Date(eighthTime.getTime() + 30 * 60 * 1000)
     const tenthTime = new Date(ninthTime.getTime() + 30 * 60 * 1000)
-    const reservations = Object.values(useSelector(state=>state.reservation.allReservations))
+    const reservations = Object.values(useSelector(state => state.reservation.allReservations))
     useEffect(() => {
-        dispatch(fetchAllRestaurants()).then(()=>dispatch(fetchAllReservation()))
+        dispatch(fetchAllRestaurants()).then(() => dispatch(fetchAllReservation()))
     }, [])
-    useEffect(()=>{
+    useEffect(() => {
         const searchData = {
             party,
             name: search,
             date_time: dateformatConverter(startDate, time)
         }
-            if(search.length>0) dispatch(fetchSearchRestaurantSuggestion(searchData)).then(data=>setSuggestions(data.restaurants)).catch(e => setError(e))
-            setError({})
+        if (search.length === 0) {
+            setSuggestions([])
+        }
+        if (search.length > 0) dispatch(fetchSearchRestaurantSuggestion(searchData)).then(data => setSuggestions(data.restaurants)).catch(e => setError(e))
+        setError({})
     }, [search])
-    
+
     const handleTime = e => {
         setTime(e.target.value)
     }
@@ -64,16 +69,16 @@ export const LandingPage = () => {
         dispatch(fetchSearchRestaurant(searchData)).catch(e => setError(e))
         setError({})
     }
-    
+
     const responsive = {
-  
+
         desktop: {
-          breakpoint: { max: 3000, min: 1024 },
-          items: 3
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
         }
-      };
-      console.log(restaurants)
-      console.log(suggestions)
+    };
+   
+    
     return (
         <>
             <div className="search-filter-contaner">
@@ -116,11 +121,10 @@ export const LandingPage = () => {
                         </select>
                     </div>
                     <div className="search-bar">
-                       
+
                         <i className="fas fa-search"></i>
                         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Restaurant..." />
-                      
-                        {suggestions?.length > 0 &&<div id="suggestion-list">{suggestions.map(suggestion=><div key={suggestion.id}  style={{color:"gray", fontSize:"12px"}}>{suggestion.name}</div>)}</div>}
+                        {suggestions?.length > 0 && <div id="suggestion-list">{suggestions.map(suggestion => <div key={suggestion.id} style={{ color: "gray", fontSize: "12px" }}>{suggestion.name}</div>)}</div>}
                     </div>
                     <button type="submit">Let's go</button>
                 </form>
@@ -129,18 +133,15 @@ export const LandingPage = () => {
             <div className="restaurants-container">
                 {error.error && <p>{error.error}</p>}
                 {
-                restaurants.length ?
-                <Carousel responsive={responsive}>
-                     {restaurants.map(restaurant=><div key={restaurant.id}><RestaurantContainer restaurant={restaurant} reservations={reservations} startDate={startDate}/></div>)}
-              </Carousel>
-                    
-                //  restaurants.map(restaurant => <div key={restaurant.id} className="restaurant-single-landing-container"><RestaurantContainer restaurant={restaurant} reservations={reservations} startDate={startDate}/></div>)
-            
-                 : 
-                 <div style={{ margin: "0 140px", width: "400px" }}>There is no available restaurants</div>
-                 }
+                    restaurants.length ?
+                        <Carousel responsive={responsive}>
+                            {restaurants.map(restaurant => <div key={restaurant.id}><RestaurantContainer restaurant={restaurant} reservations={reservations} startDate={startDate} /></div>)}
+                        </Carousel>
+                        :
+                        <div style={{ margin: "0 140px", width: "400px" }}>There is no available restaurants</div>
+                }
             </div>
-                            
+
         </>
     )
 }

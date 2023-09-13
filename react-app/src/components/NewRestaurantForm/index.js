@@ -47,7 +47,6 @@ export const NewRestaurantForm = () => {
     const [categories, setCategories] = useState(type === 'update' ? restaurant[0].categories : '')
     const [description, setDescription] = useState(type === 'update' ? restaurant[0].description : '')
     const [error, setError] = useState({})
-
     useEffect(() => {
 
         const errorObj = {}
@@ -86,7 +85,7 @@ export const NewRestaurantForm = () => {
             if(!sundayOpen || !sundayClose) errorObj.sunday ='Please select time for sunday'
         }
         setError(errorObj)
-    }, [phone, zipCode, name, street, city, state, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday ])
+    }, [phone, zipCode, name, street, city, state, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday])
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!Object.values(error).length) {

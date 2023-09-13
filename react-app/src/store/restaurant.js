@@ -66,12 +66,16 @@ export const fetchAllRestaurants = () => async dispatch => {
 }
 
 export const fetchSingleRestaurants = restaurantId => async dispatch => {
+
     const res = await fetch(`/api/restaurants/${restaurantId}`)
     if(res.ok) {
         const data = await res.json()
+
         dispatch(singleRestaurant(data))
     } else {
         const error = await res.json()
+  
+        
         throw error
     }
 }
@@ -148,8 +152,9 @@ export default function restaurantsReducer(state=initialState, action) {
             return newState
         }
         case single_restaurant: {
-            const newState = {...state, allRestaurants:{...state.allRestaurants}, singleRestaurant:{...action.restaurant}}
-            return newState
+            console.log(action.restaurant)
+            const newState = {...state, allRestaurants:{...state.allRestaurants}, singleRestaurant:{...state.singleRestaurant}}
+            return {...newState, allRestaurants:{...newState.allRestaurants, [action.restaurant.id]:{...action.restaurant}}, singleRestaurant:{...action.restaurant}}
         }
         case new_restaurant: {
             const newState = {...state, allRestaurants:{...state.allRestaurants, [action.restaurant.id]:{...action.restaurant}}, singleRestaurant:{...action.restaurant}}

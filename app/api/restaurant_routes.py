@@ -23,7 +23,7 @@ def all_restaurants():
 
 @restaurant_routes.route('/<int:restaurantId>')
 def single_restaurant(restaurantId):
-   
+    
     restaurant = Restaurant.query.get(restaurantId)
     return restaurant.to_dict()
 

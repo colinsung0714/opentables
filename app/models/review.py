@@ -5,8 +5,10 @@ from datetime import datetime
 class Review(db.Model):
     __tablename__ = 'reviews'
 
-    if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+    __table_args__ = (
+        UniqueConstraint('user_id', 'restaurant_id', name='unique_combination_user_restaurant'),
+        {'schema': SCHEMA} if environment == "production" else None,
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))

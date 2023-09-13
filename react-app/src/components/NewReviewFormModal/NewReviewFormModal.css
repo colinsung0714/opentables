@@ -1,0 +1,49 @@
+.review-modal-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-upper-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border-bottom: 2px solid #d8d9db;
+}
+
+
+
+.review-lower-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 20px;
+    justify-content: center;
+}
+
+.review-button-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#review-textarea-container {
+    border: solid 2px #d8d9db;
+    width: 600px;
+    height: 200px;
+}
+
+#review-textarea-container:focus {
+    outline: solid 1px  hsl(209, 48%, 43%);
+}
+
+.comment-required {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: lightgray;
+    align-items: center;
+}
+

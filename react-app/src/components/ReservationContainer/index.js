@@ -5,14 +5,25 @@ import '../ReservationContainer/ReservationContainer.css'
 import { convertTimetoString } from '../helper'
 import OpenModalButton from "../OpenModalButton";
 import { DeleteModalButton } from "../DeleteModalButton"
+import { useModal } from '../../context/Modal';
+import { NewReviewFormModal } from "../NewReviewFormModal";
 
 export const ReservationContainer = ({ reservation, type }) => {
     const dispatch = useDispatch()
+    const { setModalContent, setOnModalClose } = useModal();
     const currentUser = useSelector(state => state.session.user)
     const reservationDateTimeParts = convertTimetoString(reservation.reservationDate).split(' ')
     const timeParts = reservationDateTimeParts[4].slice(0, 5)
     const history = useHistory()
-
+    const handleReview = () => {
+        history.push(`/restaurants/${reservation.restaurantInfo.id}`)
+        setModalContent(<NewReviewFormModal reservation={reservation} user={currentUser} type={'create'}/>)
+    }
+    const handleReviewUpdate = () => {
+        history.push(`/restaurants/${reservation.restaurantInfo.id}`)
+        setModalContent(<NewReviewFormModal reservation={reservation} user={currentUser} type={'update'}/>)
+    }
+   
     return (
         <div className="single-reservation-container">
             <div className="single-reservation-info">
@@ -37,6 +48,7 @@ export const ReservationContainer = ({ reservation, type }) => {
                 </div>
                 :
                 <div className="reservation-button-past-container">
+                    { reservation.restaurantInfo.reviews.find(review=>review.userId === currentUser.id) ? <button  onClick={() => handleReviewUpdate()}>Update your Review</button> : <button  onClick={() => handleReview()}>Leave a Review</button>}
                     <OpenModalButton
                         className='reservation-delete-button'
                         buttonText="Delete"

@@ -15,9 +15,9 @@ import 'react-multi-carousel/lib/styles.css';
 
 export const LandingPage = () => {
     const dispatch = useDispatch()
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    const userTime = new Date().toLocaleString("en-US", {timeZone:userTimeZone})
-    const today = new Date(userTime)
+    // const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    // const userTime = new Date().toLocaleString("en-US", {timeZone:userTimeZone})
+    const today = new Date()
     const [time, setTime] = useState(today.getMinutes() < 30 ? new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours(), 30).toString().split(' ')[4].slice(0, 5) : new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours() + 1, 0).toString().split(' ')[4].slice(0, 5))
     const [startDate, setstartDate] = useState(today)
     const [party, setParty] = useState(2)

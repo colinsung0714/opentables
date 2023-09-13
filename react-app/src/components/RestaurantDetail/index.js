@@ -10,14 +10,18 @@ import Maps from "../Maps";
 import LoginFormModal from "../LoginFormModal";
 import { useModal } from '../../context/Modal';
 import { ReviewContainer } from "../ReviewContainer";
-import { NavLink } from 'react-router-dom';
+import { sortList, sortHighest, sortLowest } from "../helper";
+import { fetchReviewRestaurant } from "../../store/review";
+import {fetchallRestaurantReservations} from '../../store/reservation'
 
 export const RestaurantDetail = () => {
     const { restaurantId } = useParams()
     const [activeReview, setActiveReview] = useState(false)
     const [activeOverview, setActiveOverview] = useState(true)
+    const [sortVal, setSortVal] = useState('newest')
     const key = useSelector((state) => state.maps.key);
     const currentUser = useSelector(state => state.session.user)
+    const reviews = Object.values(useSelector(state=>state.review.restaurantReviews))
     const dispatch = useDispatch()
     const histroy = useHistory()
     const { setModalContent, setOnModalClose } = useModal();
@@ -26,9 +30,11 @@ export const RestaurantDetail = () => {
         if (!key) {
             dispatch(getKey());
         }
-        dispatch(fetchSingleRestaurants(restaurantId))
+        dispatch(fetchSingleRestaurants(restaurantId)).then(()=>dispatch(fetchReviewRestaurant(restaurantId))).then(()=>dispatch(fetchallRestaurantReservations(restaurantId)))
+        
+    
     }, [])
-
+  
     if (!key) {
         return null;
     }
@@ -37,9 +43,16 @@ export const RestaurantDetail = () => {
         else setModalContent(<LoginFormModal />)
     }
 
+    const handleOverview = () => {
+        setActiveOverview(prev => !prev)
+        setActiveReview(prev => !prev)
+    }
 
-
-
+    const handleReview = () => {
+        setActiveOverview(prev => !prev)
+        setActiveReview(prev => !prev)
+    }
+  
     return (
         <div className="restaurant-detail-container">
             <div style={{ width: "100%", margin: "0 250px" }}>
@@ -48,10 +61,10 @@ export const RestaurantDetail = () => {
             <div className='restaurant-info-container' id="retaurant-info-detail">
                 <div className="restaurant-info">
                     <div className="nav-restaurant-detail-container">
-                        <a href="#retaurant-info-detail" style={{textDecoration:"none", color:"black"}}>Overview</a>
+                        <a onClick={handleOverview} href="#retaurant-info-detail" style={activeOverview ? { textDecoration: "none", color: "#da3743", borderBottom: "solid 2px #da3743" } : { textDecoration: "none", color: "black" }}>Overview</a>
                         <div>Photos</div>
                         <div>Menu</div>
-                        <a href="#review-section" style={{textDecoration:"none", color:"black"}}>Review</a>
+                        <a onClick={handleReview} href="#review-section" style={activeReview ? { textDecoration: "none", color: "#da3743", borderBottom: "solid 2px #da3743" } : { textDecoration: "none", color: "black" }}>Review</a>
                     </div>
                     <div className="detail-restaurant-info">
                         <h1>
@@ -70,12 +83,29 @@ export const RestaurantDetail = () => {
                         <div>
                             {restaurant.description}
                         </div>
-                        <div style={{ marginTop: '30px', fontWeight: "bold" }}>{restaurant.reviewNum === 0 ? "Visit this restaurant and be the first to make a review" : restaurant.reviewNum === 1 ? `${restaurant.reviewNum} Review` : `${restaurant.reviewNum} Reviews`}</div>
+                        <div id="num-reviews-sort-container">
+                            <div style={{ fontWeight: "bold" }}>{restaurant.reviewNum === 0 ? "Visit this restaurant and be the first to make a review" : restaurant.reviewNum === 1 ? `${restaurant.reviewNum} Review` : `${restaurant.reviewNum} Reviews`}</div>
+                            <div>
+                                {
+                                    restaurant.reviewNum > 0 && <select value={sortVal} onChange={(e) => setSortVal(e.target.value)}>
+                                        <option value={'newest'}>Newest</option>
+                                        <option value={'highest'}>Higest Rating</option>
+                                        <option value={'lowest'}>Lowest Rating</option>
+                                    </select>
+                                }
+                            </div>
+                        </div>
                         <div style={{ marginTop: '10px' }} id="review-section">
                             {
-                                restaurant.reviews?.map(review => <ReviewContainer key={review.id} review={review} />)
+                                sortVal === 'newest' && sortList(reviews)?.map(review => <ReviewContainer key={review.id} review={review} />)
                             }
-                            <div id="empty-space" style={{height:"50px"}}></div>
+                            {
+                                sortVal === 'highest' && sortHighest(reviews)?.map(review => <ReviewContainer key={review.id} review={review} />)
+                            }
+                            {
+                                sortVal === 'lowest' && sortLowest(reviews)?.map(review => <ReviewContainer key={review.id} review={review} />)
+                            }
+                            <div id="empty-space" style={{ height: "50px" }}></div>
                         </div>
                     </div>
                 </div>

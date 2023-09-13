@@ -32,3 +32,18 @@
     gap: 30px;
 }
 
+#update-delete-review-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+#update-delete-review-buttons button{
+    padding: 5px;
+}
+
+.single-review-right-icon-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}

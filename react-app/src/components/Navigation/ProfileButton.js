@@ -56,7 +56,7 @@ function ProfileButton({ user }) {
           <>
             <h3>Hello, {user.firstName}!</h3>
             <div>{user.email}</div>
-            <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push('/restaurants/new')}>Add My Restaurant</div>
+            <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push('/restaurants/new', {type:'create'})}>Add My Restaurant</div>
             <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push(`/user/${user.id}/restaurants`)}>My Restaurants</div>
             <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push(`/user/${user.id}/reservations`)}>My Reservations</div>
             <div>

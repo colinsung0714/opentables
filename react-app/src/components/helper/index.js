@@ -134,10 +134,11 @@ export const dateformatConverter = (dateform, time) => {
 }
 
 export const sortList = list => {
-  return list.sort((a, b) => {
-        const aTime = new Date(a.createdAt).getTime()
-        const bTime = new Date(b.createdAt).getTime()
-      
+  return list?.sort((a, b) => {
+       
+        const aTime = new Date(a.createAt).getTime()
+        const bTime = new Date(b.createAt).getTime()
+
         if(aTime > bTime) return -1
         if (bTime > aTime) return 1
         return 0
@@ -199,4 +200,27 @@ export const dateCalculatortoString =(targetDate) => {
         return `Dined on ${convertIntMonthtoStringMonth(visitedDayMonth)} ${visitedDayDay}, ${visitedDayYear}`
     }
     
+}
+
+export const sortHighest = list => {
+    return list?.sort((a, b) => {
+          const aRating = a.rating
+          const bRating = b.rating
+        
+          if(aRating > bRating) return -1
+          if (bRating > aRating) return 1
+          return 0
+      })
+}
+
+
+export const sortLowest = list => {
+    return list?.sort((a, b) => {
+          const aRating = a.rating
+          const bRating = b.rating
+        
+          if(aRating > bRating) return 1
+          if (bRating > aRating) return -1
+          return 0
+      })
 }

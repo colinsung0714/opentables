@@ -14,7 +14,9 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate }) => 
     }
     const { setModalContent, setOnModalClose } = useModal();
     const currentUser = useSelector(state=>state.session.user)
-    const now = new Date()
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const userTime = new Date().toLocaleString("en-US", {timeZone:userTimeZone})
+    const now = new Date(userTime)
     const restaurantBusinessHours = restaurant.business_hours
     const reservationsDateTime = reservations.filter(reservation => reservation.restaurantId === restaurant.id).map(reservation => reservation.reservationDate)
     const nowDate = now.getDate()

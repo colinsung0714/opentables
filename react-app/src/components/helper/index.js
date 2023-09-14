@@ -1,4 +1,7 @@
-export const today = new Date()
+const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const userTime = new Date().toLocaleString("en-US", {timeZone:userTimeZone})
+
+export const today = new Date(userTime)
 
 const newDate = new Date(today.getFullYear(), today.getMonth(), today.getDay(), 0, 0)
 

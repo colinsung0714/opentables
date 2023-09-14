@@ -39,10 +39,10 @@ export const ReservationContainer = ({ reservation, type }) => {
             </div>
             <div>{type === 'upcoming' ?
                 <div className="reservation-button-upcoming-container">
-                    <button onClick={() => history.push(`/user/${currentUser.id}/restaurants/${reservation.restaurantInfo.id}/reservations/new`, { type: 'update', reservation })}>Update</button>
+                    <button onClick={() => history.push(`/user/${currentUser.id}/restaurants/${reservation.restaurantInfo.id}/reservations/new`, { type: 'update', reservation })}>Update Reservation</button>
                     <OpenModalButton
                         className='reservation-delete-button'
-                        buttonText="Cancel"
+                        buttonText="Cancel Reservation"
                         modalComponent={<DeleteModalButton reservation={reservation} type={'reservation'} />}
                     />
                 </div>

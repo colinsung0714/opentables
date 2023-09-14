@@ -20,7 +20,6 @@ def all_reservations(userId):
     return { 'reservations': res }
 
 @reservation_routes.route('/restaurants/<int:restaurantId>/all')
-@login_required
 def all_restaurant_reservations(restaurantId):
 
     reservations = Reservation.query.filter(Reservation.restaurant_id == restaurantId).all()

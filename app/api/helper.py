@@ -7,3 +7,6 @@ def calculate_avg(restaurant):
 
 def total_review_num(restaurant):
     return len(restaurant.reviews)
+
+def to_lower(menu_type):
+    return menu_type.title()

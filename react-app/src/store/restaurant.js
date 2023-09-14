@@ -152,7 +152,7 @@ export default function restaurantsReducer(state=initialState, action) {
             return newState
         }
         case single_restaurant: {
-            console.log(action.restaurant)
+           
             const newState = {...state, allRestaurants:{...state.allRestaurants}, singleRestaurant:{...state.singleRestaurant}}
             return {...newState, allRestaurants:{...newState.allRestaurants, [action.restaurant.id]:{...action.restaurant}}, singleRestaurant:{...action.restaurant}}
         }

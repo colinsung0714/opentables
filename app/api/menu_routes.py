@@ -57,3 +57,20 @@ def update_menu(menuId):
 
     return {"menuItems": [menu_item.to_dict() for menu_item in menu.menu_items]}
      
+@menus_routes.route('/<int:menuId>/delete', methods=['DELETE'])
+@login_required
+def delete_menu(menuId):
+    menu = Menu.query.get(menuId)
+    db.session.delete(menu)
+    db.session.commit()
+    return {'message': 'delete complete'}
+
+     
+@menus_routes.route('/menuitems/<int:menuItemId>', methods=['DELETE'])
+@login_required
+def delete_menu_item(menuItemId):
+    menu_item = MenuItem.query.get(menuItemId)
+    res = menu_item.to_dict()
+    db.session.delete(menu_item)
+    db.session.commit()
+    return res

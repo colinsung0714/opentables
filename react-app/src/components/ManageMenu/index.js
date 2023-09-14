@@ -6,6 +6,8 @@ import { UserNavigation } from "../UserNavigation"
 import { fetchAllRestaurants } from "../../store/restaurant"
 import { StarIcon } from '../StarIcon'
 import { sortList } from "../helper"
+import { DeleteMenuModal } from "../DeleteMenuModal"
+import OpenModalButton from "../OpenModalButton";
 import '../ManageMenu/ManageMenu.css'
 
 export const ManageMenu = () => {
@@ -17,6 +19,8 @@ export const ManageMenu = () => {
     useEffect(() => {
         dispatch(fetchAllRestaurants())
     }, [])
+
+
 
     if (Number(userId) !== currentUser.id) history.push('/')
     return (
@@ -43,12 +47,15 @@ export const ManageMenu = () => {
                                 restaurant.menus.length > 0 ?
                                     <div className="spec-manage-button-container">
                                         <button onClick={() => history.push(`/restaurants/${restaurant.id}/menus`, { restaurant, type: "update" })}>Update Menu</button>
-                                        <button onClick={() => history.push(`/restaurants/${restaurant.id}/menus`)}>Delete Menu</button>
+                                        <OpenModalButton
+                                            className='menu-delete-button'
+                                            buttonText="Delete Menu"
+                                            modalComponent={<DeleteMenuModal restaurant={restaurant} />}
+                                        />
                                     </div>
                                     :
                                     <div className="spec-manage-button-container">
                                         <button onClick={() => history.push(`/restaurants/${restaurant.id}/menus`, { restaurant, type: "create" })}>New Menu</button>
-                                        <button onClick={() => history.push(`/restaurants/${restaurant.id}/menus`)}>Delete Menu</button>
                                     </div>
                             }
                         </div>

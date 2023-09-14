@@ -117,7 +117,7 @@ export const convertTofullDateString = (year, month, day) => {
 export const currentSelectionMapper = () => {
     const res = []
     
-    for (let i = 0; i <= (today.getHours()*2)*30; i += 30) {
+    for (let i = 0; i <= (today.getHours()*2+1)*30; i += 30) {
         const newTime = new Date(newDate.getTime() + i * 60 * 1000)
 
         res.push(newTime.toString().split(' ')[4].slice(0, 5))
@@ -243,8 +243,10 @@ export const priceDigitChecker = (menus) => {
     for (let menu of menus) {
         const price = menu?.price
         const priceParts = price.split('.')
+        console.log(priceParts)
         const digit = priceParts[1]
-        if(digit?.length > 2 || price?.length > 6) return true
+        const integer =priceParts[0]
+        if(digit?.length > 2 || integer.length > 4 ) return true
     }
     return false
 }

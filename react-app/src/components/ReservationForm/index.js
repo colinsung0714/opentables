@@ -8,7 +8,9 @@ import { selectionMapper, convertIntDaytoStringDay, normalizationListOfreservati
 import '../ReservationForm/ReservationForm.css'
 import "react-datepicker/dist/react-datepicker.css";
 export const ReservationForm = () => {
-    const now = new Date()
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const userTime = new Date().toLocaleString("en-US", {timeZone:userTimeZone})
+    const now = new Date(userTime)
     const location = useLocation()
     const type = location.state ? location.state.type : 'create'
     const reservation = location.state ? location.state.reservation : null

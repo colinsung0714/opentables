@@ -63,3 +63,10 @@
     gap: 5px;
     margin: 5px 0;
 }
+
+.menuitem-delete-button {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}

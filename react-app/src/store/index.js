@@ -5,13 +5,14 @@ import restaurant from './restaurant';
 import reservation from './reservation'
 import review from './review'
 import maps from './maps'
-
+import menu from './menu'
 const rootReducer = combineReducers({
   session,
   restaurant,
   reservation,
   maps,
-  review
+  review,
+  menu
 });
 
 

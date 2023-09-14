@@ -20,6 +20,7 @@ export const UserNavigation = ({currentUser, type}) => {
         <div className="nav-menu-bar">
             <div id="navi-to-reservation" onClick={()=>history.push(`/user/${currentUser.id}/reservations`)} style={type === 'reservations' ? {fontWeight:'bold'} : null}>Reservations</div>
             <div id="navi-to-restaurant" onClick={()=>history.push(`/user/${currentUser.id}/restaurants`)} style={type === 'restaurants' ? {fontWeight:'bold'} : null}>Restaurants</div>
+            <div id="navi-to-restaurant" onClick={()=>history.push(`/user/${currentUser.id}/menus`)} style={type === 'menus' ? {fontWeight:'bold'} : null}>Menus</div>
         </div>
         </>
     )

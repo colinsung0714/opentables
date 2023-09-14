@@ -116,8 +116,8 @@ export const convertTofullDateString = (year, month, day) => {
 
 export const currentSelectionMapper = () => {
     const res = []
-
-    for (let i = 0; i < (today.getHours() * 2 + 1) * 30; i += 30) {
+    
+    for (let i = 0; i <= (today.getHours()*2)*30; i += 30) {
         const newTime = new Date(newDate.getTime() + i * 60 * 1000)
 
         res.push(newTime.toString().split(' ')[4].slice(0, 5))
@@ -223,4 +223,28 @@ export const sortLowest = list => {
           if (bRating > aRating) return -1
           return 0
       })
+}
+
+export const filterMenuTypeNumber = list => {
+    const total_menuType = []
+    
+    for(let item of list) {
+        if(total_menuType.indexOf(item.item_type)<0) total_menuType.push(item.item_type)
+    }
+    return total_menuType
+}
+
+export const sameTypeMenuList = (menuType, list) => {
+    const sameTypeMenu = list?.filter(item => item.item_type === menuType)
+    return sameTypeMenu
+}
+
+export const priceDigitChecker = (menus) => {
+    for (let menu of menus) {
+        const price = menu?.price
+        const priceParts = price.split('.')
+        const digit = priceParts[1]
+        if(digit?.length > 2 || price?.length > 6) return true
+    }
+    return false
 }

@@ -128,7 +128,7 @@ export default function reservationsReducer(state=initialState, action) {
             return newState
         }
         case ALL_RESTAURANT_RESERVATION: {
-            console.log(action.reservations)
+         
             const newState = {...state, reservations:{...state.reservations}, restaurantReservations:{...state.restaurantReservations}, allReservations:{...state.allReservations}}
             action.reservations.reservations.forEach(reservation => {
                 newState.restaurantReservations[reservation.id] = reservation                

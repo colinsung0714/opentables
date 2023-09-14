@@ -32,7 +32,7 @@ class Restaurant(db.Model):
     business_hours = db.relationship('Business_hour', back_populates='restaurant', cascade="all, delete-orphan")
     reservations = db.relationship('Reservation', back_populates='restaurant', cascade="all, delete-orphan")
     reviews = db.relationship('Review',  back_populates='restaurant', cascade="all, delete-orphan")
-
+    menus = db.relationship('Menu', back_populates='restaurant', cascade="all, delete-orphan")
     def to_dict(self):
         return {
             'id': self.id,
@@ -55,7 +55,8 @@ class Restaurant(db.Model):
             'createdAt': self.created_at,
             'updatedAt': self.updated_at, 
             'business_hours':[bh.to_dict() for bh in self.business_hours],
-            'reviews':[review.to_dict() for review in self.reviews]
+            'reviews':[review.to_dict() for review in self.reviews],
+            'menus':[menu.to_dict() for menu in self.menus]
         }
     
  

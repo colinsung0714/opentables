@@ -10,17 +10,21 @@ import Maps from "../Maps";
 import LoginFormModal from "../LoginFormModal";
 import { useModal } from '../../context/Modal';
 import { ReviewContainer } from "../ReviewContainer";
-import { sortList, sortHighest, sortLowest } from "../helper";
+import { sortList, sortHighest, sortLowest, filterMenuTypeNumber } from "../helper";
 import { fetchReviewRestaurant } from "../../store/review";
 import {fetchallRestaurantReservations} from '../../store/reservation'
+import { fetchAllMenusForRestaurant } from "../../store/menu";
+import { MenusContainer } from "../MenusContainer";
 
 export const RestaurantDetail = () => {
     const { restaurantId } = useParams()
     const [activeReview, setActiveReview] = useState(false)
     const [activeOverview, setActiveOverview] = useState(true)
+    const [activeMenu, setActiveMenu] = useState(false)
     const [sortVal, setSortVal] = useState('newest')
     const key = useSelector((state) => state.maps.key);
     const currentUser = useSelector(state => state.session.user)
+    const restaurantMenus = Object.values(useSelector(state=> state.menu.currentRestaurantMenus))
     const reviews = Object.values(useSelector(state=>state.review.restaurantReviews))
     const dispatch = useDispatch()
     const histroy = useHistory()
@@ -30,7 +34,7 @@ export const RestaurantDetail = () => {
         if (!key) {
             dispatch(getKey());
         }
-        dispatch(fetchSingleRestaurants(restaurantId)).then(()=>dispatch(fetchReviewRestaurant(restaurantId))).then(()=>dispatch(fetchallRestaurantReservations(restaurantId)))
+        dispatch(fetchSingleRestaurants(restaurantId)).then(()=>dispatch(fetchReviewRestaurant(restaurantId))).then(()=>dispatch(fetchallRestaurantReservations(restaurantId))).then(()=>dispatch(fetchAllMenusForRestaurant(restaurantId))).catch(e=>console.log(e))
         
     
     }, [])
@@ -45,13 +49,22 @@ export const RestaurantDetail = () => {
 
     const handleOverview = () => {
         setActiveOverview(prev => !prev)
-        setActiveReview(prev => !prev)
+        setActiveReview(false)
+        setActiveMenu(false)
     }
 
     const handleReview = () => {
-        setActiveOverview(prev => !prev)
         setActiveReview(prev => !prev)
+        setActiveOverview(false)
+        setActiveMenu(false)
     }
+
+    const handleMenu = () => {
+        setActiveMenu(prev=>!prev)
+        setActiveOverview(false)
+        setActiveReview(false)
+    }
+    const totalMenuType = filterMenuTypeNumber(restaurantMenus)
   
     return (
         <div className="restaurant-detail-container">
@@ -62,8 +75,7 @@ export const RestaurantDetail = () => {
                 <div className="restaurant-info">
                     <div className="nav-restaurant-detail-container">
                         <a onClick={handleOverview} href="#retaurant-info-detail" style={activeOverview ? { textDecoration: "none", color: "#da3743", borderBottom: "solid 2px #da3743" } : { textDecoration: "none", color: "black" }}>Overview</a>
-                        <div>Photos</div>
-                        <div>Menu</div>
+                        <a onClick={handleMenu} href="#menu-start" style={activeMenu ? { textDecoration: "none", color: "#da3743", borderBottom: "solid 2px #da3743" } : { textDecoration: "none", color: "black" }}>Menu</a>
                         <a onClick={handleReview} href="#review-section" style={activeReview ? { textDecoration: "none", color: "#da3743", borderBottom: "solid 2px #da3743" } : { textDecoration: "none", color: "black" }}>Review</a>
                     </div>
                     <div className="detail-restaurant-info">
@@ -80,8 +92,14 @@ export const RestaurantDetail = () => {
                                 <div id="type-restaurant-icon-container"><i className="fas fa-utensils"></i>{restaurant.categories}</div>
                             </div>
                         </div>
-                        <div>
+                        <div id="description-restaurant-conatiner">
                             {restaurant.description}
+                        </div>
+                        <div id="menu-start">Menu</div>
+                        <div style={{padding:"20px 0"}}>
+                            { 
+                                restaurantMenus?.length > 0 ?   totalMenuType.map(itemType=><div id="all-menu-container" key={itemType}><MenusContainer itemType={itemType} restaurantMenus={restaurantMenus}/></div>) : 'Menu currently not accessible online'
+                            }
                         </div>
                         <div id="num-reviews-sort-container">
                             <div style={{ fontWeight: "bold" }}>{restaurant.reviewNum === 0 ? "Visit this restaurant and be the first to make a review" : restaurant.reviewNum === 1 ? `${restaurant.reviewNum} Review` : `${restaurant.reviewNum} Reviews`}</div>

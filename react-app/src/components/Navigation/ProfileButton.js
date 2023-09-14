@@ -59,6 +59,7 @@ function ProfileButton({ user }) {
             <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push('/restaurants/new', {type:'create'})}>Add My Restaurant</div>
             <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push(`/user/${user.id}/restaurants`)}>My Restaurants</div>
             <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push(`/user/${user.id}/reservations`)}>My Reservations</div>
+            <div style={{fontWeight:"bold", cursor:"pointer"}} onClick={() => history.push(`/user/${user.id}/menus`)}>Manage Menus</div>
             <div>
               <button id="Logout-profile-dropdown" onClick={handleLogout}>Log Out</button>
             </div>

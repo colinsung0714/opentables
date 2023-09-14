@@ -6,12 +6,12 @@ import "../ReviewContainer/ReviewContainer.css"
 import OpenModalButton from "../OpenModalButton";
 import { NewReviewFormModal } from '../NewReviewFormModal'
 import { DeleteReviewModal } from "../DeleteReviewModal";
-export const ReviewContainer = ({ review, key }) => {
+export const ReviewContainer = ({ review}) => {
     const currentUser = useSelector(state => state.session.user)
-    const reservation = Object.values(useSelector(state => state.reservation.restaurantReservations)).find(reserv => reserv.userId === currentUser.id)
+    const reservation = Object.values(useSelector(state => state.reservation.restaurantReservations)).find(reserv => reserv.userId === currentUser?.id)
   
     return (
-        <div key={key} className="single-review-container">
+        <div className="single-review-container">
             <div className="single-review-left-container">
                 <img src={review.user.profilePic}></img>
                 <div>{review.user.username}</div>
@@ -28,7 +28,7 @@ export const ReviewContainer = ({ review, key }) => {
             </div>
             <div style={{display:"flex", alignItems:"center"}}>
                 {
-                    review.userId === currentUser.id &&   <div id="update-delete-review-buttons">
+                    review?.userId === currentUser?.id &&   <div id="update-delete-review-buttons">
                         <OpenModalButton
                             className='review-update-button'
                             buttonText="Update"

@@ -51,7 +51,7 @@ export const ReservationContainer = ({ reservation, type }) => {
                     { reservation.restaurantInfo.reviews.find(review=>review.userId === currentUser.id) ? <button  onClick={() => handleReviewUpdate()}>Update your Review</button> : <button  onClick={() => handleReview()}>Leave a Review</button>}
                     <OpenModalButton
                         className='reservation-delete-button'
-                        buttonText="Delete"
+                        buttonText="Delete Reservation"
                         modalComponent={<DeleteModalButton reservation={reservation} type={'reservation'} />}
                     />
                 </div>

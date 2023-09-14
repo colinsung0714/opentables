@@ -13,6 +13,9 @@ import { ManageRestaurants } from './components/ManageRestaurants'
 import { ManageReservations } from "./components/ManageReservations";
 import { ReservationForm } from "./components/ReservationForm";
 import { Footer } from "./components/Footer";
+import { ManageMenu } from "./components/ManageMenu";
+import { CreateMenuForm } from "./components/CreateMenuForm";
+import { Test } from "./components/Test";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -28,6 +31,9 @@ function App() {
           <Route exact path='/'>
             <LandingPage />
           </Route>
+          <Route exact path='/test'>
+            <Test />
+          </Route>
           <Route path="/login" >
             <LoginFormPage />
           </Route>
@@ -36,6 +42,9 @@ function App() {
           </Route>
           <ProtectedRoute path='/restaurants/new'>
             <NewRestaurantForm />
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/restaurants/:restaurantId/menus'>
+            <CreateMenuForm />
           </ProtectedRoute>
           <Route path='/restaurants/:restaurantId'>
             <RestaurantDetail />
@@ -46,9 +55,13 @@ function App() {
           <ProtectedRoute exact path='/user/:userId/reservations'>
             <ManageReservations />
           </ProtectedRoute>
+          <ProtectedRoute exact path='/user/:userId/menus'>
+            <ManageMenu />
+          </ProtectedRoute>
           <ProtectedRoute path='/user/:userId/restaurants/:restaurantId/reservations/new'>
             <ReservationForm />
           </ProtectedRoute>
+        
         </Switch>
       )}
       <Footer />

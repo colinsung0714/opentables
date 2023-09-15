@@ -33,7 +33,7 @@ export const CreateMenuForm = () => {
     }
     useEffect(() => {
         const errorObj = {}
-        if (priceDigitChecker(menuItems)) errorObj.price = '*Format: $xxxx.xx'
+        if (priceDigitChecker(menuItems)) errorObj.price =  "The price should be in the format $xxxx.xx"
         setError(errorObj)
     }, [menuItems])
 
@@ -48,11 +48,12 @@ export const CreateMenuForm = () => {
             <form onSubmit={handleSubmit} className="menu-form-main-container">
 
                 <h2 style={{ textAlign: "center" }}>{`Add a new menu for ${restaurant.name}`}</h2>
+                <p style={{ color: "red" }}>{error.price && error.price}</p>
                 <div id="new-menu-form-container">
                     {menuItems.map((item, idx) => (
                         <div key={idx} className="input-menu-item-container">
                             <div id="input-menu-item-list">
-                                <div style={{display:'flex', alignItems:"center", gap:"10px"}}>
+                                <div style={{ display: 'flex', alignItems: "center", gap: "10px" }}>
                                     <div style={{ fontWeight: "bold" }}>{`Menu Item #${idx + 1}`}</div>
                                     {type === 'update' && item.id ? <OpenModalButton
                                         className='menuitem-delete-button'
@@ -85,10 +86,8 @@ export const CreateMenuForm = () => {
                                         />
                                     </div>
                                     <div style={{ display: "flex", flexDirection: "column" }}>
-                                        <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                                            <div>{`Price ($)`}</div>
-                                            <p style={{ color: "red" }}>{error.price && error.price}</p>
-                                        </div>
+
+                                        <div>{`Price ($)`}</div>
                                         <input
                                             type="number"
                                             value={item.price}
@@ -115,7 +114,7 @@ export const CreateMenuForm = () => {
                         </div>
                     ))}
                     <div style={{ padding: "10px 0" }} className="menu-button-container">
-                        <button onClick={e => handleClick(e)}>More Menu</button>
+                        <button onClick={e => handleClick(e)}>Add More Item</button>
                         <button style={Object.values(error).length > 0 ? { backgroundColor: "#ccc", color: "#666", cursor: "not-allowed" } : null} type="submit">{type === 'update' ? 'Update Menu' : 'Submit'}</button>
                     </div>
                     <div id="empty-space" style={{ height: "50px" }}></div>

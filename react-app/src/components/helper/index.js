@@ -1,5 +1,5 @@
 const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    const userTime = new Date().toLocaleString("en-US", {timeZone:userTimeZone})
+const userTime = new Date().toLocaleString("en-US", { timeZone: userTimeZone })
 
 export const today = new Date(userTime)
 
@@ -18,11 +18,11 @@ export const selectionMapper = () => {
 
 export const phoneValidate = phone => {
     let phoneParts = phone.split('-')
-    if(phoneParts[0]?.length !== 3 || phoneParts[1]?.length !== 3 ||phoneParts[2]?.length !== 4) return true
+    if (phoneParts[0]?.length !== 3 || phoneParts[1]?.length !== 3 || phoneParts[2]?.length !== 4) return true
     for (let num of phoneParts) {
         if (isNaN(num)) return true
     }
-    if(phone[0] === '-' || phone[phone.length-1]==='-' || phoneParts.length !== 3 || phone.length !== 12) {
+    if (phone[0] === '-' || phone[phone.length - 1] === '-' || phoneParts.length !== 3 || phone.length !== 12) {
         return true
     }
     return false
@@ -119,13 +119,27 @@ export const convertTofullDateString = (year, month, day) => {
 
 export const currentSelectionMapper = () => {
     const res = []
-    
-    for (let i = 0; i <= (today.getHours()*2+1)*30; i += 30) {
-        const newTime = new Date(newDate.getTime() + i * 60 * 1000)
 
-        res.push(newTime.toString().split(' ')[4].slice(0, 5))
+    const hourNow = today.getHours()
+    const minNow = today.getMinutes()
+  
+    if (minNow >= 30) {
+        for (let i = 0; i < ((hourNow * 2 + 1) + 1) * 30; i += 30) {
+            const newTime = new Date(newDate.getTime() + i * 60 * 1000)
 
+            res.push(newTime.toString().split(' ')[4].slice(0, 5))
+
+        }
+    } else {
+
+        for (let i = 0; i < (hourNow * 2 + 1) * 30; i += 30) {
+            const newTime = new Date(newDate.getTime() + i * 60 * 1000)
+
+            res.push(newTime.toString().split(' ')[4].slice(0, 5))
+
+        }
     }
+   
     return res
 }
 
@@ -137,12 +151,12 @@ export const dateformatConverter = (dateform, time) => {
 }
 
 export const sortList = list => {
-  return list?.sort((a, b) => {
-       
+    return list?.sort((a, b) => {
+
         const aTime = new Date(a.createAt).getTime()
         const bTime = new Date(b.createAt).getTime()
 
-        if(aTime > bTime) return -1
+        if (aTime > bTime) return -1
         if (bTime > aTime) return 1
         return 0
     })
@@ -179,60 +193,60 @@ export const convertIntMonthtoStringMonth = month => {
     }
 }
 
-export const dateCalculatortoString =(targetDate) => {
+export const dateCalculatortoString = (targetDate) => {
     const today = new Date().toLocaleDateString()
     const todayParts = today.split('/')
     const todayMonth = todayParts[0]
     const todayDay = todayParts[1]
     const todayYear = todayParts[2]
-    
+
     const visitedDay = new Date(targetDate).toLocaleDateString()
-   
+
     const visitedDayParts = visitedDay.split('/')
     const visitedDayMonth = visitedDayParts[0]
     const visitedDayDay = visitedDayParts[1]
     const visitedDayYear = visitedDayParts[2]
-    
-  
+
+
     if (todayDay === visitedDayDay && todayMonth === visitedDayMonth && todayYear === visitedDayYear) return 'Dined today'
-    else if(todayDay !== visitedDayDay && todayMonth === visitedDayMonth && todayYear === visitedDayYear) {
+    else if (todayDay !== visitedDayDay && todayMonth === visitedDayMonth && todayYear === visitedDayYear) {
         if (Number(todayDay) - Number(visitedDayDay) === 1) return `Dined yesterday`
         else return `Dined ${Number(todayDay) - Number(visitedDayDay)} days ago`
     }
     else {
         return `Dined on ${convertIntMonthtoStringMonth(visitedDayMonth)} ${visitedDayDay}, ${visitedDayYear}`
     }
-    
+
 }
 
 export const sortHighest = list => {
     return list?.sort((a, b) => {
-          const aRating = a.rating
-          const bRating = b.rating
-        
-          if(aRating > bRating) return -1
-          if (bRating > aRating) return 1
-          return 0
-      })
+        const aRating = a.rating
+        const bRating = b.rating
+
+        if (aRating > bRating) return -1
+        if (bRating > aRating) return 1
+        return 0
+    })
 }
 
 
 export const sortLowest = list => {
     return list?.sort((a, b) => {
-          const aRating = a.rating
-          const bRating = b.rating
-        
-          if(aRating > bRating) return 1
-          if (bRating > aRating) return -1
-          return 0
-      })
+        const aRating = a.rating
+        const bRating = b.rating
+
+        if (aRating > bRating) return 1
+        if (bRating > aRating) return -1
+        return 0
+    })
 }
 
 export const filterMenuTypeNumber = list => {
     const total_menuType = []
-    
-    for(let item of list) {
-        if(total_menuType.indexOf(item.item_type)<0) total_menuType.push(item.item_type)
+
+    for (let item of list) {
+        if (total_menuType.indexOf(item.item_type) < 0) total_menuType.push(item.item_type)
     }
     return total_menuType
 }
@@ -248,8 +262,8 @@ export const priceDigitChecker = (menus) => {
         const priceParts = price.split('.')
         console.log(priceParts)
         const digit = priceParts[1]
-        const integer =priceParts[0]
-        if(digit?.length > 2 || integer.length > 4 ) return true
+        const integer = priceParts[0]
+        if (digit?.length > 2 || integer.length > 4) return true
     }
     return false
 }

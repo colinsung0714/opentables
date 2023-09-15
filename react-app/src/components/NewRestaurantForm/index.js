@@ -61,6 +61,7 @@ export const NewRestaurantForm = () => {
         if(state.length < 1 ) errorObj.state = '*'
         if(street.length < 1 ) errorObj.street = '*'
         if(city.length < 1) errorObj.city = '*'
+        if(priceRange < 1) errorObj.priceRange ='Select Price Rating:'
         if(categories.length < 1 || categories.length > 100) errorObj.categories = 'categoreis should be less than 100 char'
         if(description.length < 1 || description.length >255) errorObj.description ='description should be less than 255 char'
         if(checkMonday) {
@@ -85,7 +86,7 @@ export const NewRestaurantForm = () => {
             if(!sundayOpen || !sundayClose) errorObj.sunday ='Please select time for sunday'
         }
         setError(errorObj)
-    }, [phone, zipCode, name, street, city, state, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday])
+    }, [phone, zipCode, name, street, city, state, priceRange, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday])
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!Object.values(error).length) {
@@ -138,7 +139,7 @@ export const NewRestaurantForm = () => {
             setError({})
         }
     }
-
+   
     return (
         
         <div className="new-restaurant-container">
@@ -224,7 +225,7 @@ export const NewRestaurantForm = () => {
                         <div>
                             <div className="rating-input" style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
                                 <div>
-                                    Price Rating:
+                                    {error.priceRange ? <p style={{ margin: "0", color: "red" }} >{error.priceRange}</p> : "Price Rating:"}
                                 </div>
                                 <div>
                                     <i className="fas fa-dollar-sign" style={priceRange > 0 ? null : { color: '#d1d5d6' }} onMouseEnter={() => { setpriceRange(1) }} onMouseLeave={() => setpriceRange(priceRange)} onClick={() => setpriceRange(priceRange)}></i>

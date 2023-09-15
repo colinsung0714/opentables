@@ -19,24 +19,30 @@ def seed_reservations():
         party=2,
         reservation_date=datetime(2023, 9, 6, 14,00)
     )
+    five_reservation = Reservation(
+        party=2,
+        reservation_date=datetime(2023, 9, 5, 15,30)
+    )
     
     db.session.add(first_reservation)
     db.session.add(second_reservation)
     db.session.add(third_reservation)
     db.session.add(four_reservation)
+    db.session.add(five_reservation)
     restaurant = Restaurant.query.get(1)
     restaurant2 = Restaurant.query.get(2)
     user = User.query.get(1)
     user2 = User.query.get(2)
     user.reservations.append(first_reservation)
     user.reservations.append(second_reservation)
+    user.reservations.append(five_reservation)
     user2.reservations.append(third_reservation)
     user2.reservations.append(four_reservation)
     restaurant.reservations.append(first_reservation)
     restaurant.reservations.append(second_reservation)
     restaurant.reservations.append(third_reservation)
     restaurant2.reservations.append(four_reservation)
-
+    restaurant2.reservations.append(five_reservation)
     db.session.commit()
 
 def undo_reservations():

@@ -103,7 +103,7 @@ export const RestaurantDetail = () => {
                         <a onClick={handleReview} href="#review-section" style={activeReview ? { textDecoration: "none", color: "#da3743", borderBottom: "solid 2px #da3743" } : { textDecoration: "none", color: "black" }}>Review</a>
                     </div>
                     <div className="detail-restaurant-info">
-                        <h1>
+                        <h1 style={{wordBreak:"break-all"}}>
                             {restaurant.name}
                         </h1>
                         <div className="detail-restaurant-icons-container">

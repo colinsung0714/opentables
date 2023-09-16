@@ -38,8 +38,6 @@
 }
 
 #restaurant-form {
-   
-   
     width: 100%;
     padding: 10px;
 }
@@ -64,6 +62,12 @@
 
 .rating-input i{
     font-size: 30px;
+}
+
+.businesshour-container-newform label{
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
 
 #loading-circle {

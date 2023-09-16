@@ -34,7 +34,7 @@ export const ManageMenu = () => {
                         <div className="left-manage">
                             <img src={restaurant.restaurantPic} />
                             <div className="restaurant-info-detail-icon-container">
-                                <h3>{restaurant.name}</h3>
+                                <h3 style={{wordBreak:"break-all"}}>{restaurant.name}</h3>
                                 <StarIcon avgRating={restaurant.avgRating} />
                                 <div className="categories-city-container">
                                     <div style={{ borderRight: "2px solid #d8d9db", paddingRight: "10px" }}>{restaurant.categories}</div>

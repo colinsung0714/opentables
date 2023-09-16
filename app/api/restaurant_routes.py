@@ -4,10 +4,11 @@ from ..models.restaurant import Restaurant
 from ..models.user import User
 from ..models.business_hour import Business_hour
 from ..models.restaurant_image import Restaurant_image
+from ..models.menu import Menu, MenuItem
 from app.models import db
 from app.forms import NewRestaurantForm
 from datetime import time, datetime
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from sqlalchemy.orm import joinedload
 from app.api.AWS_helpers import upload_file_to_s3, get_unique_filename
 import googlemaps
@@ -310,13 +311,13 @@ def delete_restaurant(restaurantId):
 @restaurant_routes.route('/search', methods=['POST'])
 def search_restaurant():
     data = request.json
-    
     year, month, day, hour, min = data['date_time'].split(':')
     reservation_date = datetime(int(year), int(month), int(day), int(hour), int(min))
     target_time = time(int(hour), int(min))
     target_day = reservation_date.strftime('%A')
     if data['name']:
-        restaurants = Restaurant.query.filter(Restaurant.name.ilike(f"%{data['name']}%")).all()
+        restaurants = Restaurant.query.filter(or_(Restaurant.name.ilike(f"%{data['name']}%"), Restaurant.categories.ilike(f"%{data['name']}%"))).all()
+        print(restaurants)
         if restaurants:
             avaliable_restaurant = []
             for restaurant in restaurants:

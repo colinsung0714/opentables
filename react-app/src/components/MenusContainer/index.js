@@ -12,9 +12,9 @@ export const MenusContainer = ({ itemType, restaurantMenus }) => {
                         return (
                             <div className="menu-content-container" key={item.id}>
                                 <div className="name-price-menu-container">
-                                    <div>{item.name}</div><div style={{paddingRight:"10px"}}>{`$${item.price}`}</div>
+                                    <div style={{wordBreak:"break-all"}}>{item.name}</div><div style={{paddingRight:"10px"}}>{`$${item.price}`}</div>
                                 </div>
-                                <div style={{width:'100%'}}>
+                                <div style={{width:'100%', wordBreak:"break-all"}}>
                                     {item.description}
                                 </div>
                             </div>

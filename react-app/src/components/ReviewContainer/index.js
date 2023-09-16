@@ -31,7 +31,7 @@ export const ReviewContainer = ({ review }) => {
                         <StarIcon avgRating={review.rating} />
                         <div>{dateCalculatortoString(review.createAt)}</div>
                     </div>
-                    <div>
+                    <div style={{wordBreak:"break-all"}}>
                         {review.comment}
                     </div>
                 </div>

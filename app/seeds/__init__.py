@@ -5,6 +5,8 @@ from .business_hours import seed_business_hours, undo_business_hours
 from .reservations import seed_reservations, undo_reservations
 from .reviews import seed_reviews, undo_reviews
 from .menus import seed_menus, undo_menus
+from .restaurant_images import seed_restaurant_images, undo_restaurant_images
+from .review_images import seed_review_images, undo_review_images
 from app.models.db import db, environment, SCHEMA
 
 # Creates a seed group to hold our commands
@@ -20,6 +22,8 @@ def seed():
         # command, which will  truncate all tables prefixed with 
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
+        undo_review_images()
+        undo_restaurant_images
         undo_menus()
         undo_reviews()
         undo_reservations()
@@ -32,12 +36,16 @@ def seed():
     seed_reservations()
     seed_reviews()
     seed_menus()
+    seed_restaurant_images()
+    seed_review_images()
     # Add other seed functions here
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_review_images()
+    undo_restaurant_images
     undo_menus()
     undo_reviews()
     undo_reservations()

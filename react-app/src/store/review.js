@@ -38,8 +38,7 @@ export const fetchReviewRestaurant = restaurantId => async dispatch => {
 export const fetchaddReview = (review, restaurantId, userId) => async dispatch => {
     const res = await fetch(`/api/reviews/restaurants/${restaurantId}/user/${userId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(review)
+        body: review
     })
     if (res.ok) {
         const data = await res.json()
@@ -53,8 +52,7 @@ export const fetchaddReview = (review, restaurantId, userId) => async dispatch =
 export const fetchupdateReview = (review, reviewId) => async dispatch => {
     const res = await fetch(`/api/reviews/${reviewId}/edit`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(review)
+        body: review
     })
     if (res.ok) {
         const data = await res.json()

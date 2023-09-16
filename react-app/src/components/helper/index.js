@@ -17,7 +17,8 @@ export const selectionMapper = () => {
 }
 
 export const phoneValidate = phone => {
-    let phoneParts = phone.split('-')
+    let phoneParts = phone?.split('-')
+    if(phoneParts) {
     if (phoneParts[0]?.length !== 3 || phoneParts[1]?.length !== 3 || phoneParts[2]?.length !== 4) return true
     for (let num of phoneParts) {
         if (isNaN(num)) return true
@@ -26,6 +27,7 @@ export const phoneValidate = phone => {
         return true
     }
     return false
+}
 }
 
 export const upcomingReservations = reservations => {
@@ -266,4 +268,23 @@ export const priceDigitChecker = (menus) => {
         if (digit?.length > 2 || integer.length > 4) return true
     }
     return false
+}
+
+export const sumAllPhotos = (restaurant, reviewList) => {
+    const res = []
+    if( restaurant.restaurantImages?.length) {
+        for(let img of restaurant.restaurantImages) {
+            res.push(img)
+        }
+    }
+ 
+    for(let review of reviewList) {
+        if(review.reviewImages?.length) {
+            for(let reviewImage of review.reviewImages) {
+                res.push(reviewImage)
+            }
+        }
+    }
+ 
+    return res
 }

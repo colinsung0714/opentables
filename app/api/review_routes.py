@@ -20,7 +20,6 @@ def restaurant_reviews(restaurantId):
 @login_required
 def add_review(restaurantId, userId):
     form = NewReviewForm()
-    print('formdata~~~~~~~~~~~~~~~~~~~~~~~~', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
     restaurant = Restaurant.query.get(restaurantId)
     user = User.query.get(userId)

@@ -10,3 +10,4 @@ def total_review_num(restaurant):
 
 def to_lower(menu_type):
     return menu_type.title()
+

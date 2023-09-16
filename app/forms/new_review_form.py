@@ -9,3 +9,4 @@ class NewReviewForm(FlaskForm):
     restaurant_id = IntegerField('restaurant_id', validators=[DataRequired()])
     rating = IntegerField('rating', validators=[DataRequired()])
     comment = TextAreaField('comment', validators=[DataRequired()])
+    review_images = FileField("Image File", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])

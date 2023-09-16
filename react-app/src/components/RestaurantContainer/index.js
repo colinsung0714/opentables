@@ -46,17 +46,17 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate }) => 
         const deleteList = currentSelectionMapper()
         filterFinalList(filterBusinessHour, deleteList)
     }
-  
+   
     
     return (
         <div onClick={() => movetoRestaurantDetail(restaurant.id)} className="single-restaurant-container">
             <div className="img-container"><img src={restaurant.restaurantPic} /></div>
-            <div style={{fontWeight:'bold'}}>{restaurant.name}</div>
+            <div style={{fontWeight:'bold', wordBreak:"break-all"}}>{restaurant.name}</div>
             <div className="restaurant-middle-container">
                 <div>
                     <div><StarIcon avgRating={restaurant.avgRating} /></div>
                     <div style={{ display: 'flex', gap: '5px' }}>
-                        <div>{restaurant.categories}</div>
+                        <div style={{width:"100px"}}>{restaurant.categories}</div>
                         <div><AvgPriceIcon avgPrice={restaurant.avgPrice} /></div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate }) => 
                     } else {
                         setModalContent(<LoginFormModal/>)
                     }
-            }} key={time}>{time}</button>) : <div style={{padding:"16px"}}>Not Available</div>}
+            }} key={time}>{time}</button>) : <div style={{padding:"16px 0", fontWeight:"bold", color:"#da3743"}}>Not Available</div>}
             </div>
             <div id="empty-space" style={{height:"50px"}}></div>
         </div>

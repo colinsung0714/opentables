@@ -29,7 +29,7 @@ export const ReservationContainer = ({ reservation, type }) => {
             <div className="single-reservation-info">
                 <img src={reservation.restaurantInfo.restaurantPic} />
                 <div>
-                    <h3>{reservation.restaurantInfo.name}</h3>
+                    <h3 style={{wordBreak:"break-all"}}>{reservation.restaurantInfo.name}</h3>
                     {type === 'upcoming' ? <div className="reservation-confirmed-container"><i className="fas fa-check-circle" style={{ color: '#47b329' }} /><div style={{ fontWeight: "bold" }}>Reservation confirmed</div></div> : <div className="reservation-completed-container"><i class="fas fa-hourglass-end" /><div style={{ fontWeight: "bold" }}>Reservation completed</div></div>}
                     <div className="party-date-container">
                         <div className="party-container"><i className="fas fa-users" /><div>{reservation.numGuests}</div></div>

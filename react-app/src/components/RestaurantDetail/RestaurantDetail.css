@@ -123,6 +123,7 @@
 #description-restaurant-conatiner {
     border-bottom: 2px solid #d8d9db;
     padding: 20px 0;
+    word-break: break-all;
 }
 
 #menu-start{

@@ -144,6 +144,7 @@ export const NewRestaurantForm = () => {
                 const errorMsg = {}
                 errorMsg.location = err.error
                 setError(errorMsg)
+                setLoading(false)
             })
             setLoading(true)
             setError({})
@@ -182,7 +183,6 @@ export const NewRestaurantForm = () => {
             </div>
             <div className="new-restaurant-form-container">
                 <h2 style={{ textAlign: 'center' }}>{type === 'update' ? "Update your restaurant's information" : "Tell us about your restaurant business"}</h2>
-                {error.location && <p style={{ color: "red", marginLeft: "10px" }}>{error.location}</p>}
                 <div className="new-restaurant-form">
                     <form id="restaurant-form" encType="multipart/form-data" onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                         <label>
@@ -190,7 +190,7 @@ export const NewRestaurantForm = () => {
                                 <div>Restaurant Name</div>
                                 {error.name && <p style={{ margin: "0", color: "red" }} >{error.name}</p>}
                             </div>
-                            <input placeholder="ex. my restaurant" style={{ width: "100%", height: "30px" }} type="text" value={name} onChange={e => setName(e.target.value)} required />
+                            <input maxLength={100} placeholder="ex. my restaurant" style={{ width: "100%", height: "30px" }} type="text" value={name} onChange={e => setName(e.target.value)} required />
                         </label>
                         <div style={{ width: '100%', display: "flex" }}>
                             <label>
@@ -250,7 +250,7 @@ export const NewRestaurantForm = () => {
                             <label style={{ width: "100%" }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                     <div>Description</div>
-                                    {error.categories && <p style={{ margin: "0", color: "red" }} >{error.description}</p>}
+                                    {error.description && <p style={{ margin: "0", color: "red" }} >{error.description}</p>}
                                 </div>
                                 <textarea placeholder="ex. Nice Restaurant..." style={{ width: "100%", height: "200px" }} type="text" value={description} onChange={e => setDescription(e.target.value)} required />
                             </label>
@@ -402,6 +402,7 @@ export const NewRestaurantForm = () => {
                             <i id="loading-circle" className="fas fa-circle-notch" style={{ color: '#2b46b6' }}></i>
                             <p style={{ fontWeight: "bold" }}>Please wait...</p>
                         </div>}
+                        {error.location && <p style={{ color: "red", textAlign:"center" }}>{error.location}</p>}
                         <button style={Object.values(error).length > 0 ? { backgroundColor: "#ccc", color: "#666", cursor: "not-allowed" } : null} type="submit">{type === 'update' ? 'Update Restaurant' : 'Submit'}</button>
                         <div id="empty-space" style={{ height: "50px" }}></div>
                     </form>

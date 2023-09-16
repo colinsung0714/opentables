@@ -20,7 +20,7 @@ class Review(db.Model):
     
     user = db.relationship('User', back_populates='reviews')
     restaurant = db.relationship('Restaurant', back_populates='reviews')
-
+    review_images =db.relationship('Review_image', back_populates='review')
     
     def to_dict(self):
         return {
@@ -31,5 +31,6 @@ class Review(db.Model):
             'comment':self.comment,
             'createAt':self.created_at,
             'updated_at':self.updated_at,
-            'user':self.user.to_dict() if self.user else None
+            'user':self.user.to_dict() if self.user else None,
+            'reviewImages': [review_image.to_dict() for review_image in self.review_images]
         }

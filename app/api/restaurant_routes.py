@@ -3,6 +3,7 @@ from flask_login import login_required
 from ..models.restaurant import Restaurant
 from ..models.user import User
 from ..models.business_hour import Business_hour
+from ..models.restaurant_image import Restaurant_image
 from app.models import db
 from app.forms import NewRestaurantForm
 from datetime import time, datetime
@@ -17,7 +18,6 @@ restaurant_routes = Blueprint('restaurant', __name__)
 @restaurant_routes.route('/all')
 def all_restaurants():
     restaurants = Restaurant.query.options(joinedload(Restaurant.business_hours)).all()
-    
     res = [restaurant.to_dict() for restaurant in restaurants]
     return { 'restaurants' : res}
 
@@ -34,10 +34,30 @@ def new_restaurant(userId):
     form['csrf_token'].data = request.cookies['csrf_token']
     
     if form.validate_on_submit():
-        if form.data['restaurant_pic']:
-            restaurant_pic = form.data['restaurant_pic']
-            restaurant_pic.filename = get_unique_filename(restaurant_pic.filename)
-            upload = upload_file_to_s3(restaurant_pic)
+        uploaded_files = request.files.getlist('restaurant_pic')
+        image_list = []
+        if len(uploaded_files):
+            for index in range(len(uploaded_files)):
+                file = uploaded_files[index]
+                if index == 0 :
+                    restaurant_pic = file
+                    restaurant_pic.filename = get_unique_filename(restaurant_pic.filename)
+                    upload = upload_file_to_s3(restaurant_pic)
+                    first_image = Restaurant_image(
+                        url = upload['url']
+                    )
+                    image_list.append(first_image)
+                    db.session.add(first_image)
+                else:
+                    other_pic = file
+                    other_pic.filename = get_unique_filename(other_pic.filename)
+                    other_upload = upload_file_to_s3(other_pic)
+                    other_image = Restaurant_image(
+                        url = other_upload['url']
+                    )
+                    image_list.append(other_image)
+                    db.session.add(other_image)
+        
         else:
             upload = {}
             upload['url'] = 'https://opentables.s3.us-west-1.amazonaws.com/default_restaurant.jpg'
@@ -71,6 +91,9 @@ def new_restaurant(userId):
             description = form.data['description'],
             avg_price = form.data['avg_price']
         )
+        if len(image_list):
+            _ =  [ restaurant.restaurant_images.append(image) for image in image_list ]
+            
         owner.restaurants.append(restaurant)
         if form.data['monday_open']:
             start_hour, start_min = form.data['monday_open'].split(':')
@@ -158,14 +181,32 @@ def update_restaurant(restaurantId):
     form['csrf_token'].data = request.cookies['csrf_token']
     restaurant = Restaurant.query.get(restaurantId)
     if form.validate_on_submit():
-      
-        if form.data['restaurant_pic']:
-            restaurant_pic = form.data['restaurant_pic']
-            restaurant_pic.filename = get_unique_filename(restaurant_pic.filename)
-            upload = upload_file_to_s3(restaurant_pic)
-            if 'url' not in upload:
-                print(upload)
-            restaurant.restaurant_pic = upload['url']
+        uploaded_files = request.files.getlist('restaurant_pic')
+        if len(uploaded_files):
+            restaurant.restaurant_images = []
+            restaurant_images = Restaurant_image.query.filter(Restaurant_image.restaurant_id == restaurantId).all()
+            _ = [db.session.delete(restaurant_image) for restaurant_image in restaurant_images]
+            for index in range(len(uploaded_files)):
+                file = uploaded_files[index]
+                if index == 0 :
+                    restaurant_pic = file
+                    restaurant_pic.filename = get_unique_filename(restaurant_pic.filename)
+                    upload = upload_file_to_s3(restaurant_pic)
+                    first_image = Restaurant_image(
+                        url = upload['url']
+                    )
+                    restaurant.restaurant_pic = upload['url']
+                    db.session.add(first_image)
+                    restaurant.restaurant_images.append(first_image)
+                else:
+                    other_pic = file
+                    other_pic.filename = get_unique_filename(other_pic.filename)
+                    other_upload = upload_file_to_s3(other_pic)
+                    other_image = Restaurant_image(
+                        url = other_upload['url']
+                    )
+                    restaurant.restaurant_images.append(other_image)
+                    db.session.add(other_image)
       
         restaurant.name=form.data['name']
         restaurant.phone = form.data['phone']

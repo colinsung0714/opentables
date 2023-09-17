@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { dateformatConverter, selectionMapper } from "../helper";
 import { fetchSearchRestaurant, fetchSearchRestaurantSuggestion } from '../../store/restaurant'
 import { fetchAllReservation } from "../../store/reservation";
+import { SelectionList } from "../SelectionList";
 
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -36,6 +37,7 @@ export const LandingPage = () => {
     const eighthTime = new Date(seventhTime.getTime() + 30 * 60 * 1000)
     const ninthTime = new Date(eighthTime.getTime() + 30 * 60 * 1000)
     const tenthTime = new Date(ninthTime.getTime() + 30 * 60 * 1000)
+
     const reservations = Object.values(useSelector(state => state.reservation.allReservations))
     useEffect(() => {
         dispatch(fetchAllRestaurants()).then(() => dispatch(fetchAllReservation()))
@@ -68,6 +70,7 @@ export const LandingPage = () => {
         }
         dispatch(fetchSearchRestaurant(searchData)).catch(e => setError(e))
         setError({})
+        setSuggestions([])
     }
 
     const responsive = {
@@ -77,12 +80,6 @@ export const LandingPage = () => {
             items: 3
         }
     };
-
-    const handleSuggestion = e => {
-        console.log(e.target.value)
-        e.stopPropagation()
-        setSearch(e.target.value)
-    }
    
     return (
         <>
@@ -129,7 +126,7 @@ export const LandingPage = () => {
 
                         <i className="fas fa-search"></i>
                         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Restaurant..." />
-                        {suggestions?.length > 0 && <div id="suggestion-list">{suggestions.map(suggestion => <input readOnly value={suggestion.name} onClick={e=>handleSuggestion(e)} key={suggestion.id} style={{ color: "gray", fontSize: "12px", width:"95%", paddingBottom:"5px", cursor:"pointer" }}/>)}</div>}
+                        {suggestions?.length > 0 && <div id="suggestion-list">{suggestions.map(suggestion => <div style={{width:"100%"}} key={suggestion.id}><SelectionList suggestion={suggestion} setSearch={setSearch} /></div>)}</div>}
                     </div>
                     <button type="submit">Let's go</button>
                 </form>

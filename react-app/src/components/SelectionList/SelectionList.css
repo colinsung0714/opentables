@@ -1,0 +1,19 @@
+.suggestion-input-container {
+    display: flex;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    align-items: center;
+}
+
+#suggestion-input {
+    background-color: transparent;
+    width: 95%;
+    padding-bottom: 5px;
+    cursor: pointer;
+    text-align: left;
+}
+
+
+

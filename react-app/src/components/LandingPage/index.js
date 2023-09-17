@@ -83,10 +83,10 @@ export const LandingPage = () => {
             <div className="search-filter-contaner">
                 <div style={{ fontSize: '48px', color: 'white', fontWeight: 'bold' }}>Find your table for any occasion</div>
                 <form onSubmit={handleSubmit} className="date-time-party-container">
-                    <div className="date-container">
+                    <div style={{cursor:"pointer"}} className="date-container">
                         <DatePicker selected={startDate} minDate={today} onChange={(date) => setstartDate(date)} />
                     </div>
-                    <div className="time-container">
+                    <div style={{cursor:"pointer"}} className="time-container">
                         <i className="far fa-clock"></i>
                         <select value={time} onChange={handleTime}>
                             {startDate.toString().slice(0, 15) === today.toString().slice(0, 15) ? <>

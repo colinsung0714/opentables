@@ -125,7 +125,7 @@ export const LandingPage = () => {
                     <div className="search-bar">
 
                         <i className="fas fa-search"></i>
-                        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Restaurant..." />
+                        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Location, Restaurant, or Cuisine" />
                         {suggestions?.length > 0 && <div id="suggestion-list">{suggestions.map(suggestion => <div style={{width:"100%"}} key={suggestion.id}><SelectionList suggestion={suggestion} setSearch={setSearch} /></div>)}</div>}
                     </div>
                     <button type="submit">Let's go</button>

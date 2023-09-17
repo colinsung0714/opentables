@@ -66,7 +66,7 @@ export const NewRestaurantForm = () => {
         if (street?.length < 1) errorObj.street = '*'
         if (city?.length < 1) errorObj.city = '*'
         if (priceRange < 1) errorObj.priceRange = 'Select Price Rating:'
-        if (categories?.length < 1 || categories?.length > 100) errorObj.categories = 'categoreis should be less than 100 char'
+        if (categories?.length < 1 || categories?.length > 100) errorObj.categories = 'categories should be less than 100 char'
         if (description?.length < 1 || description?.length > 255) errorObj.description = 'description should be less than 255 char'
         if (checkMonday) {
             if (!mondayOpen || !mondayClose) errorObj.monday = 'Please select time for monday'

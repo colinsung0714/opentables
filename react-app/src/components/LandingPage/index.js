@@ -46,10 +46,10 @@ export const LandingPage = () => {
             name: search,
             date_time: dateformatConverter(startDate, time)
         }
-        if (search.length === 0) {
+        if (search?.length === 0) {
             setSuggestions([])
         }
-        if (search.length > 0) dispatch(fetchSearchRestaurantSuggestion(searchData)).then(data => setSuggestions(data.restaurants)).catch(e => setError(e))
+        if (search?.length > 0) dispatch(fetchSearchRestaurantSuggestion(searchData)).then(data => setSuggestions(data.restaurants)).catch(e => setError(e))
         setError({})
     }, [search])
 
@@ -77,6 +77,12 @@ export const LandingPage = () => {
             items: 3
         }
     };
+
+    const handleSuggestion = e => {
+        console.log(e.target.value)
+        e.stopPropagation()
+        setSearch(e.target.value)
+    }
    
     return (
         <>
@@ -123,7 +129,7 @@ export const LandingPage = () => {
 
                         <i className="fas fa-search"></i>
                         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Restaurant..." />
-                        {suggestions?.length > 0 && <div id="suggestion-list">{suggestions.map(suggestion => <div key={suggestion.id} style={{ color: "gray", fontSize: "12px" }}>{suggestion.name}</div>)}</div>}
+                        {suggestions?.length > 0 && <div id="suggestion-list">{suggestions.map(suggestion => <input readOnly value={suggestion.name} onClick={e=>handleSuggestion(e)} key={suggestion.id} style={{ color: "gray", fontSize: "12px", width:"95%", paddingBottom:"5px", cursor:"pointer" }}/>)}</div>}
                     </div>
                     <button type="submit">Let's go</button>
                 </form>

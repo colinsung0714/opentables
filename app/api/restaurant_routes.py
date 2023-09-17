@@ -317,7 +317,6 @@ def search_restaurant():
     target_day = reservation_date.strftime('%A')
     if data['name']:
         restaurants = Restaurant.query.options(joinedload(Restaurant.menus).options(joinedload(Menu.menu_items))).filter(or_(Restaurant.name.ilike(f"%{data['name']}%"), Restaurant.categories.ilike(f"%{data['name']}%"), MenuItem.name.ilike(f"%{data['name']}%"))).all()
-        print(restaurants)
         if restaurants:
             avaliable_restaurant = []
             for restaurant in restaurants:

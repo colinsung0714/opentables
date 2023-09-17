@@ -18,6 +18,10 @@ export const ReviewContainer = ({ review }) => {
             items: 3
         }
     };
+    const handleImgClick = (e, url) => {
+        e.stopPropagation()
+        window.open(url)
+    }
     return (
         <div className="whole-single-review-container">
             <div className="single-review-container">
@@ -54,7 +58,7 @@ export const ReviewContainer = ({ review }) => {
             </div>
             <div style={{ width: "350px" }}>{
              review.reviewImages?.length > 0 &&   <Carousel responsive={responsive}>
-                    {review.reviewImages.map(el => <img style={{ width: "100px", height: "100px", borderRadius: "10px" }} src={el.url} key={el.id} />)}
+                    {review.reviewImages.map(el => <img onClick={e=>handleImgClick(e, el.url)} style={{ width: "100px", height: "100px", borderRadius: "10px" , cursor:"pointer"}} src={el.url} key={el.id} />)}
                 </Carousel>
             }</div>
         </div>

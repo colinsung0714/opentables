@@ -79,6 +79,10 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    border: 2px solid #d8d9db;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .party-container {

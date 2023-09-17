@@ -88,7 +88,10 @@ export const RestaurantDetail = () => {
         }
     };
     const sumAllPhotosList = sumAllPhotos(restaurant, reviews)
-
+    const handleImgClick = (e, url) => {
+        e.stopPropagation()
+        window.open(url)
+    }
     return (
         <div className="restaurant-detail-container">
             <div style={{ width: "100%", margin: "0 250px" }}>
@@ -122,7 +125,7 @@ export const RestaurantDetail = () => {
                         <div id="restaurant-photo-container" style={{fontWeight:"bold", paddingTop:"40px", paddingBottom:"20px"}}>{sumAllPhotosList?.length > 1 ? `${sumAllPhotosList?.length } Photos` : sumAllPhotosList?.length === 1 ? `${sumAllPhotosList?.length } Photo` : "Photo"}</div>
                         <div style={{width:"540px",  paddingBottom:"20px"}}>
                         { sumAllPhotosList?.length > 0  ? <Carousel responsive={responsive}>
-                            {sumAllPhotosList.map(el => <img style={{width:"150px", height:"150px", borderRadius:"10px"}} src={el.url} key={el}/>)}
+                            {sumAllPhotosList.map(el => <img onClick={e=>handleImgClick(e, el.url)} style={{width:"150px", height:"150px", borderRadius:"10px", cursor:"pointer"}} src={el.url} key={el}/>)}
                         </Carousel> : "Restaurant photos are not available"}
                         </div>
                         <div id="menu-start" style={{paddingTop:"40px", borderTop:"2px solid #d8d9db"}}>Menu</div>

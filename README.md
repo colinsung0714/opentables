@@ -18,5 +18,5 @@ https://open-tables.onrender.com
 [Feature List](https://github.com/colinsung0714/opentables/wiki/Features) |
 [Database Scheme](https://github.com/colinsung0714/opentables/wiki/Database-Schema-and-Backend-Routes) |
 [User Stories](https://github.com/colinsung0714/opentables/wiki/User-Stories-and-Future-Implementations) |
-[Wireframes](https://github.com/colinsung0714/opentables/wiki/Wireframes) |
+[Wireframes](https://github.com/colinsung0714/opentables/wiki/Wireframes)
 

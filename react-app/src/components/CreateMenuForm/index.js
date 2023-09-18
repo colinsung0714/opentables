@@ -47,10 +47,10 @@ export const CreateMenuForm = () => {
             </div>
             <form onSubmit={handleSubmit} className="menu-form-main-container">
 
-                <h2 style={{ textAlign: "center" }}>{`Add a new menu for ${restaurant.name}`}</h2>
+                <h2 style={{ textAlign: "center" }}>{`Add a new menu for ${restaurant?.name}`}</h2>
                 <p style={{ color: "red" }}>{error.price && error.price}</p>
                 <div id="new-menu-form-container">
-                    {menuItems.map((item, idx) => (
+                    {menuItems?.map((item, idx) => (
                         <div key={idx} className="input-menu-item-container">
                             <div id="input-menu-item-list">
                                 <div style={{ display: 'flex', alignItems: "center", gap: "10px" }}>

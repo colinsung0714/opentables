@@ -139,7 +139,12 @@ export const NewRestaurantForm = () => {
                 formData.append('sunday_close', sundayClose)
             }
 
-            if (type === 'update') dispatch(fetchUpdateRestaurant(formData, restaurantId)).then(restaurant => history.push(`/restaurants/${restaurantId}`)).catch(err => setError(err))
+            if (type === 'update') dispatch(fetchUpdateRestaurant(formData, restaurantId)).then(restaurant => history.push(`/restaurants/${restaurantId}`)).catch(err => {
+                const errorMsg = {}
+                errorMsg.location = err.error
+                setError(errorMsg)
+                setLoading(false)
+            })
             else dispatch(fetchNewRestaurant(formData, currentUser.id)).then(restaurant => history.push(`/restaurants/${restaurant.id}`)).catch(err => {
                 const errorMsg = {}
                 errorMsg.location = err.error

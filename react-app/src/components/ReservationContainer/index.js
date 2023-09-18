@@ -39,7 +39,7 @@ export const ReservationContainer = ({ reservation, type }) => {
             </div>
             <div>{type === 'upcoming' ?
                 <div className="reservation-button-upcoming-container">
-                    <button onClick={() => history.push(`/user/${currentUser.id}/restaurants/${reservation.restaurantInfo.id}/reservations/new`, { type: 'update', reservation })}>Update Reservation</button>
+                    <button onClick={() => history.push(`/user/${currentUser.id}/restaurants/${reservation.restaurantInfo.id}/reservations/new`, { type: 'update', reservation })}>Modify Reservation</button>
                     <OpenModalButton
                         className='reservation-delete-button'
                         buttonText="Cancel Reservation"

@@ -16,6 +16,7 @@ import {fetchallRestaurantReservations} from '../../store/reservation'
 import { fetchAllMenusForRestaurant } from "../../store/menu";
 import { MenusContainer } from "../MenusContainer";
 import { sumAllPhotos } from "../helper";
+import { ImageOpenModal } from "../ImageOpenModal";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -90,7 +91,7 @@ export const RestaurantDetail = () => {
     const sumAllPhotosList = sumAllPhotos(restaurant, reviews)
     const handleImgClick = (e, url) => {
         e.stopPropagation()
-        window.open(url)
+        setModalContent(<ImageOpenModal url={url}/>)
     }
     return (
         <div className="restaurant-detail-container">

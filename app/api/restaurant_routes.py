@@ -208,7 +208,19 @@ def update_restaurant(restaurantId):
                     )
                     restaurant.restaurant_images.append(other_image)
                     db.session.add(other_image)
-      
+        api_key = os.environ.get('MAPS_API_KEY')
+        gmaps = googlemaps.Client(key=api_key)
+        street = form.data['state']
+        state= form.data['state']
+        city = form.data['city']
+
+        
+        try:
+            geocode_result = gmaps.geocode(f'{street}, {city}, {state}')
+            lat, lng = geocode_result[0]['geometry']['location'].values()
+        
+        except IndexError as e:
+            return {'error':'Please provide address correctly'}, 400
         restaurant.name=form.data['name']
         restaurant.phone = form.data['phone']
         restaurant.street = form.data['street']
@@ -219,6 +231,8 @@ def update_restaurant(restaurantId):
         restaurant.categories = form.data['categories']
         restaurant.description = form.data['description']
         restaurant.avg_price = form.data['avg_price']
+        restaurant.lat = lat
+        restaurant.lng = lng
         
         restaurant.business_hours= []
         if form.data['monday_open']:

@@ -211,7 +211,7 @@ export const NewRestaurantForm = () => {
                                     <div>Street</div>
                                     {error.street && <p style={{ margin: "0", color: "red" }} >{error.street}</p>}
                                 </div>
-                                <input placeholder="ex. 410 Terry Ave N" style={{ width: "100%", height: "30px" }} type="text" value={street} onChange={e => setStreet(e.target.value)} required />
+                                <input maxLength={90} placeholder="ex. 410 Terry Ave N" style={{ width: "100%", height: "30px" }} type="text" value={street} onChange={e => setStreet(e.target.value)} required />
                             </label>
                         </div>
                         <div style={{ width: '100%', display: "flex" }}>
@@ -220,14 +220,14 @@ export const NewRestaurantForm = () => {
                                     <div>City</div>
                                     {error.city && <p style={{ margin: "0", color: "red" }} >{error.city}</p>}
                                 </div>
-                                <input placeholder="ex. Seattle" style={{ width: "100%", height: "30px" }} type="text" value={city} onChange={e => setCity(e.target.value)} required />
+                                <input  maxLength={50} placeholder="ex. Seattle" style={{ width: "100%", height: "30px" }} type="text" value={city} onChange={e => setCity(e.target.value)} required />
                             </label>
                             <label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                     <div>State</div>
                                     {error.state && <p style={{ margin: "0", color: "red" }} >{error.state}</p>}
                                 </div>
-                                <input placeholder="ex. WA" style={{ width: "100%", height: "30px" }} type="text" value={state} onChange={e => setState(e.target.value)} required />
+                                <input maxLength={50} placeholder="ex. WA" style={{ width: "100%", height: "30px" }} type="text" value={state} onChange={e => setState(e.target.value)} required />
                             </label>
                             <label>
                                 <div>Country</div>

@@ -6,10 +6,13 @@ import "../ReviewContainer/ReviewContainer.css"
 import OpenModalButton from "../OpenModalButton";
 import { NewReviewFormModal } from '../NewReviewFormModal'
 import { DeleteReviewModal } from "../DeleteReviewModal";
+import { useModal } from '../../context/Modal';
+import { ImageOpenModal } from "../ImageOpenModal";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 export const ReviewContainer = ({ review }) => {
     const currentUser = useSelector(state => state.session.user)
+    const { setModalContent, setOnModalClose } = useModal();
     const reservation = Object.values(useSelector(state => state.reservation.restaurantReservations)).find(reserv => reserv.userId === currentUser?.id)
     const responsive = {
 
@@ -20,7 +23,7 @@ export const ReviewContainer = ({ review }) => {
     };
     const handleImgClick = (e, url) => {
         e.stopPropagation()
-        window.open(url)
+        setModalContent(<ImageOpenModal url={url}/>)
     }
     return (
         <div className="whole-single-review-container">

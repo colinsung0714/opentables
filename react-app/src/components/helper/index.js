@@ -288,3 +288,9 @@ export const sumAllPhotos = (restaurant, reviewList) => {
  
     return res
 }
+
+export const anHourMapper = (list, time) =>{
+    const timeIndex = list?.indexOf(time)
+    const newList = list?.slice(timeIndex, timeIndex+3)
+    return newList
+}

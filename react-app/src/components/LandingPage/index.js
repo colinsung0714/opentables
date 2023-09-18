@@ -138,7 +138,7 @@ export const LandingPage = () => {
                 {
                     restaurants.length ?
                         <Carousel responsive={responsive}>
-                            {restaurants.map(restaurant => <div key={restaurant.id}><RestaurantContainer restaurant={restaurant} reservations={reservations} startDate={startDate} /></div>)}
+                            {restaurants.map(restaurant => <div key={restaurant.id}><RestaurantContainer restaurant={restaurant} reservations={reservations} time={time} startDate={startDate} /></div>)}
                         </Carousel>
                         :
                         <div style={{ margin: "0 140px", width: "400px" }}>There is no available restaurants</div>

@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 import { selectionMapper, convertIntDaytoStringDay, normalizationListOfreservationDateTime, matchingDay, filterTimeMatchDay, filterFinalList, convertTofullDateString, currentSelectionMapper, dateformatConverter } from '../helper'
 import LoginFormModal from "../LoginFormModal";
 import { useModal } from '../../context/Modal';
-export const RestaurantContainer = ({ restaurant, reservations, startDate }) => {
+import { anHourMapper } from "../helper";
+export const RestaurantContainer = ({ restaurant, reservations, startDate, time }) => {
     const history = useHistory()
     const movetoRestaurantDetail = (id) => {
         history.push(`/restaurants/${id}`)
@@ -46,8 +47,9 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate }) => 
         const deleteList = currentSelectionMapper()
         filterFinalList(filterBusinessHour, deleteList)
     }
-   
-    
+    let recommendTime;
+    if(filterBusinessHour) recommendTime = anHourMapper(filterBusinessHour, time)
+
     return (
         <div onClick={() => movetoRestaurantDetail(restaurant.id)} className="single-restaurant-container">
             <div className="img-container"><img src={restaurant.restaurantPic} /></div>
@@ -66,7 +68,7 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate }) => 
                 </div>
             </div>
             <div style={{display:"flex", gap:"5px"}}>
-                {filterBusinessHour.length ? filterBusinessHour.slice(0, 3).map(time => <button onClick={(e)=>{
+                {recommendTime?.length ? recommendTime.map(time => <button onClick={(e)=>{
                     e.stopPropagation()
                     if(currentUser) {
                         history.push(`/user/${currentUser.id}/restaurants/${restaurant.id}/reservations/new`)

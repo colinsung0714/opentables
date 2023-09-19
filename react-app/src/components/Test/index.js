@@ -1,43 +1,28 @@
-import React, { useState, useEffect } from "react";
-const moment = require('moment-timezone');
+import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getKey } from "../../store/maps";
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+
 
 export const Test = () => {
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const [userTime, setUserTime] = useState('');
+    const [address, setAddress] = useState('')
+    const dispatch = useDispatch()
+    const apiKey = useSelector(state => state.maps.key)
 
-    useEffect(() => {
-        displayTimeInUserTimezone();
-    }, []);
 
-    function detectUserTimezone() {
-        const userTimezoneOffset = new Date().getTimezoneOffset();
-        const timezoneIdentifier = moment.tz.guess(); 
-        return timezoneIdentifier;
-    }
-
-    function displayTimeInUserTimezone() {
-        const userTimezone = detectUserTimezone();
-        const nowInUserTimezone = moment.tz(userTimezone);
-        const formattedTime = nowInUserTimezone.format('YYYY-MM-DD HH:mm:ss');
-        setUserTime(formattedTime);
-        console.log(`Time in User's Timezone: ${formattedTime}`);
-    }
-
-    const test1 = new Date().toLocaleString('en-US', { timeZone: timeZone });
-    const test2 = new Date().toLocaleString();
-    const test3 = new Date().toUTCString();
-    const test4 = new Date(test3).toString();
-    const test5 = new Date(test1);
-
+  useEffect(() => {
+    dispatch(getKey())
+}, []);
+    console.log(address)
     return (
-        <div>
-            <h1>{timeZone}</h1>
-            <h1>{`test1:${test1}`}</h1>
-            <h1>{`test2:${test2}`}</h1>
-            <h1>{`test3:${test3}`}</h1>
-            <h1>{`test4:${test4}`}</h1>
-            <h1>{`test5:${test5}`}</h1>
-            <h1>{`User's Timezone: ${userTime}`}</h1>
+        <div className="App" style={{width:"300px"}}>
+            {apiKey && <GooglePlacesAutocomplete
+                apiKey={apiKey}
+                selectProps={{
+                  address,
+                  onChange: setAddress
+                }}
+            />}
         </div>
-    );
+    )
 }

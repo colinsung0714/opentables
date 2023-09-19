@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import '../NewRestaurantForm/NewRestaurantForm.css'
@@ -6,13 +6,17 @@ import { selectionMapper, phoneValidate } from '../helper'
 import { fetchNewRestaurant, fetchUpdateRestaurant } from "../../store/restaurant";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { getKey } from "../../store/maps";
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import { useDropzone } from 'react-dropzone'
 
 export const NewRestaurantForm = () => {
+
     const dispatch = useDispatch()
     const history = useHistory()
     const location = useLocation()
-
     const currentUser = useSelector(state => state.session.user)
+    const apiKey = useSelector(state => state.maps.key)
     const type = location.state ? location.state.type : 'create'
     const restaurantId = location.state ? location.state.restaurantId : null
     const restaurant = Object.values(useSelector(state => state.restaurant.allRestaurants)).filter(updateRestaurant => updateRestaurant.id === restaurantId)
@@ -39,6 +43,7 @@ export const NewRestaurantForm = () => {
     const [checkSunday, setCheckSunday] = useState(type === 'update' && restaurant[0]?.business_hours.find(hours => hours.day === 'Sunday')?.start ? true : false)
     const [priceRange, setpriceRange] = useState(type === 'update' ? restaurant[0]?.avgPrice : 0)
     const [image, setImage] = useState(null);
+    const [address, setAddress] = useState('')
     const [name, setName] = useState(type === 'update' ? restaurant[0]?.name : '')
     const [phone, setPhone] = useState(type === 'update' ? restaurant[0]?.phone : '')
     const [street, setStreet] = useState(type === 'update' ? restaurant[0]?.street : '')
@@ -52,8 +57,19 @@ export const NewRestaurantForm = () => {
     const [loading, setLoading] = useState(false)
     const [imageUrls, setImageUrls] = useState(type === 'update' ? restaurant[0]?.restaurantImages.map(el => el.url) : [])
     useEffect(() => {
-
+        if (address) {
+            const addresParts = address.label?.split(',')
+            if (addresParts?.length) {
+                setStreet(addresParts[0])
+                setCity(addresParts[1])
+                setState(addresParts[2])
+            }
+        }
+        if (!apiKey) dispatch(getKey())
         const errorObj = {}
+        if (type !== 'update' && address.length < 1) {
+            errorObj.address = '*'
+        }
         if (zipCode?.length !== 5 || isNaN(Number(zipCode))) {
             errorObj.zipcode = 'Need to be 5 digit numbers'
 
@@ -90,7 +106,7 @@ export const NewRestaurantForm = () => {
             if (!sundayOpen || !sundayClose) errorObj.sunday = 'Please select time for sunday'
         }
         setError(errorObj)
-    }, [phone, zipCode, name, street, city, state, priceRange, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday])
+    }, [phone, zipCode, name, street, city, state, priceRange, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday, apiKey, address])
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!Object.values(error).length) {
@@ -155,18 +171,6 @@ export const NewRestaurantForm = () => {
             setError({})
         }
     }
-    const handleImages = e => {
-        const files = [...e.target.files];
-        setImage(files);
-
-        const tempImageUrls = [];
-
-        files.forEach((file) => {
-            const url = URL.createObjectURL(file);
-            tempImageUrls.push(url);
-        });
-        setImageUrls(tempImageUrls);
-    }
 
     const responsive = {
 
@@ -176,12 +180,21 @@ export const NewRestaurantForm = () => {
         }
     };
 
-
-
+    const onDrop = useCallback(acceptedFiles => {
+        setImage(acceptedFiles)
+        const tempImageUrls = [];
+        acceptedFiles.forEach((file) => {
+            const url = URL.createObjectURL(file);
+            tempImageUrls.push(url);
+        });
+        setImageUrls(tempImageUrls);
+    }, [])
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: {
+        'image/*': []
+      }, noClick:true, onDrop, noDragEventsBubbling:true})
     return (
 
         <div className="new-restaurant-container">
-
             <div className="intro-new-restaurant">
                 <h2>Dig into the world's most complete restaurant platform</h2>
                 <div>The most valuable diner network that's 20+ years in the making</div>
@@ -197,6 +210,30 @@ export const NewRestaurantForm = () => {
                             </div>
                             <input maxLength={100} placeholder="ex. my restaurant" style={{ width: "100%", height: "30px" }} type="text" value={name} onChange={e => setName(e.target.value)} required />
                         </label>
+                        <div>
+                            <label>
+                                <div style={{ width: '100%', display: "flex", gap: "5px" }}>
+                                    <div>Address</div>
+                                    {error.address && <p style={{ margin: "0", color: "red" }} >{error.address}</p>}
+                                </div>
+                                <div id='autofill-container' style={{ fontSize: "13px" }}>
+                                    {apiKey && <GooglePlacesAutocomplete
+                                        apiKey={apiKey}
+                                        selectProps={{
+                                            address,
+                                            onChange: setAddress,
+                                            styles: {
+                                                input: (provided) => ({
+                                                    ...provided,
+                                                    color: 'black',
+                                                })
+                                            },
+                                            placeholder: "Type your address"
+                                        }}
+
+                                    />}</div>
+                            </label>
+                        </div>
                         <div style={{ width: '100%', display: "flex" }}>
                             <label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
@@ -220,7 +257,7 @@ export const NewRestaurantForm = () => {
                                     <div>City</div>
                                     {error.city && <p style={{ margin: "0", color: "red" }} >{error.city}</p>}
                                 </div>
-                                <input  maxLength={50} placeholder="ex. Seattle" style={{ width: "100%", height: "30px" }} type="text" value={city} onChange={e => setCity(e.target.value)} required />
+                                <input maxLength={50} placeholder="ex. Seattle" style={{ width: "100%", height: "30px" }} type="text" value={city} onChange={e => setCity(e.target.value)} required />
                             </label>
                             <label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
@@ -281,18 +318,24 @@ export const NewRestaurantForm = () => {
                             <div style={{ width: '100%' }}>
                                 <label style={{ width: '100%', display: "flex", flexDirection: "column", gap: "10px" }}>
                                     <div>Restaurant Picture</div>
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        multiple
-                                        onChange={handleImages}
-                                    />
+                                    <div className="drag-drop-pic-piclist-container">
+                                    <div id="drag-drop-pic-container" {...getRootProps()}>
+                                        <input {...getInputProps()} />
+                                        {
+                                            isDragActive ?
+                                                <p style={{color:"#2684ff"}}>Drop the images here ...</p> :
+                                                <p>Drag 'n' drop some images here, or click to select images</p>
+                                        }
+                                    </div>
+                                 
+                                    </div>
                                 </label>
                                 <div style={{ width: "600px", paddingTop: "10px" }}>
-                                    {imageUrls?.length > 0 && <Carousel responsive={responsive}>
-                                        {imageUrls.map(el => <img style={{ width: "150px", height: "150px", borderRadius: "10px" }} src={el} key={el} />)}
-                                    </Carousel>}
-                                </div>
+            
+            {imageUrls?.length > 0 && <Carousel responsive={responsive}>
+                {imageUrls.map(el => <img style={{ width: "150px", height: "150px", borderRadius: "10px" }} src={el} key={el} />)}
+            </Carousel>}
+        </div>
                             </div>
                         </div>
                         <div className="businesshour-container-newform">
@@ -403,11 +446,11 @@ export const NewRestaurantForm = () => {
                                 </label>
                             </div>
                         </div>
-                        {loading && <div style={{ display: "flex", gap: "20px", justifyContent: "center", alignItems: "center", padding:"20px" }}>
+                        {loading && <div style={{ display: "flex", gap: "20px", justifyContent: "center", alignItems: "center", padding: "20px" }}>
                             <i id="loading-circle" className="fas fa-circle-notch" style={{ color: '#2b46b6' }}></i>
                             <p style={{ fontWeight: "bold" }}>Please wait...</p>
                         </div>}
-                        {error.location && <p style={{ color: "red", textAlign:"center" }}>{error.location}</p>}
+                        {error.location && <p style={{ color: "red", textAlign: "center" }}>{error.location}</p>}
                         <button style={Object.values(error).length > 0 ? { backgroundColor: "#ccc", color: "#666", cursor: "not-allowed" } : null} type="submit">{type === 'update' ? 'Update Restaurant' : 'Submit'}</button>
                         <div id="empty-space" style={{ height: "50px" }}></div>
                     </form>

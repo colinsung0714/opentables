@@ -64,11 +64,23 @@ def new_restaurant(userId):
             upload['url'] = 'https://opentables.s3.us-west-1.amazonaws.com/default_restaurant.jpg'
         api_key = os.environ.get('MAPS_API_KEY')
         gmaps = googlemaps.Client(key=api_key)
-        street = form.data['state']
+        street = form.data['street']
         state= form.data['state']
         city = form.data['city']
+        zipCode = form.data['zip_code']
 
-        
+        addressvalidation_result =  gmaps.addressvalidation([street], 
+                                                    regionCode='US',
+                                                    locality=city, 
+                                                    enableUspsCass=True)
+        try:
+            postalCode = addressvalidation_result['result']['address']['postalAddress']['postalCode'][:5]
+        except KeyError as e:
+            return {'error':'Invalid Street Address'}, 400  
+       
+        if(postalCode != zipCode): 
+           return {'error': f'zip code is incorrect. Did you mean {postalCode}?'}, 400
+                                               
         try:
             geocode_result = gmaps.geocode(f'{street}, {city}, {state}')
             lat, lng = geocode_result[0]['geometry']['location'].values()
@@ -210,11 +222,22 @@ def update_restaurant(restaurantId):
                     db.session.add(other_image)
         api_key = os.environ.get('MAPS_API_KEY')
         gmaps = googlemaps.Client(key=api_key)
-        street = form.data['state']
+        street = form.data['street']
         state= form.data['state']
         city = form.data['city']
+        zipCode = form.data['zip_code']
+        addressvalidation_result =  gmaps.addressvalidation([street, city, state, zipCode], 
+                                                    regionCode='US',
+                                                    locality=city, 
+                                                    enableUspsCass=True)
+        try:
+            postalCode = addressvalidation_result['result']['address']['postalAddress']['postalCode'][:5]
+        except KeyError as e:
+            return {'error':'Invalid Street Address'}, 400  
+       
+        if(postalCode != zipCode): 
+           return {'error': f'zip code is incorrect. Did you mean {postalCode}?'}, 400
 
-        
         try:
             geocode_result = gmaps.geocode(f'{street}, {city}, {state}')
             lat, lng = geocode_result[0]['geometry']['location'].values()

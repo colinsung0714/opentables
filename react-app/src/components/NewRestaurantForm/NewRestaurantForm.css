@@ -42,13 +42,28 @@
     padding: 10px;
 }
 
+#restaurant-form input {
+    border:solid 1px hsl(0, 0%, 80%);
+}
+
+#restaurant-form input:focus {
+    outline-color: #2684ff;
+}
+
+#restaurant-form textarea {
+    border: solid 1px hsl(0, 0%, 80%);
+}
+#restaurant-form textarea:focus {
+    outline-color: #2684ff;
+}
+
 .businesshour-container-newform {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    border: 2px solid black;
+    border: 1px solid lightgray;
     width: fit-content;
     margin: auto;
     padding: 10px;
@@ -68,6 +83,26 @@
     display: flex;
     gap: 5px;
     align-items: center;
+}
+
+.drag-drop-pic-piclist-container {
+    border: solid 1px lightgray;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+#drag-drop-pic-container {
+ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgray;
+    padding: 20px;
+    border: dashed 1px lightgray;
+}
+
+#drag-drop-pic-container:focus {
+    outline: dashed #2684ff;
 }
 
 #loading-circle {

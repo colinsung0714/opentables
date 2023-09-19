@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { useModal } from "../../context/Modal";
 import '../NewReviewFormModal/NewReviewFormModal.css'
 import { fetchSingleRestaurants } from "../../store/restaurant";
 import { fetchaddReview, fetchupdateReview, fetchReviewRestaurant } from "../../store/review";
 import Carousel from 'react-multi-carousel';
+import { useDropzone } from 'react-dropzone'
 import 'react-multi-carousel/lib/styles.css';
 export const NewReviewFormModal = ({ reservation, user, type }) => {
     let updateReview = Object.values(useSelector(state => state.review.restaurantReviews)).find(rev => rev.userId == user.id)
@@ -17,6 +18,18 @@ export const NewReviewFormModal = ({ reservation, user, type }) => {
     const [loading, setLoading] = useState(false)
     const [imagesUrls, setImagesUrls] = useState(type === 'update' ? updateReview?.reviewImages.map(prevReview => prevReview.url) : [])
     const dispatch = useDispatch()
+    const onDrop = useCallback(acceptedFiles => {
+        setImages(acceptedFiles)
+        const tempImageUrls = [];
+        acceptedFiles.forEach((file) => {
+            const url = URL.createObjectURL(file);
+            tempImageUrls.push(url);
+        });
+        setImagesUrls(tempImageUrls);
+    }, [])
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: {
+        'image/*': []
+      }, noClick:true, onDrop, noDragEventsBubbling:true})
 
     const reservationDateStringParts = reservation.reservationDate.split(' ')[0].split('-')
     useEffect(() => {
@@ -49,16 +62,7 @@ export const NewReviewFormModal = ({ reservation, user, type }) => {
         }
     }
 
-    const handleReviewImgs = (e) => {
-        const files = [...e.target.files]
-        setImages(files)
-        const tempImageUrls = []
-        files.forEach(file => {
-            const url = URL.createObjectURL(file)
-            tempImageUrls.push(url)
-        })
-        setImagesUrls(tempImageUrls)
-    }
+ 
     const responsive = {
 
         desktop: {
@@ -98,12 +102,17 @@ export const NewReviewFormModal = ({ reservation, user, type }) => {
                 <div>
                     <label style={{ width: '100%', display: "flex", flexDirection: "column", gap: "10px" }}>
                         <div>Review Picture</div>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            multiple
-                            onChange={handleReviewImgs}
-                        />
+                        <div className="drag-drop-pic-piclist-container">
+                                        <div id="drag-drop-pic-container" {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            {
+                                                isDragActive ?
+                                                    <p style={{ color: "#2684ff" }}>Drop the images here ...</p> :
+                                                    <p>Drag 'n' drop some images here, or click to select images</p>
+                                            }
+                                        </div>
+
+                                    </div>
                     </label>
                     <div style={{ width: "600px", paddingTop: "10px" }}>
                         {imagesUrls?.length > 0 && <Carousel responsive={responsive}>

@@ -9,7 +9,7 @@ import { dateformatConverter, selectionMapper } from "../helper";
 import { fetchSearchRestaurant, fetchSearchRestaurantSuggestion } from '../../store/restaurant'
 import { fetchAllReservation } from "../../store/reservation";
 import { SelectionList } from "../SelectionList";
-
+import { getKey } from "../../store/maps";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -40,7 +40,7 @@ export const LandingPage = () => {
 
     const reservations = Object.values(useSelector(state => state.reservation.allReservations))
     useEffect(() => {
-        dispatch(fetchAllRestaurants()).then(() => dispatch(fetchAllReservation()))
+        dispatch(fetchAllRestaurants()).then(() => dispatch(fetchAllReservation())).then(()=>dispatch(getKey()))
     }, [])
     useEffect(() => {
         const searchData = {

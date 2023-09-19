@@ -20,6 +20,15 @@ export const CreateMenuForm = () => {
         setMenuItems((prevItems) => [...prevItems, { name: "", item_type: "", price: "", description: "" }]);
     };
 
+    const handleDelete = (e) => {
+        e.preventDefault()
+        setMenuItems(prev=>{
+            const prevArr = [...prev]
+            prevArr.pop()
+            return prevArr
+        })
+    }
+
     const updateMenuItem = (idx, field, value) => {
         const updatedItems = [...menuItems];
         updatedItems[idx][field] = value;
@@ -113,8 +122,11 @@ export const CreateMenuForm = () => {
                             </div>
                         </div>
                     ))}
-                    <div style={{ padding: "10px 0" }} className="menu-button-container">
-                        <button onClick={e => handleClick(e)}>Add More Item</button>
+                    <div id="menu-item-button-container" style={{ padding: "10px 0", display:"flex", justifyContent:"space-around" }} className="menu-button-container">
+                        <div style={{display:"flex", gap:"20px", padding:"0 50px"}}>
+                        <button onClick={e => handleClick(e)}>Add Item</button>
+                        {menuItems.length > 1 && <button onClick={e => handleDelete(e)}>Delete Item</button>}
+                        </div>
                         <button style={Object.values(error).length > 0 ? { backgroundColor: "#ccc", color: "#666", cursor: "not-allowed" } : null} type="submit">{type === 'update' ? 'Update Menu' : 'Submit'}</button>
                     </div>
                     <div id="empty-space" style={{ height: "50px" }}></div>

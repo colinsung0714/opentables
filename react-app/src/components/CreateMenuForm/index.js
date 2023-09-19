@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import { fetchNewMenuforRestaurant, fetchUpdateMenuforRestaurant } from "../../store/menu";
 import '../CreateMenuForm/CreateMenuForm.css'
 import { useLocation, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { priceDigitChecker } from "../helper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DeleteMenuModal } from "../DeleteMenuModal"
 import OpenModalButton from "../OpenModalButton";
+import { fetchSingleRestaurants } from "../../store/restaurant";
 export const CreateMenuForm = () => {
     const location = useLocation()
     const history = useHistory()
+    const {restaurantId} = useParams()
     const type = location.state ? location.state.type : null
+    const singleRestaurant = useSelector(state=>state.restaurant.singleRestaurant)
     const restaurant = location.state ? location.state.restaurant : null
     const dispatch = useDispatch()
     const menuId = type === 'update' ? restaurant.menus[0].id : null
-    const [menuItems, setMenuItems] = useState(type === 'update' ? [...restaurant.menus[0].menu_items] : [{ name: "", item_type: "", price: "", description: "" }]);
+    const [menuItems, setMenuItems] = useState(type === 'update' ? [...singleRestaurant.menus[0].menu_items] : [{ name: "", item_type: "", price: "", description: "" }]);
     const [error, setError] = useState({})
     const handleClick = (e) => {
         e.preventDefault()
@@ -41,11 +45,11 @@ export const CreateMenuForm = () => {
         else dispatch(fetchNewMenuforRestaurant(menuItems, restaurant.id)).then(() => history.push(`/restaurants/${restaurant.id}`))
     }
     useEffect(() => {
+        if(!singleRestaurant)dispatch(fetchSingleRestaurants(restaurantId))
         const errorObj = {}
         if (priceDigitChecker(menuItems)) errorObj.price =  "The price should be in the format $xxxx.xx"
         setError(errorObj)
     }, [menuItems])
-
 
     return (
         <div className="whole-menu-form">
@@ -67,7 +71,7 @@ export const CreateMenuForm = () => {
                                     {type === 'update' && item.id ? <OpenModalButton
                                         className='menuitem-delete-button'
                                         buttonText="Delete item"
-                                        modalComponent={<DeleteMenuModal item={item} type={'update'} setMenuItems={setMenuItems} />}
+                                        modalComponent={<DeleteMenuModal setMenuItems={setMenuItems} restaurantId={restaurantId} item={item} type={'update'}/>}
                                     /> : null}
                                 </div>
 
@@ -125,7 +129,7 @@ export const CreateMenuForm = () => {
                     <div id="menu-item-button-container" style={{ padding: "10px 0", display:"flex", justifyContent:"space-around" }} className="menu-button-container">
                         <div style={{display:"flex", gap:"20px", padding:"0 50px"}}>
                         <button onClick={e => handleClick(e)}>Add Item</button>
-                        {menuItems.length > 1 && <button onClick={e => handleDelete(e)}>Delete Item</button>}
+                        {type === 'update' && singleRestaurant?.menus[0].menu_items.length < menuItems.length?  <button onClick={e => handleDelete(e)}>Delete Item</button> : type !== 'update' && menuItems.length > 1 ?   <button onClick={e => handleDelete(e)}>Delete Item</button>  : null }
                         </div>
                         <button style={Object.values(error).length > 0 ? { backgroundColor: "#ccc", color: "#666", cursor: "not-allowed" } : null} type="submit">{type === 'update' ? 'Update Menu' : 'Submit'}</button>
                     </div>

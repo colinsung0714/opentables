@@ -3,9 +3,9 @@ import '../DeleteModalButton/DeleteModalButton.css'
 import '../DeleteMenuModal/DeleteMenuModal.css'
 import { useModal } from "../../context/Modal";
 import { fetchDeleteMenu, fetchDeleteMenuItem } from "../../store/menu"
-import { fetchAllRestaurants } from "../../store/restaurant"
+import { fetchAllRestaurants, fetchSingleRestaurants } from "../../store/restaurant"
 import { useDispatch } from "react-redux"
-export const DeleteMenuModal = ({ restaurant, item, type, setMenuItems }) => {
+export const DeleteMenuModal = ({ setMenuItems, restaurant, item, type, restaurantId }) => {
     const { closeModal } = useModal()
     const menuId = restaurant?.menus[0].id
     const dispatch = useDispatch()
@@ -13,7 +13,7 @@ export const DeleteMenuModal = ({ restaurant, item, type, setMenuItems }) => {
         dispatch(fetchDeleteMenu(menuId)).then(() => dispatch(fetchAllRestaurants())).then(() => closeModal())
     }
     const deleteMenuItem = () => {
-        dispatch(fetchDeleteMenuItem(item.id)).then(()=>setMenuItems(prev=>{
+        dispatch(fetchDeleteMenuItem(item.id)).then(()=>dispatch(fetchSingleRestaurants(restaurantId))).then(()=>setMenuItems(prev=>{
             const oldList = prev
             const newList = oldList.filter(el => el.id !== item.id)
             return [...newList]

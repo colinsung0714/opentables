@@ -262,7 +262,6 @@ export const priceDigitChecker = (menus) => {
     for (let menu of menus) {
         const price = menu?.price
         const priceParts = price.split('.')
-        console.log(priceParts)
         const digit = priceParts[1]
         const integer = priceParts[0]
         if (digit?.length > 2 || integer.length > 4) return true

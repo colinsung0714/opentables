@@ -58,13 +58,13 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate, time 
                 <div>
                     <div><StarIcon avgRating={restaurant.avgRating} /></div>
                     <div style={{ display: 'flex', gap: '5px' }}>
-                        <div style={{width:"100px"}}>{restaurant.categories}</div>
-                        <div><AvgPriceIcon avgPrice={restaurant.avgPrice} /></div>
+                        <div style={{width:"100%"}}>{restaurant.categories}</div>
+                        <div id="avgPriceIcon-container"><AvgPriceIcon avgPrice={restaurant.avgPrice} /></div>
                     </div>
                 </div>
                 <div>
                     <div>{restaurant.reviewNum === 0 ? 'New' : restaurant.reviewNum === 1 ? `${restaurant.reviewNum}  review` : `${restaurant.reviewNum} reviews`}</div>
-                    <div>• {restaurant.city}</div>
+                    <div style={{display:"flex",gap:"5px"}}> <i className="fas fa-circle" style={{color: "#041839", fontSize:"10px", paddingTop:"6px", alignSelf:"flex-start"}}></i><div style={{width:"100%", wordBreak:"break-word"}}>{restaurant.city}</div></div>
                 </div>
             </div>
             <div style={{display:"flex", gap:"5px"}}>

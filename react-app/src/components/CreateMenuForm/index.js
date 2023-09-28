@@ -14,10 +14,10 @@ export const CreateMenuForm = () => {
     const {restaurantId} = useParams()
     const type = location.state ? location.state.type : null
     const singleRestaurant = useSelector(state=>state.restaurant.singleRestaurant)
-    const restaurant = location.state ? location.state.restaurant : null
+    const restaurant = location.state ? location.state.restaurant : singleRestaurant
     const dispatch = useDispatch()
     const menuId = type === 'update' ? restaurant.menus[0].id : null
-    const [menuItems, setMenuItems] = useState(type === 'update' ? [...singleRestaurant.menus[0].menu_items] : [{ name: "", item_type: "", price: "", description: "" }]);
+    const [menuItems, setMenuItems] = useState(type === 'update' ? [...restaurant.menus[0].menu_items] : [{ name: "", item_type: "", price: "", description: "" }]);
     const [error, setError] = useState({})
     const handleClick = (e) => {
         e.preventDefault()
@@ -129,7 +129,7 @@ export const CreateMenuForm = () => {
                     <div id="menu-item-button-container" style={{ padding: "10px 0", display:"flex", justifyContent:"space-around" }} className="menu-button-container">
                         <div style={{display:"flex", gap:"20px", padding:"0 50px"}}>
                         <button onClick={e => handleClick(e)}>Add Item</button>
-                        {type === 'update' && singleRestaurant?.menus[0].menu_items.length < menuItems.length?  <button onClick={e => handleDelete(e)}>Delete Item</button> : type !== 'update' && menuItems.length > 1 ?   <button onClick={e => handleDelete(e)}>Delete Item</button>  : null }
+                        {type === 'update' && restaurant?.menus[0].menu_items.length < menuItems.length?  <button onClick={e => handleDelete(e)}>Cancel Item</button> : type !== 'update' && menuItems.length > 1 ?   <button onClick={e => handleDelete(e)}>Cancel Item</button>  : null }
                         </div>
                         <button style={Object.values(error).length > 0 ? { backgroundColor: "#ccc", color: "#666", cursor: "not-allowed" } : null} type="submit">{type === 'update' ? 'Update Menu' : 'Submit'}</button>
                     </div>

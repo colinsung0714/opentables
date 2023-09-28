@@ -93,6 +93,7 @@ export const RestaurantDetail = () => {
         e.stopPropagation()
         setModalContent(<ImageOpenModal url={url}/>)
     }
+    console.log(restaurant)
     return (
         <div className="restaurant-detail-container">
             <div style={{ width: "100%", margin: "0 250px" }}>
@@ -165,6 +166,10 @@ export const RestaurantDetail = () => {
                     <div style={{ fontWeight: "bold" }}>Make a Reservation</div>
                     <button onClick={() => handleClick()}>Find a Time</button>
                     <Maps apiKey={key} lat={restaurant.lat} lng={restaurant.lng} title={restaurant.name} />
+                    <div id="restaurant-detail-address-information-box">
+                        <i className="fas fa-map-marker-alt" style={{fontSize:"30px"}}></i>
+                        <div style={{wordBreak:"break-word", color:"#da3743", fontWeight:"bold", fontSize:"15px"}}>{`${restaurant.street}, ${restaurant.city}, ${restaurant.state} ${restaurant.zipCode} `}</div>
+                    </div>
                 </div>
             </div>
 

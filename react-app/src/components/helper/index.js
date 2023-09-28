@@ -293,3 +293,24 @@ export const anHourMapper = (list, time) =>{
     const newList = list?.slice(timeIndex, timeIndex+3)
     return newList
 }
+
+export const parseDirection = direction => {
+    const parser = new DOMParser()
+    const letter ='abcdefghijklmnopqrstuvwxyz'
+    const string = parser.parseFromString(direction, 'text/html')
+    const stringParts = string.body.textContent.split(' ')
+    const finalList = []
+    for (let part of stringParts) {
+        let word = ''
+        for(let i = 0; i < part.length; i++) {
+            if(i > 1 && part[i].toUpperCase() === part[i] && letter.includes(part[i].toLowerCase())) {
+                word += ` ${part[i]}`
+            } else {
+                word += part[i]
+            }
+        }
+       finalList.push(word)
+    }
+   
+    return finalList.join(' ')
+}

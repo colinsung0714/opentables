@@ -11,7 +11,6 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { useDropzone } from 'react-dropzone'
 
 export const NewRestaurantForm = () => {
-
     const dispatch = useDispatch()
     const history = useHistory()
     const location = useLocation()
@@ -56,7 +55,7 @@ export const NewRestaurantForm = () => {
     const [error, setError] = useState({})
     const [loading, setLoading] = useState(false)
     const [imageUrls, setImageUrls] = useState(type === 'update' ? restaurant[0]?.restaurantImages.map(el => el.url) : [])
-    useEffect(() => {
+    useEffect(async () => {
         if (address) {
             const addresParts = address.label?.split(',')
             if (addresParts?.length) {
@@ -106,7 +105,7 @@ export const NewRestaurantForm = () => {
             if (!sundayOpen || !sundayClose) errorObj.sunday = 'Please select time for sunday'
         }
         setError(errorObj)
-    }, [phone, zipCode, name, street, city, state, priceRange, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday, apiKey, address])
+    }, [window.google, phone, zipCode, name, street, city, state, priceRange, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday, apiKey, address])
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!Object.values(error).length) {
@@ -192,6 +191,7 @@ export const NewRestaurantForm = () => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: {
         'image/*': []
       }, noClick:true, onDrop, noDragEventsBubbling:true})
+
     return (
 
         <div className="new-restaurant-container">
@@ -211,13 +211,13 @@ export const NewRestaurantForm = () => {
                             <input maxLength={100} placeholder="ex. my restaurant" style={{ width: "100%", height: "30px" }} type="text" value={name} onChange={e => setName(e.target.value)} required />
                         </label>
                         <div>
-                            <label>
+                            {<label>
                                 <div style={{ width: '100%', display: "flex", gap: "5px" }}>
                                     <div>Address</div>
                                     {error.address && <p style={{ margin: "0", color: "red" }} >{error.address}</p>}
                                 </div>
                                 <div id='autofill-container' style={{ fontSize: "13px" }}>
-                                    {apiKey && <GooglePlacesAutocomplete
+                                    {<GooglePlacesAutocomplete
                                         apiKey={apiKey}
                                         selectProps={{
                                             address,
@@ -232,7 +232,7 @@ export const NewRestaurantForm = () => {
                                         }}
 
                                     />}</div>
-                            </label>
+                            </label>}
                         </div>
                         <div style={{ width: '100%', display: "flex" }}>
                             <label>

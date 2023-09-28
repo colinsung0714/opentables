@@ -13,7 +13,7 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate, time 
     const movetoRestaurantDetail = (id) => {
         history.push(`/restaurants/${id}`)
     }
-    const { setModalContent, setOnModalClose } = useModal();
+    const { setModalContent } = useModal();
     const currentUser = useSelector(state=>state.session.user)
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
     const userTime = new Date().toLocaleString("en-US", {timeZone:userTimeZone})
@@ -52,7 +52,7 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate, time 
 
     return (
         <div onClick={() => movetoRestaurantDetail(restaurant.id)} className="single-restaurant-container">
-            <div className="img-container"><img src={restaurant.restaurantPic} /></div>
+            <div className="img-container"><img src={restaurant.restaurantPic} alt={restaurant.restaurantPic} /></div>
             <div style={{fontWeight:'bold', wordBreak:"break-all"}}>{restaurant.name}</div>
             <div className="restaurant-middle-container">
                 <div>
@@ -67,7 +67,7 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate, time 
                     <div style={{display:"flex",gap:"5px"}}> <i className="fas fa-circle" style={{color: "#041839", fontSize:"10px", paddingTop:"6px", alignSelf:"flex-start"}}></i><div style={{width:"100%", wordBreak:"break-word"}}>{restaurant.city}</div></div>
                 </div>
             </div>
-            <div style={{display:"flex", gap:"5px"}}>
+            <div id='recommend-time-button-container' style={{display:"flex", gap:"5px"}}>
                 {recommendTime?.length ? recommendTime.map(time => <button onClick={(e)=>{
                     e.stopPropagation()
                     if(currentUser) {

@@ -41,6 +41,8 @@
     gap:20px;
     border: 2px solid #d8d9db;
     height: 500px;
+    position: sticky;
+    top: 50px;
 }
 
 .detail-restaurant-info {
@@ -132,3 +134,8 @@
     border-bottom: 2px solid #d8d9db;
 }
 
+#restaurant-detail-address-information-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}

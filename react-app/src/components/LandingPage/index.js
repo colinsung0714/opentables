@@ -9,7 +9,6 @@ import { dateformatConverter, selectionMapper } from "../helper";
 import { fetchSearchRestaurant, fetchSearchRestaurantSuggestion } from '../../store/restaurant'
 import { fetchAllReservation } from "../../store/reservation";
 import { SelectionList } from "../SelectionList";
-import { getKey } from "../../store/maps";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -26,7 +25,6 @@ export const LandingPage = () => {
     const [error, setError] = useState({})
     const [suggestions, setSuggestions] = useState([])
     const restaurants = Object.values(useSelector(state => state.restaurant.allRestaurants))
-    const todayParts = today.toString().split(' ')
     const firstTime = today.getMinutes() < 30 ? new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours(), 30) : new Date(today.getFullYear(), today.getMonth(), today.getDay(), today.getHours() + 1, 0)
     const secondTime = new Date(firstTime.getTime() + 30 * 60 * 1000)
     const thirdTime = new Date(secondTime.getTime() + 30 * 60 * 1000)
@@ -37,10 +35,9 @@ export const LandingPage = () => {
     const eighthTime = new Date(seventhTime.getTime() + 30 * 60 * 1000)
     const ninthTime = new Date(eighthTime.getTime() + 30 * 60 * 1000)
     const tenthTime = new Date(ninthTime.getTime() + 30 * 60 * 1000)
-
     const reservations = Object.values(useSelector(state => state.reservation.allReservations))
     useEffect(() => {
-        dispatch(fetchAllRestaurants()).then(() => dispatch(fetchAllReservation())).then(()=>dispatch(getKey()))
+        dispatch(fetchAllRestaurants()).then(() => dispatch(fetchAllReservation()))
     }, [])
     useEffect(() => {
         const searchData = {
@@ -74,13 +71,13 @@ export const LandingPage = () => {
     }
 
     const responsive = {
-
+        
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 3
+            items: 4
         }
     };
-   
+
     return (
         <>
             <div className="search-filter-contaner">
@@ -126,7 +123,7 @@ export const LandingPage = () => {
 
                         <i className="fas fa-search"></i>
                         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Location, Restaurant, or Cuisine" />
-                        {suggestions?.length > 0 && <div id="suggestion-list">{suggestions.map(suggestion => <div style={{width:"100%"}} key={suggestion.id}><SelectionList suggestion={suggestion} setSearch={setSearch} /></div>)}</div>}
+                        {suggestions?.length > 0 && <div id="suggestion-list">{suggestions.map(suggestion => <div style={{width:"100%"}} key={suggestion.id}><SelectionList suggestion={suggestion} setSearch={setSearch} party={party} startDate={startDate} time={time} setError={setError} setSuggestions={setSuggestions}  /></div>)}</div>}
                     </div>
                     <button type="submit">Let's go</button>
                 </form>

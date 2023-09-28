@@ -1,0 +1,78 @@
+#route-action-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+#route-action-upper {
+    display: flex;
+    gap: 20px;
+    height: 30px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#route-action-upper div{
+    width: 100%;
+    display: flex;
+}
+
+#route-action-upper button {
+    width: auto;
+    height: 25x;
+    padding: 10px;
+    font-size: 12px;
+}
+
+#route-action-container input {
+    border:1px solid lightgray;
+    border-radius: 5px;
+    height: 25px;
+    padding: 5px;
+}
+
+#route-action-container input:focus {
+  outline-color: rgb(78, 121, 177);
+}
+
+#route-action-bottom {
+    display: flex;
+    gap: 20px;
+    height: 30px;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+#rollback-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#rollback-box i {
+    cursor: pointer;
+}
+
+#start-input {
+ width: 100%;
+}
+
+#destination-input {
+    width: 100%;
+}
+
+#cancel-rollback-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 45px;
+    padding-right: 30px;
+}
+
+#cancel-box-icon {
+    cursor: pointer;
+}

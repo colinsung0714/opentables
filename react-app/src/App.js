@@ -16,18 +16,21 @@ import { Footer } from "./components/Footer";
 import { ManageMenu } from "./components/ManageMenu";
 import { CreateMenuForm } from "./components/CreateMenuForm";
 import { Test } from "./components/Test";
+import { getKey } from "./store/maps";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [apiKey, setApiKey] = useState(false)
   useEffect(() => {
-    dispatch(authenticate()).then(() => setIsLoaded(true));
+    dispatch(authenticate()).then(() => setIsLoaded(true)).then(dispatch(getKey())).then(()=> setApiKey(true));
   }, [dispatch]);
+
 
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
+      {(isLoaded && apiKey)&& (
         <Switch>
           <Route exact path='/'>
             <LandingPage />

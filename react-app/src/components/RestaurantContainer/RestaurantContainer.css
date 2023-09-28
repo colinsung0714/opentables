@@ -29,3 +29,28 @@
 #avgPriceIcon-container div{
     width: 40px;
 }
+
+@media screen and (max-width:1200px) {
+    .img-container img {
+        width: 200px;
+        height: 200px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .single-restaurant-container {
+        /* position: absolute;
+        transition: top 2s ease-in-out .7s; */
+        border: 2px solid #d8d9db;
+        border-radius: 20px;
+        padding: 20px;
+        width: fit-content;
+        width: 200px;
+        font-size: 12px;
+    }
+
+    #recommend-time-button-container button{
+        width: fit-content;
+        padding: 12px;
+    }
+}

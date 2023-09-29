@@ -86,6 +86,7 @@ export const ReservationForm = () => {
     if (Number(userId) !== currentUser.id) history.push('/')
     
     return (
+        <>
         <div className="reservation-form-container">
             <div className="reservation-form-right">
                 <div id="reservation-package-box">
@@ -190,6 +191,9 @@ export const ReservationForm = () => {
                     }
                 }):null}
             </div>
+
         </div>
+        <div id="empty-space" style={{height:"50px"}}></div>
+        </>
     )
 }

@@ -56,7 +56,7 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate, time 
             <div style={{fontWeight:'bold', wordBreak:"break-all"}}>{restaurant.name}</div>
             <div className="restaurant-middle-container">
                 <div>
-                    <div><StarIcon avgRating={restaurant.avgRating} /></div>
+                    <div style={{width:"90px"}}><StarIcon avgRating={restaurant.avgRating} /></div>
                     <div style={{ display: 'flex', gap: '5px' }}>
                         <div style={{width:"100%"}}>{restaurant.categories}</div>
                         <div id="avgPriceIcon-container"><AvgPriceIcon avgPrice={restaurant.avgPrice} /></div>
@@ -77,7 +77,6 @@ export const RestaurantContainer = ({ restaurant, reservations, startDate, time 
                     }
             }} key={time}>{time}</button>) : <div style={{padding:"16px 0", fontWeight:"bold", color:"#da3743"}}>Not Available</div>}
             </div>
-            <div id="empty-space" style={{height:"50px"}}></div>
         </div>
     )
 }

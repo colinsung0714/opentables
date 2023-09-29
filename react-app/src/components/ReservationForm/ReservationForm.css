@@ -48,10 +48,10 @@
 
 .reservation-current-date-time {
     display: flex;
-    gap: 5px;
+    gap: 10px;
     align-items: center;
     font-size: 15px;
-    width: 150px;
+    width: 160px;
 }
 
 .reservation-calendar-party-container {

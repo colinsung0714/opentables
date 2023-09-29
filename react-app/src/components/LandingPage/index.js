@@ -141,7 +141,7 @@ export const LandingPage = () => {
                         <div style={{ margin: "0 140px", width: "400px" }}>There is no available restaurants</div>
                 }
             </div>
-
+            <div id="empty-space" style={{height:"50px"}}></div>
         </>
     )
 }

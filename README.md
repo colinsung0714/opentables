@@ -20,3 +20,68 @@ https://open-tables.onrender.com
 [User Stories](https://github.com/colinsung0714/opentables/wiki/User-Stories-and-Future-Implementations) |
 [Wireframes](https://github.com/colinsung0714/opentables/wiki/Wireframes)
 
+## Landing Page
+![image](https://github.com/colinsung0714/opentables/assets/99006739/95d0c21f-f2be-4f0e-abc6-42fa5ba7884e)
+
+## Restaurant Detail Page
+![image](https://github.com/colinsung0714/opentables/assets/99006739/fce8e140-e15f-4de3-921e-f69c0fff0f12)
+
+## Reservation Page
+![image](https://github.com/colinsung0714/opentables/assets/99006739/92a46e3c-654a-4fd4-9665-0cfc6cfb7feb)
+
+## Getting started
+1. Clone this repository:
+    * `https://github.com/colinsung0714/opentables.git`
+
+2. Install dependencies into the Backend by running the following:
+    * `pipenv install`
+
+3. Install dependencies into the Frontend by cd into `react-app` and running the following:
+    * `npm install`
+
+4. Create a **.env** file using the **.envexample** provided
+
+5. Set up your database with information from your .env and then run the following to create your database, migrate, and seed:
+    * `pipenv run flask db migrate`
+    * `pipenv run flask db upgrade`
+    * `pipenv run flask seed all`
+
+
+6. Start the app for backend using:
+    * `pipenv run flask run`
+
+7. Start the app for frontend by cd into `react-app` and running:
+    * `npm start`
+
+8. Now you can use the `Demo User` button to log in or Create an account
+
+***
+
+# Features
+
+## Restaurant
+Logged-in Users can
+* add a restaurant
+* read/view other user's restaurants
+* update their restaurants
+* delete their restaurants
+
+## Reservation
+Logged-in Users can
+* create a reservation
+* read/view previous reservation
+* update their reservations
+* delete their reservations
+
+## Comments
+Logged-in Users can
+* post a comment for a restaurant under the restaurant detail page
+* read/view other users' comments under restaurant detail page
+* delete a comment post by the logged-in user
+
+## Menus
+Logged-in Users can
+* create a menu for their restaurants
+* read/view menus for restaurants
+* update menus and menu items
+* delete menus and menu items

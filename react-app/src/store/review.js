@@ -30,7 +30,6 @@ export const fetchReviewRestaurant = restaurantId => async dispatch => {
         dispatch(allReviewRestaurant(data))
     } else {
         const error = await res.json()
-        console.log(error)
         throw error
     }
 }

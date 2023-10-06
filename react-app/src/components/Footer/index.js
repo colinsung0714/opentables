@@ -24,11 +24,11 @@ export const Footer = () => {
                     Developer
                 </div>
                 <div id='profile-items-container'>
-                    <a href={creator.github} id='creator-item' >
+                    <a href={creator.github} id='creator-item' target="_blank" rel="noreferrer">
                         <i id="github-icon" className="fab fa-github"></i>
                         <p id='creator-name'>{creator.name}</p>
                     </a>
-                    <a href={creator.linkedin} id='creator-item' >
+                    <a href={creator.linkedin} id='creator-item' target="_blank" rel="noreferrer" >
                         <i class="fab fa-linkedin"></i>
                         <p id='creator-name'>{creator.name}</p>
                     </a>

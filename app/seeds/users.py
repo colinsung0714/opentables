@@ -10,10 +10,18 @@ def seed_users():
         username='marnie', email='marnie@aa.io', first_name='Marnie', last_name='Kim', password='password')
     bobbie = User(
         username='bobbie', email='bobbie@aa.io',first_name='Bobbie', last_name='Lee', password='password')
-
+    poppy = User(
+        username='poppy', email='poppy@aa.io',first_name='Poppy', last_name='Park', password='password')
+    rachel = User(
+        username='Rachel', email='Rachel@aa.io',first_name='Rachel', last_name='Park', password='password', profile_pic='https://opentables.s3.us-west-1.amazonaws.com/rachel.jpg')
+    steven = User(
+        username='steven', email='steven@aa.io',first_name='steven', last_name='Park', password='password')
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
+    db.session.add(poppy)
+    db.session.add(rachel)
+    db.session.add(steven)
     db.session.commit()
 
 

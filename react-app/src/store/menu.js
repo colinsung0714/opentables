@@ -111,7 +111,6 @@ export default function menusReducer(state=initialState, action) {
         case ADD_MENU:{
             const newState = { currentRestaurantMenus:{} }
             const newItemList = {}
-            console.log(action.menuItems)
             action.menuItems.menuItems?.forEach(item =>{
                 newItemList[item.id] = item
             })

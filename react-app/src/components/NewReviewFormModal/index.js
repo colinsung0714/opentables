@@ -41,7 +41,7 @@ export const NewReviewFormModal = ({ reservation, user, type }) => {
     }, [rating, comment])
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(user.id, reservation.restaurantInfo.id, rating, comment, images)
+    
         const formData = new FormData()
         formData.append('user_id', user.id)
         formData.append('restaurant_id', reservation.restaurantInfo.id)

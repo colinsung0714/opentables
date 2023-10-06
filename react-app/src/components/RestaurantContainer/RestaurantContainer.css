@@ -1,8 +1,7 @@
 
 
 .single-restaurant-container {
-    /* position: absolute;
-    transition: top 2s ease-in-out .7s; */
+  
     border: 2px solid #d8d9db;
     border-radius: 20px;
     padding: 20px;
@@ -10,10 +9,7 @@
     width: 250px;
     height: auto;
 }
-/* 
-.single-restaurant-container:hover {
-   top: -10px;
-} */
+
 
 .restaurant-middle-container {
     display: flex;
@@ -41,8 +37,7 @@
     }
 
     .single-restaurant-container {
-        /* position: absolute;
-        transition: top 2s ease-in-out .7s; */
+     
         border: 2px solid #d8d9db;
         border-radius: 20px;
         padding: 20px;

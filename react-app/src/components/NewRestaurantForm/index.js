@@ -9,7 +9,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { getKey } from "../../store/maps";
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { useDropzone } from 'react-dropzone'
-
+import { Autocomplete, useJsApiLoader } from '@react-google-maps/api';
 export const NewRestaurantForm = () => {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -55,7 +55,8 @@ export const NewRestaurantForm = () => {
     const [error, setError] = useState({})
     const [loading, setLoading] = useState(false)
     const [imageUrls, setImageUrls] = useState(type === 'update' ? restaurant[0]?.restaurantImages.map(el => el.url) : [])
-    useEffect(async () => {
+    const [searchResult, setSearchResult] = useState("");
+    useEffect(() => {
         if (address) {
             const addresParts = address.label?.split(',')
             if (addresParts?.length) {
@@ -105,7 +106,7 @@ export const NewRestaurantForm = () => {
             if (!sundayOpen || !sundayClose) errorObj.sunday = 'Please select time for sunday'
         }
         setError(errorObj)
-    }, [window.google, phone, zipCode, name, street, city, state, priceRange, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday, apiKey, address])
+    }, [phone, zipCode, name, street, city, state, priceRange, categories, description, mondayOpen, mondayClose, checkMonday, tuesdayOpen, tuesdayClose, checkTuesday, wednesdayOpen, wednesClose, checkWednesday, thursdayOpen, thursdayClose, checkThursday, fridayOpen, fridayClose, checkFriday, saturdayOpen, saturdayClose, checkSaturday, sundayOpen, sundayClose, checkSunday, apiKey, address])
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!Object.values(error).length) {
@@ -188,9 +189,37 @@ export const NewRestaurantForm = () => {
         });
         setImageUrls(tempImageUrls);
     }, [])
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: {
-        'image/*': []
-      }, noClick:true, onDrop, noDragEventsBubbling:true})
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        accept: {
+            'image/*': []
+        }, noClick: true, onDrop, noDragEventsBubbling: true
+    })
+    function onPlaceChanged() {
+
+        if (searchResult != null) {
+            const place = searchResult.getPlace();
+            const name = place.name;
+            const status = place.business_status;
+            const formattedAddress = place.formatted_address;
+            const addressParts = formattedAddress.split(',')
+            const nation = isNaN(Number(place.address_components[6]?.long_name)) ? place.address_components[6]?.long_name : place.address_components[5]?.long_name
+            setStreet(addressParts[0])
+            setCity(addressParts[1].slice(1))
+            setState(addressParts[2]?.split(' ')[1])
+            setCountry(nation)
+            setzipCode(addressParts[2]?.split(' ')[2])
+        } else {
+            setError({ map: "Please enter address correctly" });
+        }
+    }
+    function onLoad(autocomplete) {
+        setSearchResult(autocomplete);
+    }
+    const { isLoaded } = useJsApiLoader({
+        id: 'google-map-script',
+        googleMapsApiKey: apiKey,
+        libraries: ['places'],
+    });
 
     return (
 
@@ -216,22 +245,12 @@ export const NewRestaurantForm = () => {
                                     <div>Address</div>
                                     {error.address && <p style={{ margin: "0", color: "red" }} >{error.address}</p>}
                                 </div>
-                                <div id='autofill-container' style={{ fontSize: "13px" }}>
-                                    {<GooglePlacesAutocomplete
-                                        apiKey={apiKey}
-                                        selectProps={{
-                                            address,
-                                            onChange: setAddress,
-                                            styles: {
-                                                input: (provided) => ({
-                                                    ...provided,
-                                                    color: 'black',
-                                                })
-                                            },
-                                            placeholder: "Type your address"
-                                        }}
 
-                                    />}</div>
+                                <div id='autofill-container' style={{ fontSize: "13px" }}>
+                                    {isLoaded && <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onLoad}>
+                                        <input style={{ width: "100%", height: "30px" }} type='text' />
+                                    </Autocomplete>}
+                                </div>
                             </label>}
                         </div>
                         <div style={{ width: '100%', display: "flex" }}>
@@ -268,7 +287,7 @@ export const NewRestaurantForm = () => {
                             </label>
                             <label>
                                 <div>Country</div>
-                                <input style={{ width: "100%", height: "30px" }} type="text" value={country} required />
+                                <input style={{ width: "100%", height: "30px" }} type="text" value={country} onChange={e=> setCountry(e.target.value)} required />
                             </label>
                             <label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
@@ -319,23 +338,23 @@ export const NewRestaurantForm = () => {
                                 <label style={{ width: '100%', display: "flex", flexDirection: "column", gap: "10px" }}>
                                     <div>Restaurant Picture</div>
                                     <div className="drag-drop-pic-piclist-container">
-                                    <div id="drag-drop-pic-container" {...getRootProps()}>
-                                        <input {...getInputProps()} />
-                                        {
-                                            isDragActive ?
-                                                <p style={{color:"#2684ff"}}>Drop the images here ...</p> :
-                                                <p>Drag 'n' drop some images here, or click to select images</p>
-                                        }
-                                    </div>
-                                 
+                                        <div id="drag-drop-pic-container" {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            {
+                                                isDragActive ?
+                                                    <p style={{ color: "#2684ff" }}>Drop the images here ...</p> :
+                                                    <p>Drag 'n' drop some images here, or click to select images</p>
+                                            }
+                                        </div>
+
                                     </div>
                                 </label>
                                 <div style={{ width: "600px", paddingTop: "10px" }}>
-            
-            {imageUrls?.length > 0 && <Carousel responsive={responsive}>
-                {imageUrls.map(el => <img style={{ width: "150px", height: "150px", borderRadius: "10px" }} src={el} key={el} />)}
-            </Carousel>}
-        </div>
+
+                                    {imageUrls?.length > 0 && <Carousel responsive={responsive}>
+                                        {imageUrls.map(el => <img style={{ width: "150px", height: "150px", borderRadius: "10px" }} src={el} key={el} alt={el} />)}
+                                    </Carousel>}
+                                </div>
                             </div>
                         </div>
                         <div className="businesshour-container-newform">

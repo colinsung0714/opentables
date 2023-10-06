@@ -8,7 +8,6 @@ export const SelectionList = ({suggestion, setSearch, party, startDate, time, se
     const [focus, setFocus] = useState(false)
     const dispatch = useDispatch()
     const handleSuggestion = e => {
-        console.log(startDate)
         e.stopPropagation()
         e.preventDefault();
         const searchData = {

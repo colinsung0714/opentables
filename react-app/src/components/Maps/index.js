@@ -53,7 +53,6 @@ const Maps = ({ lat, lng, title, type, restaurant, setSteps}) => {
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
         const steps = [...results.routes[0].legs[0].steps]
-        console.log(steps)
         setSteps(steps)
     }
 

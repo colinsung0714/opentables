@@ -15,7 +15,7 @@ import { ReservationForm } from "./components/ReservationForm";
 import { Footer } from "./components/Footer";
 import { ManageMenu } from "./components/ManageMenu";
 import { CreateMenuForm } from "./components/CreateMenuForm";
-import { Test } from "./components/Test";
+
 import { getKey } from "./store/maps";
 
 function App() {
@@ -34,9 +34,6 @@ function App() {
         <Switch>
           <Route exact path='/'>
             <LandingPage />
-          </Route>
-          <Route exact path='/test'>
-            <Test />
           </Route>
           <Route path="/login" >
             <LoginFormPage />

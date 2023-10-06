@@ -77,7 +77,7 @@ Logged-in Users can
 Logged-in Users can
 * post a comment for a restaurant under the restaurant detail page
 * read/view other users' comments under restaurant detail page
-* delete a comment post by the logged-in user
+* delete a comment posted by the logged-in user
 
 ## Menus
 Logged-in Users can
